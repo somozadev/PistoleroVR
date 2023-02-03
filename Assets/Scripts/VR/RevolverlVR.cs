@@ -1,5 +1,8 @@
+using General;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace VR
@@ -12,11 +15,11 @@ namespace VR
         [SerializeField] private float _shootForce;
         [SerializeField] private GameObject _shootingParticles;
         [SerializeField] private Transform _bulletPivot;
-
         private void Awake()
         {
             _interactable = GetComponent<XRGrabInteractable>();
             _interactable.activated.AddListener(Shoot);
+            
         }
 
         private void Shoot(ActivateEventArgs args)
@@ -24,6 +27,14 @@ namespace VR
             BulletVR bulletInstance = Instantiate(_bulletPrefab,_bulletPivot.position, quaternion.identity);
             bulletInstance.Initialize(_shootForce, transform.forward);
         }
+
+        public void CallShootFromDebugger()
+        {
+            BulletVR bulletInstance = Instantiate(_bulletPrefab,_bulletPivot.position, quaternion.identity);
+            bulletInstance.Initialize(_shootForce, transform.forward);
+        }
     }
 
 }
+
+
