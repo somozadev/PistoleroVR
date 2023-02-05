@@ -10,8 +10,9 @@ namespace VR
         private Rigidbody _rb;
         private float _shootForce;
         [SerializeField] private GameObject _hitParticles;
-        public void Initialize(float shootForce, Vector3 direction)
+        public void Initialize(float shootForce, Vector3 direction, Vector3 startPoint)
         {
+            transform.position = startPoint;
             _rb = GetComponent<Rigidbody>();
             _shootForce = shootForce;
             _rb.transform.forward = direction;
@@ -23,11 +24,11 @@ namespace VR
             _rb.velocity = _rb.transform.forward * _shootForce;
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
-            GameObject hit = Instantiate(_hitParticles, transform.position, quaternion.identity);
-            hit.transform.localEulerAngles = new Vector3(0f, 0f, -90f);
-            Destroy(gameObject);
+            // GameObject hit = Instantiate(_hitParticles, transform.position, quaternion.identity);
+            // hit.transform.localEulerAngles = new Vector3(0f, 0f, -90f);
+            gameObject.SetActive(false);
         }
     }
     

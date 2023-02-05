@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using General;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,5 +17,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     #endregion
-    
+
+    public ObjectPoolingManager objectPoolingManager;
+
 }

@@ -1,50 +1,53 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 
 namespace General
 {
-    [System.Serializable]
-    public class ObjectPooling<T> : MonoBehaviour where T : Object
+    public class ObjectPooling : MonoBehaviour
     {
-        [SerializeField] private T prefab;
+        [SerializeField] private string poolName;
+        private int poolId;
         [SerializeField] private int poolAmount;
-        [SerializeField] private List<T> pool;
-    
-        public void Init(int amount)
+        [SerializeField] private List<GameObject> pool;
+        private GameObject _usedPrefab;
+        public void Init(string name, int id, int amount, ref GameObject prefab)
         {
+            _usedPrefab = prefab;
+            pool = new List<GameObject>();
+            poolName = name;
+            poolId = id;
             poolAmount = amount;
-            for (int i = 0; i < poolAmount; i++)
+            AddElementToPool(poolAmount);
+        }
+
+        private void AddElementToPool(int amount)
+        {
+            for (int i = 0; i < amount; i++)
             {
-                pool.Add(Instantiate<T>(prefab, transform.position, Quaternion.identity));
+                GameObject go = Instantiate(_usedPrefab, transform.position, Quaternion.identity,  transform);
+                go.SetActive(false);
+                pool.Add(go);
             }
         }
 
-        public T Instantiate()
+        public GameObject GetPooledElement(Transform pivot)
         {
-            // if (GetPooledElemenet() != null)
-            // {
-            //     return 
-            // }
-        }
-        
-        public T GetPooledElemenet()
-        {
+
+            
             for (int i = 0; i < poolAmount; i++)
             {
-                if (pool[i].GameObject().activeInHierarchy)
+                if (!pool[i].GameObject().activeSelf)
                 {
+                    pool[i].GameObject().SetActive(true);
                     return pool[i];
                 }
             }
-            return null;
+
+            AddElementToPool(1);
+            pool[pool.Count - 1].SetActive(true);
+            return pool[pool.Count - 1];
         }
-
-        public void DeactivateElement(int i) => pool[i].GameObject().SetActive(false);
-        public void ActivateElement(int i) => pool[i].GameObject().SetActive(true);
-        
     }
-   
-    
 }
-

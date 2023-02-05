@@ -11,7 +11,7 @@ namespace VR
     public class RevolverlVR : MonoBehaviour
     {
         private XRGrabInteractable _interactable;
-        [SerializeField] private BulletVR _bulletPrefab;
+        [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private float _shootForce;
         [SerializeField] private GameObject _shootingParticles;
         [SerializeField] private Transform _bulletPivot;
@@ -19,19 +19,16 @@ namespace VR
         {
             _interactable = GetComponent<XRGrabInteractable>();
             _interactable.activated.AddListener(Shoot);
+            GameManager.Instance.objectPoolingManager.NewObjectPool("RevolverVRBullets", ref _bulletPrefab, 20);
             
         }
 
-        private void Shoot(ActivateEventArgs args)
-        {
-            BulletVR bulletInstance = Instantiate(_bulletPrefab,_bulletPivot.position, quaternion.identity);
-            bulletInstance.Initialize(_shootForce, transform.forward);
-        }
+        private void Shoot(ActivateEventArgs args) => GameManager.Instance.objectPoolingManager.GetPoolByName("RevolverVRBullets").GetPooledElement(_bulletPivot).GetComponent<BulletVR>().Initialize(_shootForce, transform.forward, _bulletPivot.position); 
+        
 
         public void CallShootFromDebugger()
         {
-            BulletVR bulletInstance = Instantiate(_bulletPrefab,_bulletPivot.position, quaternion.identity);
-            bulletInstance.Initialize(_shootForce, transform.forward);
+            Shoot(null);
         }
     }
 
