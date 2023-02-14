@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 
 namespace General
 {
@@ -38,9 +36,9 @@ namespace General
             
             for (int i = 0; i < poolAmount; i++)
             {
-                if (!pool[i].GameObject().activeSelf)
+                if (!pool[i].gameObject.activeSelf)
                 {
-                    pool[i].GameObject().SetActive(true);
+                    pool[i].gameObject.SetActive(true);
                     return pool[i];
                 }
             }

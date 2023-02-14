@@ -21,10 +21,10 @@ namespace VR
 
         private void Update()
         {
-            _rb.velocity = _rb.transform.forward * _shootForce;
+            _rb.velocity = _rb.transform.forward * (_shootForce * Time.deltaTime);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnCollisionEnter(Collision other)
         {
             // GameObject hit = Instantiate(_hitParticles, transform.position, quaternion.identity);
             // hit.transform.localEulerAngles = new Vector3(0f, 0f, -90f);
