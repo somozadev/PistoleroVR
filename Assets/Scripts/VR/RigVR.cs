@@ -31,9 +31,9 @@ public class RigVR : MonoBehaviour
         _headBoddyOffset = transform.position - _headConstrain.position;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        transform.position = _headConstrain.position + _headBoddyOffset;
+        transform.position = _headConstrain.position + _headBoddyOffset; 
         transform.forward = Vector3.Lerp(transform.forward,
             Vector3.ProjectOnPlane(_headConstrain.forward, Vector3.up).normalized, Time.fixedDeltaTime * _turnSmoothness);
         

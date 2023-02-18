@@ -8,7 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 namespace VR
 {
     [RequireComponent(typeof(XRGrabInteractable))]
-    public class RevolverlVR : MonoBehaviour
+    public class RevolverVR : MonoBehaviour
     {
         private XRGrabInteractable _interactable;
         [SerializeField] private GameObject _bulletPrefab;

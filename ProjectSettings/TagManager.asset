@@ -13,8 +13,8 @@ TagManager:
   - UI
   - Revolver
   - Bullet
-  - Character
-  - 
+  - HeadHandsColliders
+  - MovementCollider
   - 
   - 
   - 
