@@ -14,18 +14,16 @@ namespace General.Damageable
         public override void Damage()
         {
             _health -= _basicDamage;
-            StartCoroutine(FlashDamage());
+            
+            //particle effect
+            //sound effect
+            
             if (_health <= 0)
             {
+                //unable control from player *maybe change it's character to invisible and instance a ragdoll of him?
                 gameObject.SetActive(false);
             }
         }
 
-        private IEnumerator FlashDamage()
-        {
-            GetComponent<MeshRenderer>().material.color = Color.red;
-            yield return new WaitForSeconds(.2f);
-            GetComponent<MeshRenderer>().material.color = Color.white;
-        }
     }
 }

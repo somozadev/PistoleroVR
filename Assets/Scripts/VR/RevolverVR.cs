@@ -23,6 +23,7 @@ namespace VR
         [SerializeField] private Vector3 _targetPoint;
         [SerializeField] private float spread;
 
+        [SerializeField] private LayerMask _raycastLayers;
         [SerializeField] private int currentBullets = 6;
         [SerializeField] private TMP_Text _bulletsText;
         private void Awake()
@@ -46,8 +47,9 @@ namespace VR
             RaycastHit hit;
             Ray ray = new Ray(_bulletPivot.position, _bulletPivot.forward);
             Debug.DrawRay(_bulletPivot.position, _bulletPivot.forward, Color.blue,4f);
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, 1000 , layerMask:_raycastLayers))
             {
+                
                 CheckForDamage(hit.collider.gameObject);
                 
                 //ammo
