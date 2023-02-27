@@ -1,4 +1,5 @@
 using General;
+using General.Damageable;
 using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
@@ -47,7 +48,8 @@ namespace VR
             Debug.DrawRay(_bulletPivot.position, _bulletPivot.forward, Color.blue,4f);
             if (Physics.Raycast(ray, out hit))
             {
-                //check hit
+                CheckForDamage(hit.collider.gameObject);
+                
                 //ammo
                 //hp
                 
@@ -65,6 +67,14 @@ namespace VR
 
         }
 
+        private void CheckForDamage(GameObject hitObject)
+        {
+            if(!hitObject.CompareTag("Damageable")) return;
+
+            Damageable damageable = hitObject.GetComponent<Damageable>();
+            damageable.Damage();
+
+        }
 
         private void UpdateText() => _bulletsText.text = currentBullets.ToString();
         
