@@ -1,4 +1,5 @@
 ﻿using System;
+using VR;
 
 namespace General.Damageable
 {
@@ -9,7 +10,7 @@ namespace General.Damageable
             _health = 3; 
         }
 
-        public override void Damage()
+        public override void Damage(RevolverVR revolverVR)
         {
             _health -= _critDamage;
             //particle effect 

@@ -1,30 +1,40 @@
 ﻿using System;
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using VR;
 
 namespace General.Damageable
 {
     public class BullsEye : Damageable
     {
         [SerializeField] private Animator _animator;
-        [SerializeField] private Transform _centerPivot;
-        [SerializeField] private Transform _radiusPivot;
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+            _health = 1;
         }
 
-        public override void Damage()
+        public override void Damage(RevolverVR revolverVR)
         {
-            Debug.LogError("Damage called from bullseye");
-            _animator.SetTrigger("Hit");
-            StartCoroutine(SlowReset());
+            _health -= 1;
+
+            if (_health <= 0)
+            {
+                _animator.SetTrigger("Hit");
+                StartCoroutine(SlowReset());
+            }
         }
+
+        
 
         private IEnumerator SlowReset()
         {
             yield return new WaitForSeconds(1f);
             _animator.SetTrigger("Restore");
+            _health = 1;
         }
     }
+
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Security.Cryptography;
 using Unity.Mathematics;
 using UnityEngine;
@@ -7,29 +8,32 @@ namespace VR
 {
     public class BulletVR : MonoBehaviour
     {
-        private Rigidbody _rb;
-        private float _shootForce;
-        [SerializeField] private GameObject _hitParticles;
-        public void Initialize(float shootForce, Vector3 direction, Vector3 startPoint)
+        [SerializeField] private TrailRenderer _bulletTrail;
+        [SerializeField] private ParticleSystem _impactParticle;
+
+        public void Initialize(RaycastHit hit, Vector3 startPoint)
         {
             transform.position = startPoint;
-            _rb = GetComponent<Rigidbody>();
-            _shootForce = shootForce;
-            _rb.transform.forward = direction;
-
+            _bulletTrail.enabled = true;
+            // TrailRenderer trail = Instantiate(_bulletTrail, startPoint, Quaternion.identity);
+            StartCoroutine(SpawnTrail(_bulletTrail, hit));
         }
 
-        private void Update()
+        private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
         {
-            _rb.velocity = _rb.transform.forward * (_shootForce * Time.deltaTime);
-        }
+            float time = 0;
+            Vector3 startPos = transform.position;
+            while (time < 1)
+            {
+                transform.position = Vector3.Lerp(startPos, hit.point, time);
+                time += Time.deltaTime / trail.time;
+                yield return null;
+            }
 
-        private void OnCollisionEnter(Collision other)
-        {
-            // GameObject hit = Instantiate(_hitParticles, transform.position, quaternion.identity);
-            // hit.transform.localEulerAngles = new Vector3(0f, 0f, -90f);
-            gameObject.SetActive(false);
+            transform.position = hit.point;
+            Instantiate(_impactParticle, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(trail.gameObject, trail.time);
         }
+      
     }
-    
 }
