@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using General;
 using General.Damageable;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace VR
@@ -94,6 +89,7 @@ namespace VR
             {
                 _impactParticles.transform.position = _hit.point;
                 _impactParticles.transform.forward = _hit.normal;
+                _impactParticles.transform.SetParent(_hit.transform);
                 _impactParticles.Emit(1);
                 bullet._trail.transform.position = _hit.point;
                 bullet._time = 3f;
