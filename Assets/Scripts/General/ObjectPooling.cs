@@ -10,6 +10,7 @@ namespace General
         [SerializeField] private int poolAmount;
         [SerializeField] private List<GameObject> pool;
         private GameObject _usedPrefab;
+
         public void Init(string name, int id, int amount, ref GameObject prefab)
         {
             _usedPrefab = prefab;
@@ -17,33 +18,45 @@ namespace General
             poolName = name;
             poolId = id;
             poolAmount = amount;
-            AddElementToPool(poolAmount);
+            AddElementToPool(poolAmount,false);
         }
 
-        private void AddElementToPool(int amount)
+        public List<GameObject> GetPool()
+        {
+            return pool;
+        }
+
+        private void AddElementToPool(int amount, bool lateAdded)
         {
             for (int i = 0; i < amount; i++)
             {
-                GameObject go = Instantiate(_usedPrefab, transform.position, Quaternion.identity,  transform);
+                GameObject go = Instantiate(_usedPrefab, transform.position, Quaternion.identity, transform);
+                if (!lateAdded)
+                    go.name = ($"bulletVR_{i}");
+                else
+                {
+                    poolAmount++;
+                    go.name = ($"bulletVR_{poolAmount}");
+                }
                 go.SetActive(false);
                 pool.Add(go);
             }
         }
 
-        public GameObject GetPooledElement(Transform pivot)
+        public GameObject GetPooledElement()
         {
-
-            
             for (int i = 0; i < poolAmount; i++)
             {
                 if (!pool[i].gameObject.activeSelf)
                 {
+                    Debug.Log($"Pooled element with index {i} of {poolAmount} with state of {pool[i].activeSelf}");
                     pool[i].gameObject.SetActive(true);
                     return pool[i];
                 }
             }
 
-            AddElementToPool(1);
+            Debug.Log("Can't find element in current pool, creating new one");
+            AddElementToPool(1, true);
             pool[pool.Count - 1].SetActive(true);
             return pool[pool.Count - 1];
         }

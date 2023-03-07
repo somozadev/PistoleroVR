@@ -1,39 +1,27 @@
 ﻿using System;
 using System.Collections;
-using System.Security.Cryptography;
-using Unity.Mathematics;
 using UnityEngine;
 
-namespace VR
+[System.Serializable]
+public class BulletVR : MonoBehaviour
 {
-    public class BulletVR : MonoBehaviour
+    public float _time;
+    public Vector3 _initialPos;
+    public TrailRenderer _trail;
+    public Vector3 _initialVel;
+    public float _waitTime;
+
+    private void Awake()
     {
-        [SerializeField] private TrailRenderer _bulletTrail;
-        [SerializeField] private ParticleSystem _impactParticle;
+        _trail = GetComponent<TrailRenderer>();
+    }
 
-        public void Initialize(RaycastHit hit, Vector3 startPoint)
-        {
-            transform.position = startPoint;
-            _bulletTrail.enabled = true;
-            // TrailRenderer trail = Instantiate(_bulletTrail, startPoint, Quaternion.identity);
-            StartCoroutine(SpawnTrail(_bulletTrail, hit));
-        }
-
-        private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
-        {
-            float time = 0;
-            Vector3 startPos = transform.position;
-            while (time < 1)
-            {
-                transform.position = Vector3.Lerp(startPos, hit.point, time);
-                time += Time.deltaTime / trail.time;
-                yield return null;
-            }
-
-            transform.position = hit.point;
-            Instantiate(_impactParticle, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(trail.gameObject, trail.time);
-        }
-      
+    public void Init(Vector3 initialPos, Vector3 initialVel)
+    {
+        _initialPos = initialPos;
+        _initialVel = initialVel;
+        _time = 0.0f;
+        _waitTime = 3.0f;
+        _trail.AddPosition(initialPos);
     }
 }
