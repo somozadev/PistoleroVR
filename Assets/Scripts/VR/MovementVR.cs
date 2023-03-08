@@ -5,120 +5,176 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 public class MovementVR : LocomotionProvider
 {
-    [SerializeField] private InputActionProperty _leftHandMoveAction;
+    [Header("Control movement status")]
+    [SerializeField] private bool canMove;  
+    [SerializeField] private bool canRotate;
+    [Header("Movement Variables")]
     public float speed;
-    private Vector2 _inputAxis;
-    [SerializeField] private Transform _targetTransform;
-    private Vector3 _verticalVelocity;
-
+    public float rotSpeed;
+    public float drag;
+    [Header("Hands controllers InputActions references")]
+    [SerializeField] private InputActionProperty _leftHandMoveAction;
+    [SerializeField] private InputActionProperty _rightHandMoveAction;
+    [Header("Needed references")]
+    [SerializeField] private Rigidbody _moveRb;
+    [SerializeField] private Rigidbody _lookRb;
+    [SerializeField] private Transform _cameraHolder;
+    [SerializeField] private Transform _orientationTrf;
+    [SerializeField] private Transform _pivotCamTrf;
+    
+    /// <summary>
+    /// Unity reads the value on action performed by the left hand. provided by <see cref="InputActionProperty"/>
+    /// </summary>
     private Vector2 ReadInputLeftHand()
     {
         return _leftHandMoveAction.action?.ReadValue<Vector2>() ?? Vector2.zero;
     }
-    
+    /// <summary>
+    /// Unity reads the value on action performed by the right hand. provided by <see cref="InputActionProperty"/>
+    /// </summary>
+    private Vector2 ReadInputRightHand()
+    {
+        return _rightHandMoveAction.action?.ReadValue<Vector2>() ?? Vector2.zero;
+    }
+    /// <summary>
+    /// When the gameobject gets enabled, enables both hands <see cref="InputActionProperty"/> to perform actions. Calls <see cref="Drag()"/> to start Drag calculations to the rigidbody
+    /// </summary>
     private void OnEnable()
     {
+        Drag();
         _leftHandMoveAction.EnableDirectAction();
+        _rightHandMoveAction.EnableDirectAction();
     }
-
+    /// <summary>
+    /// When the gameobject gets disabled, disables both hands <see cref="InputActionProperty"/> to perform actions.
+    /// </summary>
     private void OnDisable()
     {
         _leftHandMoveAction.DisableDirectAction();
-    }
-    protected void Update()
-    {
-        var xrOrigin = system.xrOrigin;
-        if (xrOrigin == null)
-            return;
-
-        var input = ReadInputLeftHand();
-        var translationInWorldSpace = ComputeDesiredMove(input);
-        MoveRig(translationInWorldSpace);
+        _rightHandMoveAction.DisableDirectAction();
 
     }
-
-    // public void FixedUpdate()
-    // {
-    //     Quaternion headY = Quaternion.Euler(0, _xrOrigin.Camera.transform.eulerAngles.y, 0);
-    //     Vector3 direction = headY * new Vector3(_inputAxis.x, 0, _inputAxis.y);
-    //     Move(direction * (Time.fixedDeltaTime * speed));   
-    //     
-    // }
-
-    private void Move(Vector3 direction)
+    /// <summary>
+    /// Unity calls <see cref="FixedUpdate"/> around 50 times per second, used for physics and avoid jittering.
+    /// Saves input from both hands in <paramref name="inputL"/> and <paramref name="inputR"/> respectively. With it,
+    /// calls <see cref="ComputeDesiredDirection"/> with left input to get <paramref name="translationInWorldSpace"/> the direction of the movement.
+    /// Finally, calls <see cref="MoveRig"/> passing both the direction and the right input in order to move the character by physics.
+    /// </summary>
+    /// <param name="inputL"> Left hand controller input value </param>
+    /// <param name="inputR"> Right hand controller input value </param>
+    /// <param name="translationInWorldSpace"> Desired direction of the movement </param>
+    protected void FixedUpdate()
     {
-        _targetTransform.Translate(direction);
-        
+        var inputL = ReadInputLeftHand();
+        var inputR = ReadInputRightHand();
+        var translationInWorldSpace = ComputeDesiredDirection(inputL);
+        MoveRig(translationInWorldSpace, inputR);
     }
-    protected virtual Vector3 ComputeDesiredMove(Vector2 input)
-        {
-            if (input == Vector2.zero)
-                return Vector3.zero;
-
-            var xrOrigin = system.xrOrigin;
-            if (xrOrigin == null)
-                return Vector3.zero;
-            var inputMove = Vector3.ClampMagnitude(new Vector3(input.x, 0f, input.y), 1f);
-            var originTransform = xrOrigin.Origin.transform;
-            var originUp = originTransform.up;
-            
-            var forwardSourceTransform = xrOrigin.Camera.transform;
-            var inputForwardInWorldSpace = forwardSourceTransform.forward;
-            if (Mathf.Approximately(Mathf.Abs(Vector3.Dot(inputForwardInWorldSpace, originUp)), 1f))
-            {
-                inputForwardInWorldSpace = -forwardSourceTransform.up;
-            }
-
-            var inputForwardProjectedInWorldSpace = Vector3.ProjectOnPlane(inputForwardInWorldSpace, originUp);
-            var forwardRotation = Quaternion.FromToRotation(originTransform.forward, inputForwardProjectedInWorldSpace);
-
-            var translationInRigSpace = forwardRotation * inputMove * (speed * Time.fixedDeltaTime);
-            var translationInWorldSpace = originTransform.TransformDirection(translationInRigSpace);
-            return translationInWorldSpace;
-        }
-    
-    protected virtual void MoveRig(Vector3 translationInWorldSpace)
+   /// <summary>
+   /// Unity calls <see cref="Update"/> on every frame.
+   /// Calls <see cref="SpeedControl"/> to limit the maximum velocity of the rigidbody to <see cref="speed"/> value.
+   /// </summary>
+    private void Update()
     {
-        var xrOrigin = system.xrOrigin;
-        if (xrOrigin == null)
-            return;
-
-        var motion = translationInWorldSpace;
-
-        if (_targetTransform != null)
-        {
-            // Step vertical velocity from gravity
-            if (IsGrounded())
-            {
-                _verticalVelocity = Vector3.zero;
-            }
-            else
-            {
-                _verticalVelocity += Physics.gravity * Time.fixedDeltaTime;
-            }
-
-            motion += _verticalVelocity * Time.fixedDeltaTime;
-
-            if (CanBeginLocomotion() && BeginLocomotion())
-            {
-                Move(motion);
-                EndLocomotion();
-            }
-        }
+        SpeedControl();
+    }
+   /// <summary>
+   /// Sets <see cref="_cameraHolder"/> position to follow <see cref="_pivotCamTrf"/> position, due the fact that camera is outside the
+   /// gameobject in charge of movement (its rigidbody).
+   /// </summary>
+    private void MoveCam() { _cameraHolder.position = _pivotCamTrf.position;}
+   /// <summary>
+   /// Sets the <see cref="_orientationTrf"/> rotation to a new quaternion based on the <see cref ="_lookRb"/> y euler angle multiplied by an offset,
+   /// given by the extra rotation from the <see cref="ReadInputRightHand"/>.
+   /// In other words, sets the orientation gameobject to the camera looking orientation on the Y axis. 
+   /// </summary>
+   ///<param name="localEulerAngles"> stores the vector3 of the localEulerAngles of the <see cref="_orientationTrf"/></param>
+   private void SetOrientationWithCam()
+    {
+        var localEulerAngles = _orientationTrf.localEulerAngles;
+        var rotation = _orientationTrf.rotation;
+        rotation = Quaternion.Euler(localEulerAngles.x,
+            _lookRb.transform.localEulerAngles.y, localEulerAngles.z);
+        rotation *= _cameraHolder.rotation;
+        _orientationTrf.rotation = rotation;
+    }
+   /// <summary>
+   /// Applies a force to the main rigidbody <see cref="_moveRb"/> on the given <paramref name="direction"/>
+   /// </summary>
+   /// <param name="direction"> Desired direction of the movement</param>
+    private void Move(Vector3 direction) => _moveRb.AddForce(direction, ForceMode.Force);
+   /// <summary>
+   /// Rotates the camera parent object <see cref="_cameraHolder"/> in the Y axis with a given speed.
+   /// </summary>
+   /// <param name="rotSpeedFinal">Based on given rotSpeed value, calculares if it should be positive or negative based on the <paramref name="inputRight"/> x value</param>
+   /// <param name="inputRight">The Vector2 of the current right hand input, calculated in <see cref="ReadInputRightHand()"/></param>
+   private void Rotate(Vector2 inputRight)
+    {
+        var rotSpeedFinal = rotSpeed;
+        if(inputRight.x < 0)
+            rotSpeedFinal = -rotSpeedFinal;
+        else if(inputRight.x > 0)
+            rotSpeedFinal = Mathf.Abs(rotSpeedFinal);
         else
-        {
-            if (CanBeginLocomotion() && BeginLocomotion())
-            {
-                xrOrigin.Origin.transform.position += motion;
+            return;
+        _cameraHolder.Rotate(Vector3.up * (Time.fixedDeltaTime * rotSpeedFinal));
+        
 
-                EndLocomotion();
-            }
+    }
+   /// <summary>
+   /// Calculates the direction of the movement based on the <paramref name="inputRight"/> value and the <see cref="_orientationTrf"/> tranasform
+   /// </summary>
+   /// 
+   /// <param name="input">The vector2 value of the current left hand input. Calculated in  <see cref="ReadInputLeftHand()"/></param>
+   /// <param name="forwardDir">A vector3 based on the forward direction of the <see cref="_orientationTrf"/> and the <paramref name="input"/></param>
+   /// <param name="moveDirection">The final vector3 direction, normalizing <paramref name="forwardDir"/> and multiplying it by a constant 1000, the <see cref="speed"/> and <see cref="Time.fixedDeltaTime"/></param>
+   /// <returns></returns>
+   private Vector3 ComputeDesiredDirection(Vector2 input)
+    {
+        if (input == Vector2.zero)
+            return _moveRb.position;
+        Vector3 forwardDir = _orientationTrf.forward * input.y + _orientationTrf.right * input.x;
+
+        Vector3 moveDirection = Vector3.Normalize(forwardDir) * (speed * 1000 * Time.fixedDeltaTime);
+        return moveDirection;
+    }
+   /// <summary>
+   /// Measures the current <see cref="_moveRb"/> velocity magnitude ignoring it's y axis. If it's greater than the limit <see cref="speed"/>, limits the rb velocity to it.
+   /// </summary>
+   private void SpeedControl()
+    {
+        var velocity = _moveRb.velocity;
+        Vector3 flatVel = new Vector3(velocity.x, 0f, velocity.z);
+        if (flatVel.magnitude > speed)
+        {
+            Vector3 limitedVel = flatVel.normalized * speed;
+            _moveRb.velocity = new Vector3(limitedVel.x, velocity.y, limitedVel.z);
         }
     }
-
-    private bool IsGrounded()
+   /// <summary>
+   /// Applyes a <see cref="drag"/> value to the <see cref="_moveRb"/> drag
+   /// </summary>
+    private void Drag() => _moveRb.drag = drag;
+   /// <summary>
+   /// If the locomotion system allows it by <see cref="LocomotionProvider.CanBeginLocomotion"/> and <see cref="LocomotionProvider.BeginLocomotion"/>
+   /// and the control bool <see cref="canMove"/> is true, <see cref="Move"/> will be called, passing in the direction <paramref name="translationInWorldSpace"/>
+   /// and if the control bool <see cref="canRotate"/> is true, <see cref="Rotate"/> will be called, passing in the value of  <paramref name="inputRight"/>.
+   ///
+   /// As well as calling <see cref="SetOrientationWithCam"/>, <see cref="MoveCam"/> and <see cref="LocomotionProvider.EndLocomotion"/> in that order.
+   /// </summary>
+   /// <param name="translationInWorldSpace">Direction calculated in <see cref="ComputeDesiredDirection"/></param>
+   /// <param name="inputRight">Input value of the right hand, calculated in <see cref="ReadInputRightHand"/></param>
+    private void MoveRig(Vector3 translationInWorldSpace, Vector2 inputRight)
     {
-        return true;
+        if (CanBeginLocomotion() && BeginLocomotion())
+        {
+            if (canMove)
+                Move(translationInWorldSpace);
+            if(canRotate)
+                Rotate(inputRight);
+            SetOrientationWithCam();
+            MoveCam();
+            EndLocomotion();
+        }
     }
 }
-

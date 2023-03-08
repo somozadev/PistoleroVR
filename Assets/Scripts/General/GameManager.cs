@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using General;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,5 +20,5 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public ObjectPoolingManager objectPoolingManager;
-
 }
+
