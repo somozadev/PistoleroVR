@@ -15,7 +15,7 @@ namespace General
         {
             do
             {
-                await Task.Delay(200);
+                await Task.Delay(3000);
                 _target = asyncLoad.progress;
             } while (asyncLoad.progress < 0.9f);
 

@@ -19,6 +19,7 @@ namespace VR
         [SerializeField] private Transform _raycastOrigin;
         private Ray _ray;
         private RaycastHit _hit;
+        [SerializeField] private LayerMask _layerMask;
 
         [SerializeField] private int currentBullets = 6;
         [SerializeField] private TMP_Text _bulletsText;
@@ -26,10 +27,14 @@ namespace VR
 
 
         private ObjectPooling _bulletsPooling;
+        private XRInteractorLineVisual _leftHandLineVisual;
+        private XRInteractorLineVisual _rightHandLineVisual;
 
         private void Awake()
         {
             _interactable = GetComponent<XRGrabInteractable>();
+            _leftHandLineVisual = GameManager.Instance.leftHandLineVisual;
+            _rightHandLineVisual = GameManager.Instance.leftHandLineVisual;
             _bulletsText = GetComponentInChildren<TMP_Text>();
             _interactable.activated.AddListener(PerformShoot);
             _bulletsPooling =
@@ -56,6 +61,7 @@ namespace VR
         }
 
         private void PerformShoot(ActivateEventArgs args) => Shoot();
+
 
         private Vector3 GetBulletWorldPosition(BulletVR bullet)
         {
@@ -85,14 +91,19 @@ namespace VR
             _ray.origin = start;
             _ray.direction = direction;
 
-            if (Physics.Raycast(_ray, out _hit, direction.magnitude))
+            if (Physics.Raycast(_ray, out _hit, direction.magnitude, _layerMask))
             {
-                _impactParticles.transform.position = _hit.point;
-                _impactParticles.transform.forward = _hit.normal;
-                _impactParticles.transform.SetParent(_hit.transform);
-                _impactParticles.Emit(1);
                 bullet._trail.transform.position = _hit.point;
                 bullet._time = 3f;
+                if (!CheckForForce(_hit.transform.gameObject, _hit.point, _ray.direction))
+                {
+                    var trf = _impactParticles.transform;
+                    trf.position = _hit.point;
+                    trf.forward = _hit.normal;
+                    // _impactParticles.transform.SetParent(_hit.transform);
+                    _impactParticles.Emit(1);
+                }
+
                 CheckForDamage(_hit.transform.gameObject);
             }
             else
@@ -101,8 +112,21 @@ namespace VR
             }
         }
 
+        private void HideLineVisuals()
+        {
+            _leftHandLineVisual.enabled = false;
+            _rightHandLineVisual.enabled = false;
+        }
+
+        private void UnHideLineVisuals()
+        {
+            _leftHandLineVisual.enabled = true;
+            _rightHandLineVisual.enabled = true;
+        }
+
         private void Shoot()
         {
+            HideLineVisuals();
             Vector3 velocity = _raycastOrigin.forward.normalized * _bulletSpeed;
 
             BulletVR bullet = _bulletsPooling.GetPooledElement().GetComponent<BulletVR>();
@@ -112,13 +136,25 @@ namespace VR
             currentBullets--;
             UpdateText();
             _muzzleParticles.Emit(1);
+            UnHideLineVisuals();
+        }
+
+        private bool CheckForForce(GameObject hitObject, Vector3 hitPosition, Vector3 direction)
+        {
+            bool hasRb = false;
+            if (hitObject.TryGetComponent(out Rigidbody rb))
+            {
+                rb.AddExplosionForce(1500f,hitPosition,0.2f);
+                hasRb = true;
+            }
+
+            return hasRb;
         }
 
         private void CheckForDamage(GameObject hitObject)
         {
-            if (!hitObject.CompareTag("Damageable")) return;
-            Damageable damageable = hitObject.GetComponent<Damageable>();
-            damageable.Damage(this);
+            if (hitObject.TryGetComponent(out Damageable damageable))
+                damageable.Damage(this);
         }
 
         private void UpdateText() => _bulletsText.text = currentBullets.ToString();
