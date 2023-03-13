@@ -7,7 +7,7 @@ namespace General
     {
         [SerializeField] private UiController _uiController;
 
-        private void Start()
+        private void Init()
         {
             if (SceneManager.GetActiveScene().name != SceneNames.Essentials)
                 LoadScene(SceneNames.Essentials, LoadSceneMode.Single);
