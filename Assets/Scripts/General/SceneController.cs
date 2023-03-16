@@ -7,7 +7,7 @@ namespace General
     {
         [SerializeField] private UiController _uiController;
 
-        private void Init()
+        private void Start()
         {
             if (SceneManager.GetActiveScene().name != SceneNames.Essentials)
                 LoadScene(SceneNames.Essentials, LoadSceneMode.Single);
@@ -19,7 +19,7 @@ namespace General
             _uiController.LoadingSceneStart();
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
             asyncLoad.allowSceneActivation = false;
-            await _uiController.LoadingScene(asyncLoad);
+            await _uiController.LoadingScene(asyncLoad, GameManager.Instance.gameServices.SignInAnon());
             asyncLoad.allowSceneActivation = true;
             _uiController.LoadingSceneEnd();
         }

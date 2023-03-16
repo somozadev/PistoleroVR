@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using General;
+using Multiplayer;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -26,5 +27,6 @@ public class GameManager : MonoBehaviour
     //todo -> player script with instance here and references for this 2 there. Olso make controllers to lock player movement or head rotation or lineInteractors (needed 4 loading scene )
     public XRInteractorLineVisual leftHandLineVisual;
     public XRInteractorLineVisual rightHandLineVisual;
+    public GameServices gameServices;
 }
 

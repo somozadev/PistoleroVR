@@ -1,14 +1,9 @@
 using UnityEngine;
 
 public class CharacterCustomization : MonoBehaviour
-{
-    [SerializeField] private Transform _pivotTransform; 
+{ 
     [SerializeField] private GameObject[] _hats;
     public GameObject currentHat; 
-    
-    
-    
-    
     
     
     public void SetHatWithIndex(int index)

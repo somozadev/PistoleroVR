@@ -815,11 +815,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: 6f1b61b2-7389-4d7e-bb36-1161b64e5381
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: PistoleroVR
+  organizationId: msomele
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
