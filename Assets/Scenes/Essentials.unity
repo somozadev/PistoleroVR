@@ -899,6 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276500fbaae6b3f41acdc4c465b4c625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1889710949}
   objectPoolingManager: {fileID: 1335847024}
   sceneController: {fileID: 1335847027}
   leftHandLineVisual: {fileID: 541393152}
@@ -1257,6 +1258,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638717342}
   m_CullTransparentMesh: 1
+--- !u!114 &1889710949 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7658481193799229613, guid: b817ca27284865d4cb819b85d7ec854b, type: 3}
+  m_PrefabInstance: {fileID: 9004603084459824025}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97ebb20a54596f4c8c815e730d23963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1895648071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,7 +1599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9004603084993901201, guid: b817ca27284865d4cb819b85d7ec854b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b817ca27284865d4cb819b85d7ec854b, type: 3}

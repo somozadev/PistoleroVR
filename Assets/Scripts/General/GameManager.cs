@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+
+    public Player player;
     public ObjectPoolingManager objectPoolingManager;
     public SceneController sceneController;
     
