@@ -1,10 +1,15 @@
+using System;
+using General;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
+using Unity.Netcode;
 
 public class MovementVR : LocomotionProvider
 {
+    [Header("Network variables")]
+    [SerializeField] private bool IsOwner;
     [Header("Control movement status")]
     [SerializeField] private bool canMove;  
     [SerializeField] private bool canRotate;
@@ -21,7 +26,13 @@ public class MovementVR : LocomotionProvider
     [SerializeField] private Transform _cameraHolder;
     [SerializeField] private Transform _orientationTrf;
     [SerializeField] private Transform _pivotCamTrf;
-    
+
+
+    private void Start()
+    {
+        this.IsOwner = GetComponentInParent<Player>().IsOwner;
+    }
+
     /// <summary>
     /// Unity reads the value on action performed by the left hand. provided by <see cref="InputActionProperty"/>
     /// </summary>
@@ -65,6 +76,7 @@ public class MovementVR : LocomotionProvider
     /// <param name="translationInWorldSpace"> Desired direction of the movement </param>
     protected void FixedUpdate()
     {
+        // if()
         var inputL = ReadInputLeftHand();
         var inputR = ReadInputRightHand();
         var translationInWorldSpace = ComputeDesiredDirection(inputL);
@@ -76,6 +88,8 @@ public class MovementVR : LocomotionProvider
    /// </summary>
     private void Update()
     {
+        if(!IsOwner)
+            return;
         SpeedControl();
     }
    /// <summary>

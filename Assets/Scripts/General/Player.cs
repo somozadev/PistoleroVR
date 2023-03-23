@@ -1,3 +1,4 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -11,6 +12,10 @@ namespace General
         [SerializeField] private CharacterCustomization _characterCustomization;
         [SerializeField] private ActionBasedController _leftHand;
         [SerializeField] private ActionBasedController _rightHand;
-    
+
+        private void OnEnable()
+        {
+            GameManager.Instance.player = this;
+        }
     }
 }

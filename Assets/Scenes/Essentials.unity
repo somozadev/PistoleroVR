@@ -123,17 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &335008198 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6758360392771796743, guid: b817ca27284865d4cb819b85d7ec854b, type: 3}
-  m_PrefabInstance: {fileID: 9004603084459824025}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e988983f96fe1dd48800bcdfc82f23e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &429843112
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,17 +272,6 @@ MonoBehaviour:
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
   m_CancelButton: Cancel
---- !u!114 &541393152 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6758360391761136711, guid: b817ca27284865d4cb819b85d7ec854b, type: 3}
-  m_PrefabInstance: {fileID: 9004603084459824025}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e988983f96fe1dd48800bcdfc82f23e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &649445680
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,7 +463,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 9004603084459824026}
+  m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -899,11 +877,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276500fbaae6b3f41acdc4c465b4c625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1889710949}
+  player: {fileID: 0}
   objectPoolingManager: {fileID: 1335847024}
   sceneController: {fileID: 1335847027}
-  leftHandLineVisual: {fileID: 541393152}
-  rightHandLineVisual: {fileID: 335008198}
+  leftHandLineVisual: {fileID: 0}
+  rightHandLineVisual: {fileID: 0}
   gameServices: {fileID: 1335847028}
 --- !u!4 &1335847026
 Transform:
@@ -934,6 +912,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiController: {fileID: 1895648073}
+  _currentScene: 
+  Host: 1
+  _networkManager: {fileID: 649445682}
 --- !u!114 &1335847028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,17 +1239,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638717342}
   m_CullTransparentMesh: 1
---- !u!114 &1889710949 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7658481193799229613, guid: b817ca27284865d4cb819b85d7ec854b, type: 3}
-  m_PrefabInstance: {fileID: 9004603084459824025}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f97ebb20a54596f4c8c815e730d23963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1895648071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,12 +1569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9004603084993901201, guid: b817ca27284865d4cb819b85d7ec854b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b817ca27284865d4cb819b85d7ec854b, type: 3}
---- !u!20 &9004603084459824026 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 9004603085421838058, guid: b817ca27284865d4cb819b85d7ec854b, type: 3}
-  m_PrefabInstance: {fileID: 9004603084459824025}
-  m_PrefabAsset: {fileID: 0}
