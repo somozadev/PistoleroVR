@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace General
 {
-    public class Player : NetworkBehaviour
+    public class Player : MonoBehaviour
     {
         [SerializeField] private MovementVR _movementVR;
         [SerializeField] private RigVR _rigVR;
@@ -15,7 +15,8 @@ namespace General
 
         private void OnEnable()
         {
-            GameManager.Instance.player = this;
+            if (GameManager.Instance != null)
+                GameManager.Instance.player = this;
         }
     }
 }
