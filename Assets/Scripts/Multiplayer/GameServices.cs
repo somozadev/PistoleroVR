@@ -17,7 +17,7 @@ namespace Multiplayer
         }
         private void SetupEvents()
         {
-            AuthenticationService.Instance.SignedIn += () => { _playerId = AuthenticationService.Instance.PlayerId; };
+            AuthenticationService.Instance.SignedIn += () => { _playerId = AuthenticationService.Instance.PlayerId; GameManager.Instance.cloudSaveManager.TryCloudSaveTest(_playerId); };
             AuthenticationService.Instance.SignInFailed += (err) => { Debug.Log(err.ToString()); };
             AuthenticationService.Instance.SignedOut += () => { _playerId = ""; };
             AuthenticationService.Instance.Expired += () => { Debug.Log("Session expired"); };

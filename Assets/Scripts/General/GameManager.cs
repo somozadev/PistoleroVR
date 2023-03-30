@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CloudServices;
 using General;
 using Multiplayer;
 using UnityEngine;
@@ -30,5 +31,6 @@ public class GameManager : MonoBehaviour
     public XRInteractorLineVisual leftHandLineVisual;
     public XRInteractorLineVisual rightHandLineVisual;
     public GameServices gameServices;
+    public CloudSaveManager cloudSaveManager;
 }
 
