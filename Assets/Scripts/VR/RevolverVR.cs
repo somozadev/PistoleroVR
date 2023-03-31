@@ -27,14 +27,10 @@ namespace VR
 
 
         private ObjectPooling _bulletsPooling;
-        private XRInteractorLineVisual _leftHandLineVisual;
-        private XRInteractorLineVisual _rightHandLineVisual;
 
         private void Awake()
         {
             _interactable = GetComponent<XRGrabInteractable>();
-            _leftHandLineVisual = GameManager.Instance.leftHandLineVisual;
-            _rightHandLineVisual = GameManager.Instance.leftHandLineVisual;
             _bulletsText = GetComponentInChildren<TMP_Text>();
             _interactable.activated.AddListener(PerformShoot);
             _bulletsPooling =
@@ -111,22 +107,8 @@ namespace VR
                 bullet._trail.transform.position = end;
             }
         }
-
-        private void HideLineVisuals()
-        {
-            _leftHandLineVisual.enabled = false;
-            _rightHandLineVisual.enabled = false;
-        }
-
-        private void UnHideLineVisuals()
-        {
-            _leftHandLineVisual.enabled = true;
-            _rightHandLineVisual.enabled = true;
-        }
-
         private void Shoot()
         {
-            HideLineVisuals();
             Vector3 velocity = _raycastOrigin.forward.normalized * _bulletSpeed;
 
             BulletVR bullet = _bulletsPooling.GetPooledElement().GetComponent<BulletVR>();
@@ -136,7 +118,6 @@ namespace VR
             currentBullets--;
             UpdateText();
             _muzzleParticles.Emit(1);
-            UnHideLineVisuals();
         }
 
         private bool CheckForForce(GameObject hitObject, Vector3 hitPosition, Vector3 direction)

@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour
     public SceneController sceneController;
     
     //todo -> player script with instance here and references for this 2 there. Olso make controllers to lock player movement or head rotation or lineInteractors (needed 4 loading scene )
-    public XRInteractorLineVisual leftHandLineVisual;
-    public XRInteractorLineVisual rightHandLineVisual;
-    public GameServices gameServices;
+   public GameServices gameServices;
 }
 

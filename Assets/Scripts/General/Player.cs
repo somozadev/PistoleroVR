@@ -1,6 +1,7 @@
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace General
@@ -10,13 +11,25 @@ namespace General
         [SerializeField] private MovementVR _movementVR;
         [SerializeField] private RigVR _rigVR;
         [SerializeField] private CharacterCustomization _characterCustomization;
-        [SerializeField] private ActionBasedController _leftHand;
-        [SerializeField] private ActionBasedController _rightHand;
+        [SerializeField] private XRInteractorLineVisual _leftHand;
+        [SerializeField] private XRInteractorLineVisual _rightHand;
+
+        private void Awake()
+        {
+            _movementVR = GetComponentInChildren<MovementVR>();
+            _rigVR = GetComponentInChildren<RigVR>();
+            _characterCustomization = GetComponent<CharacterCustomization>();
+            _leftHand = GetComponentsInChildren<XRInteractorLineVisual>()[1];
+            _rightHand = GetComponentsInChildren<XRInteractorLineVisual>()[0];
+        }
 
         private void OnEnable()
         {
             if (GameManager.Instance != null)
+            {
                 GameManager.Instance.player = this;
+            }
         }
+
     }
 }

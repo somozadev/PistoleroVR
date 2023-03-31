@@ -11,7 +11,7 @@ public class MovementVR : LocomotionProvider
     [Header("Network variables")] [SerializeField]
     private bool IsOwner;
 
-    [SerializeField] private bool enableInput;
+    [SerializeField] public bool enableInput;
 
     [Header("Control movement status")] [SerializeField]
     private bool canMove;
@@ -41,7 +41,7 @@ public class MovementVR : LocomotionProvider
     {
         // this.IsOwner = GetComponentInParent<Player>().IsOwner;
     }
-
+    
     /// <summary>
     /// Unity reads the value on action performed by the left hand. provided by <see cref="InputActionProperty"/>
     /// </summary>
@@ -112,7 +112,7 @@ public class MovementVR : LocomotionProvider
     private void DisplacementRigControl()
     {
         // transform.position =_characterRig.position;
-        Debug.Log(Vector3.Distance(_cameraVR.position, transform.position));
+        // Debug.Log(Vector3.Distance(_cameraVR.position, transform.position));
     }
 
     /// <summary>
