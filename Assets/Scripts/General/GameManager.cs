@@ -7,30 +7,40 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class GameManager : MonoBehaviour
+namespace General
 {
-    #region Singleton
-    private static GameManager instance;
-    public static GameManager Instance { get { return instance; } }
-    void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (instance == null)
-            instance = this;
-        else
-            Destroy(this);
-        DontDestroyOnLoad(gameObject);
+        #region Singleton
+
+        private static GameManager instance;
+
+        public static GameManager Instance
+        {
+            get { return instance; }
+        }
+
+        void Awake()
+        {
+            if (instance == null)
+                instance = this;
+            else
+                Destroy(this);
+            DontDestroyOnLoad(gameObject);
+        }
+
+        #endregion
+
+
+        public Player player;
+        public ObjectPoolingManager objectPoolingManager;
+        public SceneController sceneController;
+
+        //todo -> player script with instance here and references for this 2 there. Olso make controllers to lock player movement or head rotation or lineInteractors (needed 4 loading scene )
+        public XRInteractorLineVisual leftHandLineVisual;
+        public XRInteractorLineVisual rightHandLineVisual;
+        public GameServices gameServices;
+        public CloudSaveManager cloudSaveManager;
+        public EventManager eventManager;
     }
-    #endregion
-
-
-    public Player player;
-    public ObjectPoolingManager objectPoolingManager;
-    public SceneController sceneController;
-    
-    //todo -> player script with instance here and references for this 2 there. Olso make controllers to lock player movement or head rotation or lineInteractors (needed 4 loading scene )
-    public XRInteractorLineVisual leftHandLineVisual;
-    public XRInteractorLineVisual rightHandLineVisual;
-    public GameServices gameServices;
-    public CloudSaveManager cloudSaveManager;
 }
-

@@ -112,7 +112,7 @@ public class MovementVR : LocomotionProvider
     private void DisplacementRigControl()
     {
         // transform.position =_characterRig.position;
-        Debug.Log(Vector3.Distance(_cameraVR.position, transform.position));
+        // Debug.Log(Vector3.Distance(_cameraVR.position, transform.position));
     }
 
     /// <summary>
