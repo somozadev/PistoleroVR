@@ -22,6 +22,17 @@ namespace General
             await Task.Delay(1000);
         }
 
+        public async Task LoadingScene(AsyncOperation asyncLoad, Task signInAnon)
+        {
+            do
+            {
+                await Task.Delay(3000);
+                _target = asyncLoad.progress;
+            } while (asyncLoad.progress < 0.9f && !signInAnon.IsCompletedSuccessfully);
+
+            await Task.Delay(1000);
+        }
+
         public void LoadingSceneStart()
         {
             enabled = true;
