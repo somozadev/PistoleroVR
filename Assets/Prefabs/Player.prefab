@@ -852,8 +852,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b822e59f6ffd4c5a9007b30da9b66d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lineVisual: {fileID: 0}
-  _rayInteractor: {fileID: 0}
+  _lineVisual: {fileID: 6758360391761136711}
+  _rayInteractor: {fileID: 6758360391761136712}
 --- !u!1 &9004603084958355860
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,7 +896,6 @@ GameObject:
   - component: {fileID: 9004603084993901200}
   - component: {fileID: 7658481193799229613}
   - component: {fileID: 3835117216272610418}
-  - component: {fileID: 1149844714}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -935,11 +934,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97ebb20a54596f4c8c815e730d23963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementVR: {fileID: 6758360393539142128}
+  _movementVR: {fileID: 5766788284774994559}
   _rigVR: {fileID: 154615349241291659}
   _characterCustomization: {fileID: 3835117216272610418}
-  _leftHand: {fileID: 0}
-  _rightHand: {fileID: 0}
+  _leftHand: {fileID: 6758360391761136711}
+  _rightHand: {fileID: 6758360392771796743}
 --- !u!114 &3835117216272610418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -958,21 +957,6 @@ MonoBehaviour:
   - {fileID: 8086124197516003490}
   - {fileID: 8086124199164653568}
   currentHat: {fileID: 0}
---- !u!114 &1149844714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9004603084993901201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6bf904e410ee8479f9093d8830d1f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_LocomotionProvider: {fileID: 0}
-  m_MinHeight: 0
-  m_MaxHeight: Infinity
 --- !u!1 &9004603085403277312
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,12 +966,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9004603085403277314}
-  - component: {fileID: 6758360393539142128}
   - component: {fileID: 9004603085403277317}
   - component: {fileID: 6758360393539142143}
   - component: {fileID: 6758360393539142142}
   - component: {fileID: 6758360393539142129}
   - component: {fileID: 1699255921}
+  - component: {fileID: 5766788284774994559}
   m_Layer: 9
   m_Name: VR Rig
   m_TagString: Untagged
@@ -1013,57 +997,6 @@ Transform:
   m_Father: {fileID: 9004603084993901200}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6758360393539142128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9004603085403277312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 381d11f13a975fe44b4e34184ce0efab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_System: {fileID: 6758360393539142129}
-  IsOwner: 0
-  enableInput: 1
-  canMove: 1
-  canRotate: 1
-  speed: 120
-  rotSpeed: 60
-  drag: 40
-  _leftHandMoveAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Left Hand Move
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: b5133d3e-75d5-4c4f-b0ea-2ed63d8cf903
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  _rightHandMoveAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Right Hand Move
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 7721293d-1efc-4740-986f-416af4d36d8a
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  _moveRb: {fileID: 6758360393539142142}
-  _lookRb: {fileID: 4024133092246834545}
-  _characterRig: {fileID: 154615349241291663}
-  _cameraHolder: {fileID: 9004603086334655315}
-  _cameraVR: {fileID: 9004603085421838061}
-  _orientationTrf: {fileID: 637855629068507074}
-  _pivotCamTrf: {fileID: 9004603084958355863}
 --- !u!114 &9004603085403277317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1140,9 +1073,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minHeight: 0.8
   _maxHeight: 2
-  _locomotionProvider: {fileID: 6758360393539142128}
+  _locomotionProvider: {fileID: 0}
   _xROrigin: {fileID: 6758360393539142143}
   _playerCollider: {fileID: 6758360391631007884}
+--- !u!114 &5766788284774994559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9004603085403277312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381d11f13a975fe44b4e34184ce0efab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_System: {fileID: 6758360393539142129}
+  canMove: 1
+  canRotate: 1
+  speed: 120
+  rotSpeed: 60
+  drag: 40
+  _leftHandMoveAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Left Hand Move
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 5adb38dd-ebee-4896-977d-bdf722024078
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  _rightHandMoveAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Right Hand Move
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: b56f5f58-190c-4eaa-9ce6-b5a9cbeedf58
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  _moveRb: {fileID: 6758360393539142142}
+  _lookRb: {fileID: 4024133092246834545}
+  _characterRig: {fileID: 154615349241291663}
+  _cameraHolder: {fileID: 9004603086334655315}
+  _cameraVR: {fileID: 9004603085421838061}
+  _orientationTrf: {fileID: 637855629068507074}
+  _pivotCamTrf: {fileID: 9004603084958355863}
 --- !u!1 &9004603085421838056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,8 +1903,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b822e59f6ffd4c5a9007b30da9b66d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lineVisual: {fileID: 0}
-  _rayInteractor: {fileID: 0}
+  _lineVisual: {fileID: 6758360392771796743}
+  _rayInteractor: {fileID: 6758360392771796737}
 --- !u!1 &9004603086334655312
 GameObject:
   m_ObjectHideFlags: 0

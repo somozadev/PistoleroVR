@@ -5,14 +5,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 using Unity.Netcode;
+using Player = Unity.Services.Lobbies.Models.Player;
 
 public class MovementVR : LocomotionProvider
 {
-    [Header("Network variables")] [SerializeField]
-    private bool IsOwner;
-
-    [SerializeField] public bool enableInput;
-
     [Header("Control movement status")] [SerializeField]
     private bool canMove;
 
@@ -36,27 +32,29 @@ public class MovementVR : LocomotionProvider
     [SerializeField] private Transform _orientationTrf;
     [SerializeField] private Transform _pivotCamTrf;
 
-
     private void Start()
     {
-        // this.IsOwner = GetComponentInParent<Player>().IsOwner;
+        GameManager.Instance.onGameManagerLoaded.AddListener(() =>
+        {
+            if (GameManager.Instance != null &&
+                !GameManager.Instance.players.Contains(GetComponentInParent<General.Player>()))
+                GameManager.Instance.players.Add(GetComponentInParent<General.Player>());
+        });
     }
-    
+
     /// <summary>
     /// Unity reads the value on action performed by the left hand. provided by <see cref="InputActionProperty"/>
     /// </summary>
-    private Vector2 ReadInputLeftHand()
+    protected virtual Vector2 ReadInputLeftHand()
     {
-        if (!enableInput) return Vector2.zero;
         return _leftHandMoveAction.action?.ReadValue<Vector2>() ?? Vector2.zero;
     }
 
     /// <summary>
     /// Unity reads the value on action performed by the right hand. provided by <see cref="InputActionProperty"/>
     /// </summary>
-    private Vector2 ReadInputRightHand()
+    protected virtual Vector2 ReadInputRightHand()
     {
-        if (!enableInput) return Vector2.zero;
         return _rightHandMoveAction.action?.ReadValue<Vector2>() ?? Vector2.zero;
     }
 
@@ -65,18 +63,29 @@ public class MovementVR : LocomotionProvider
     /// </summary>
     private void OnEnable()
     {
+        BeginLocomotion();
         Drag();
         _leftHandMoveAction.EnableDirectAction();
         _rightHandMoveAction.EnableDirectAction();
     }
+
 
     /// <summary>
     /// When the gameobject gets disabled, disables both hands <see cref="InputActionProperty"/> to perform actions.
     /// </summary>
     private void OnDisable()
     {
+        if (GameManager.Instance != null &&
+            GameManager.Instance.players.Contains(GetComponentInParent<General.Player>()))
+            GameManager.Instance.players.Remove(GetComponentInParent<General.Player>());
         _leftHandMoveAction.DisableDirectAction();
         _rightHandMoveAction.DisableDirectAction();
+        EndLocomotion();
+    }
+
+    private void OnDestroy()
+    {
+        OnDisable();
     }
 
     /// <summary>

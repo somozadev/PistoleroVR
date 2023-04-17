@@ -1,8 +1,10 @@
 using Unity.Netcode;
 using Unity.Netcode.Components;
+using UnityEngine;
 
 namespace Multiplayer
 {
+    [DisallowMultipleComponent]
     public class ClientNetworkTransform : NetworkTransform
     {
         public override void OnNetworkSpawn()
@@ -10,7 +12,10 @@ namespace Multiplayer
             base.OnNetworkSpawn();
             CanCommitToTransform = IsOwner;
         }
-
+        protected override bool OnIsServerAuthoritative()
+        {
+            return false;
+        }
         protected override void Update()
         {
             base.Update();

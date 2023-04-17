@@ -23,13 +23,5 @@ namespace General
             _rightHand = GetComponentsInChildren<XRInteractorLineVisual>()[0];
         }
 
-        private void OnEnable()
-        {
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.player = this;
-            }
-        }
-
     }
 }

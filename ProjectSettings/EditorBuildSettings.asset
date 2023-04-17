@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Enviroments/E_StartScene.unity
     guid: b4ea8d19ac90f59488c9daaca9fe5fe1
+  - enabled: 1
+    path: Assets/Scenes/Testing/TestingMultiplayer.unity
+    guid: 75aa5b9030a3d8745ba60b7b06d3f3aa
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: ed65d364c18f4ac459e84f075ca72bf7, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 112b655edaa0c804f9079d81d57265fe, type: 2}

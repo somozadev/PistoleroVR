@@ -53,16 +53,16 @@ namespace Multiplayer
         {
             if (IsClient && !IsOwner)
             {
-                var movementVR = GetComponentInChildren<MovementVR>();
+                var multiplayerMovementVR = GetComponentInChildren<MultiplayerMovementVR>();
                 var clientControllers = GetComponentsInChildren<ActionBasedController>();
                 var clientHead = GetComponentInChildren<TrackedPoseDriver>();
                 var clientCamera = GetComponentInChildren<Camera>();
-                var clientRig = GetComponentInChildren<RigVR>();
-
+                
+                
                 clientCamera.enabled = false;
+                multiplayerMovementVR.EnableInputActions = false;
                 clientHead.enabled = false;
-                movementVR.enableInput = false;
-                // clientRig.enabled = false;
+                
                 foreach (var clientController in clientControllers)
                 {
                     clientController.enableInputActions = false;
