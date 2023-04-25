@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
+using VR;
 using Random = UnityEngine.Random;
 
 namespace Multiplayer
@@ -62,11 +63,11 @@ namespace Multiplayer
                 clientCamera.enabled = false;
                 multiplayerMovementVR.EnableInputActions = false;
                 clientHead.enabled = false;
-                
                 foreach (var clientController in clientControllers)
                 {
                     clientController.enableInputActions = false;
                     clientController.enableInputTracking = false;
+                    clientController.GetComponent<LineVisualRendererManager>().DisableIfNotOwner();
                 }
             }
         }

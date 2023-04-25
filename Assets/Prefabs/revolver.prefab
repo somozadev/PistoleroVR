@@ -208,7 +208,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3491398337546251803}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.4327231, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -372,9 +372,13 @@ MonoBehaviour:
   _muzzleParticles: {fileID: 4499901477326442104}
   _impactParticles: {fileID: 7473801760741121847}
   _raycastOrigin: {fileID: 4373727082947405820}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 1
   currentBullets: 6
   _bulletsText: {fileID: 4373727081710259504}
   _bulletPrefab: {fileID: 2065797238585798036, guid: 0dd36307b5bdad7459a410f8444cf299, type: 3}
+  _bulletsPooling: {fileID: 0}
 --- !u!114 &3491398337546251805
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -26,15 +26,14 @@ namespace VR
         [SerializeField] private GameObject _bulletPrefab;
 
 
-        private ObjectPooling _bulletsPooling;
+        [SerializeField] private ObjectPooling _bulletsPooling;
 
         private void Awake()
         {
             _interactable = GetComponent<XRGrabInteractable>();
             _bulletsText = GetComponentInChildren<TMP_Text>();
             _interactable.activated.AddListener(PerformShoot);
-            _bulletsPooling =
-                GameManager.Instance.objectPoolingManager.GetNewObjectPool("RevolverVRBullets", ref _bulletPrefab, 5);
+            _bulletsPooling = GameManager.Instance.objectPoolingManager.GetNewObjectPool("RevolverVRBullets", ref _bulletPrefab, 5);
         }
 
         private void Update()

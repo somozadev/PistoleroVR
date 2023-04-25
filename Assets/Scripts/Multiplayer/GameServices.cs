@@ -9,12 +9,16 @@ namespace Multiplayer
     public class GameServices : MonoBehaviour
     {
         public string _playerId;
-        private async void Awake()
-        {
-            await UnityServices.InitializeAsync();
-            SetupEvents();
 
+        private void Awake()
+        {
+            GameManager.Instance.onGameManagerLoaded.AddListener(async () =>
+            {   Debug.Log("Waiting to init unity services");
+                await UnityServices.InitializeAsync();
+                SetupEvents();
+            });
         }
+
         private void SetupEvents()
         {
             AuthenticationService.Instance.SignedIn += () => { _playerId = AuthenticationService.Instance.PlayerId; };
