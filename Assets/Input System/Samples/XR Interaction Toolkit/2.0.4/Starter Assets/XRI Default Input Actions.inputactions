@@ -63,15 +63,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Rotation",
-                    "type": "Value",
-                    "id": "cb6b7130-2bac-4ef7-abe4-6991ae7d419d",
-                    "expectedControlType": "Quaternion",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Tracking State",
                     "type": "Value",
                     "id": "d20fc51c-7916-43a7-8b03-706049966aea",
@@ -91,50 +82,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "Quaternion Fallback",
-                    "id": "61466a56-4ee4-47b1-aa6a-4806de1de5f2",
-                    "path": "QuaternionFallback",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotation",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "first",
-                    "id": "afdcfbff-e241-4fdd-a6d1-23b0bf273360",
-                    "path": "<XRController>{LeftHand}/pointerRotation",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "second",
-                    "id": "ed03d944-4c09-4c38-8b68-5c844e18ca7c",
-                    "path": "<XRController>{LeftHand}/deviceRotation",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "third",
-                    "id": "c98fc8c8-7fc6-4909-89b6-c5b7568e7275",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Generic XR Controller",
-                    "action": "Rotation",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
                 {
                     "name": "Vector 3 Fallback",
                     "id": "14aeff85-d719-43ff-a124-b1cd7ca8686d",
@@ -1012,15 +959,6 @@
                     "name": "Turn",
                     "type": "Value",
                     "id": "9fb2eb2b-2fb6-4328-8167-10a1bf11b424",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Move",
-                    "type": "Value",
-                    "id": "00a4dc9f-1ee6-4349-b0e9-72d5dccaadd6",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
