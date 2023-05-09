@@ -5,14 +5,11 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 using Unity.Netcode;
+using Unity.XR.CoreUtils;
+using Player = Unity.Services.Lobbies.Models.Player;
 
 public class MovementVR : LocomotionProvider
 {
-    [Header("Network variables")] [SerializeField]
-    private bool IsOwner;
-
-    [SerializeField] private bool enableInput;
-
     [Header("Control movement status")] [SerializeField]
     private bool canMove;
 
@@ -29,34 +26,45 @@ public class MovementVR : LocomotionProvider
     [Header("Needed references")] [SerializeField]
     private Rigidbody _moveRb;
 
+    [SerializeField] private XROrigin _xrOrigin;
     [SerializeField] private Rigidbody _lookRb;
     [SerializeField] private Transform _characterRig;
     [SerializeField] private Transform _cameraHolder;
     [SerializeField] private Transform _cameraVR;
     [SerializeField] private Transform _orientationTrf;
     [SerializeField] private Transform _pivotCamTrf;
-
+    protected override void Awake()
+    {
+        _xrOrigin = GetComponentInParent<XROrigin>();
+        BeginLocomotion();
+        _leftHandMoveAction.EnableDirectAction();
+        _rightHandMoveAction.EnableDirectAction();
+    }
 
     private void Start()
     {
-        // this.IsOwner = GetComponentInParent<Player>().IsOwner;
+        if(GameManager.Instance == null) return;
+        GameManager.Instance.onGameManagerLoaded.AddListener(() =>
+        {
+            if (GameManager.Instance != null &&
+                !GameManager.Instance.players.Contains(GetComponentInParent<General.Player>()))
+                GameManager.Instance.players.Add(GetComponentInParent<General.Player>());
+        });
     }
 
     /// <summary>
     /// Unity reads the value on action performed by the left hand. provided by <see cref="InputActionProperty"/>
     /// </summary>
-    private Vector2 ReadInputLeftHand()
+    protected virtual Vector2 ReadInputLeftHand()
     {
-        if (!enableInput) return Vector2.zero;
         return _leftHandMoveAction.action?.ReadValue<Vector2>() ?? Vector2.zero;
     }
 
     /// <summary>
     /// Unity reads the value on action performed by the right hand. provided by <see cref="InputActionProperty"/>
     /// </summary>
-    private Vector2 ReadInputRightHand()
+    protected virtual Vector2 ReadInputRightHand()
     {
-        if (!enableInput) return Vector2.zero;
         return _rightHandMoveAction.action?.ReadValue<Vector2>() ?? Vector2.zero;
     }
 
@@ -66,17 +74,25 @@ public class MovementVR : LocomotionProvider
     private void OnEnable()
     {
         Drag();
-        _leftHandMoveAction.EnableDirectAction();
-        _rightHandMoveAction.EnableDirectAction();
     }
+
 
     /// <summary>
     /// When the gameobject gets disabled, disables both hands <see cref="InputActionProperty"/> to perform actions.
     /// </summary>
     private void OnDisable()
     {
+        if (GameManager.Instance != null &&
+            GameManager.Instance.players.Contains(GetComponentInParent<General.Player>()))
+            GameManager.Instance.players.Remove(GetComponentInParent<General.Player>());
         _leftHandMoveAction.DisableDirectAction();
         _rightHandMoveAction.DisableDirectAction();
+        EndLocomotion();
+    }
+
+    private void OnDestroy()
+    {
+        OnDisable();
     }
 
     /// <summary>
@@ -90,7 +106,6 @@ public class MovementVR : LocomotionProvider
     /// <param name="translationInWorldSpace"> Desired direction of the movement </param>
     protected void FixedUpdate()
     {
-        // if()
         var inputL = ReadInputLeftHand();
         var inputR = ReadInputRightHand();
         var translationInWorldSpace = ComputeDesiredDirection(inputL);
@@ -103,23 +118,14 @@ public class MovementVR : LocomotionProvider
     /// </summary>
     private void Update()
     {
-        // if(!IsOwner)
-        //     return;
         SpeedControl();
-        DisplacementRigControl();
-    }
-
-    private void DisplacementRigControl()
-    {
-        // transform.position =_characterRig.position;
-        // Debug.Log(Vector3.Distance(_cameraVR.position, transform.position));
     }
 
     /// <summary>
     /// Sets <see cref="_cameraHolder"/> position to follow <see cref="_pivotCamTrf"/> position, due the fact that camera is outside the
     /// gameobject in charge of movement (its rigidbody).
     /// </summary>
-    private void MoveCam()
+    protected virtual void MoveCam()
     {
         _cameraHolder.position = _pivotCamTrf.position;
     }
@@ -130,8 +136,9 @@ public class MovementVR : LocomotionProvider
     /// In other words, sets the orientation gameobject to the camera looking orientation on the Y axis. 
     /// </summary>
     ///<param name="localEulerAngles"> stores the vector3 of the localEulerAngles of the <see cref="_orientationTrf"/></param>
-    private void SetOrientationWithCam()
+    protected virtual void SetOrientationWithCam()
     {
+        
         var localEulerAngles = _orientationTrf.localEulerAngles;
         var rotation = _orientationTrf.rotation;
         rotation = Quaternion.Euler(localEulerAngles.x,
@@ -160,7 +167,7 @@ public class MovementVR : LocomotionProvider
             rotSpeedFinal = Mathf.Abs(rotSpeedFinal);
         else
             return;
-        _cameraHolder.Rotate(Vector3.up * (Time.fixedDeltaTime * rotSpeedFinal));
+        _xrOrigin.RotateAroundCameraUsingOriginUp(Time.fixedDeltaTime * rotSpeedFinal);
     }
 
     /// <summary>

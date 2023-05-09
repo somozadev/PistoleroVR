@@ -1,17 +1,14 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-
 namespace General
 {
-    public class EventManager : MonoBehaviour
+    public static class EventManager
     {
-        public delegate void AuthCompleted();
-        public delegate void AuthFailed();
+        public delegate void OnLoadingEndsEventHandler();
 
-        public event AuthCompleted OnAuthCompleted;
-        public event AuthFailed OnAuthFailed;
-        public void InvokeOnAuthCompleted(){OnAuthCompleted?.Invoke();}
-        public void InvokeOnAuthFailed(){OnAuthFailed?.Invoke();}
-        
+        public static event OnLoadingEndsEventHandler LoadingEnds;
+
+        public static void OnLoadingEnds()
+        {
+            LoadingEnds?.Invoke();
+        }
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace General.UI_StartScene
@@ -7,5 +9,21 @@ namespace General.UI_StartScene
     {
         [SerializeField] private Button _joinSinglePlayer;
 
+
+        private void OnEnable()
+        {
+            _joinSinglePlayer.onClick.AddListener(LoadSinglePLayerScene);
+        }
+
+        private void OnDisable()
+        {
+            _joinSinglePlayer.onClick.RemoveListener(LoadSinglePLayerScene);
+        }
+
+    [ContextMenu("singleplayer")]
+        private void LoadSinglePLayerScene()
+        {
+            GameManager.Instance.sceneController.LoadScene("E_SinglePlayerScene", LoadSceneMode.Single);
+        }
     }
 }

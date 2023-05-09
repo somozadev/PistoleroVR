@@ -1,5 +1,8 @@
 using System;
+using System.Threading.Tasks;
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace General.UI_StartScene
@@ -17,12 +20,26 @@ namespace General.UI_StartScene
         [SerializeField] private GameObject _FindGameInnerCanvas;
         [SerializeField] private GameObject _CreateGameInnerCanvas;
 
-        private void Awake()
+        private void OnEnable()
         {
             SetupButtonEvents();
         }
 
+        private void OnDisable()
+        {
+            UnSetupButtonEvents();
+        }
+
         #region ButtonTransitionsMethods
+
+        private void UnSetupButtonEvents()
+        {
+            _JoinGame.onClick.RemoveListener(JoinGameUI);
+            _FindGame.onClick.RemoveListener(FindGameUI);
+            _CreateGame.onClick.RemoveListener(CreateGameUI);
+            foreach (Button backButton in _backButtons)
+                backButton.onClick.RemoveListener(BackToMainCanvas);
+        }
 
         private void SetupButtonEvents()
         {
@@ -35,14 +52,16 @@ namespace General.UI_StartScene
 
         private void JoinGameUI()
         {
-            _MainInnerCanvas.SetActive(true);
-            _JoinGameInnerCanvas.SetActive(true);
+            // _MainInnerCanvas.SetActive(false);
+            // _JoinGameInnerCanvas.SetActive(true);
+            DebuggingMultiplayerJoin();
         }
 
         private void CreateGameUI()
         {
-            _MainInnerCanvas.SetActive(false);
-            _CreateGameInnerCanvas.SetActive(true);
+            // _MainInnerCanvas.SetActive(false);
+            // _CreateGameInnerCanvas.SetActive(true);
+            DebuggingMultiplayer();
         }
 
         private void FindGameUI()
@@ -60,5 +79,19 @@ namespace General.UI_StartScene
         }
 
         #endregion
+
+        private void DebuggingMultiplayer()
+        {
+            GameManager.Instance.sceneController.LoadScene("TestingMultiplayer", LoadSceneMode.Single);
+            GameManager.Instance.players.TrimExcess();
+            GameManager.Instance.IsHost = true;
+        }
+
+        private void DebuggingMultiplayerJoin()
+        {
+            GameManager.Instance.sceneController.LoadScene("TestingMultiplayer", LoadSceneMode.Single);
+            GameManager.Instance.players.TrimExcess();
+            GameManager.Instance.IsHost = false;
+        }
     }
 }

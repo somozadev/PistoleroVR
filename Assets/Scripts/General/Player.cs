@@ -1,7 +1,7 @@
 using System;
-using CloudServices;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace General
@@ -11,25 +11,17 @@ namespace General
         [SerializeField] private MovementVR _movementVR;
         [SerializeField] private RigVR _rigVR;
         [SerializeField] private CharacterCustomization _characterCustomization;
-        [SerializeField] private ActionBasedController _leftHand;
-        [SerializeField] private ActionBasedController _rightHand;
-        [SerializeField] private PlayerSaveData _playerData;
+        [SerializeField] private XRInteractorLineVisual _leftHand;
+        [SerializeField] private XRInteractorLineVisual _rightHand;
 
-        private  void Start()
+        private void Awake()
         {
-            GameManager.Instance.eventManager.OnAuthCompleted += GetPlayerDataFromCloud;
-        }
+            _movementVR = GetComponentInChildren<MovementVR>();
+            _rigVR = GetComponentInChildren<RigVR>();
+            _characterCustomization = GetComponent<CharacterCustomization>();
+            _leftHand = GetComponentsInChildren<XRInteractorLineVisual>()[1];
+            _rightHand = GetComponentsInChildren<XRInteractorLineVisual>()[0];
+        }       
 
-        private async void GetPlayerDataFromCloud()
-        {
-            await GameManager.Instance.cloudSaveManager.CheckIfUserHasData(GameManager.Instance.gameServices._playerId);
-            
-            _playerData = await GameManager.Instance.cloudSaveManager.LoadFromCloud(GameManager.Instance.gameServices._playerId);
-        }
-        private void OnEnable()
-        {
-            if (GameManager.Instance != null)
-                GameManager.Instance.player = this;
-        }
     }
 }
