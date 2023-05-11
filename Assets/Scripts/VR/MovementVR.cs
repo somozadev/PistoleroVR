@@ -33,6 +33,7 @@ public class MovementVR : LocomotionProvider
     [SerializeField] private Transform _cameraVR;
     [SerializeField] private Transform _orientationTrf;
     [SerializeField] private Transform _pivotCamTrf;
+
     protected override void Awake()
     {
         _xrOrigin = GetComponentInParent<XROrigin>();
@@ -43,13 +44,11 @@ public class MovementVR : LocomotionProvider
 
     private void Start()
     {
-        if(GameManager.Instance == null) return;
-        GameManager.Instance.onGameManagerLoaded.AddListener(() =>
-        {
-            if (GameManager.Instance != null &&
-                !GameManager.Instance.players.Contains(GetComponentInParent<General.Player>()))
-                GameManager.Instance.players.Add(GetComponentInParent<General.Player>());
-        });
+        if (GameManager.Instance == null) return;
+
+        if (
+            !GameManager.Instance.players.Contains(GetComponentInParent<General.Player>()))
+            GameManager.Instance.players.Add(GetComponentInParent<General.Player>());
     }
 
     /// <summary>
@@ -138,7 +137,6 @@ public class MovementVR : LocomotionProvider
     ///<param name="localEulerAngles"> stores the vector3 of the localEulerAngles of the <see cref="_orientationTrf"/></param>
     protected virtual void SetOrientationWithCam()
     {
-        
         var localEulerAngles = _orientationTrf.localEulerAngles;
         var rotation = _orientationTrf.rotation;
         rotation = Quaternion.Euler(localEulerAngles.x,

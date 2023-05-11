@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,18 +11,22 @@ namespace General
         [SerializeField] private UiController _uiController;
         [SerializeField] private string _currentScene;
 
-        private void Awake()
+        private void OnValidate()
+        {
+            if (_uiController == null)
+                _uiController = FindObjectOfType<UiController>();
+        }
+
+        private async void Start()
         {
             // if (SceneManager.GetActiveScene().name != SceneNames.Essentials)
             //     await LoadScene(SceneNames.Essentials, LoadSceneMode.Single);
             // await LoadScene(SceneNames.StartScene, LoadSceneMode.Additive);
 
-            GameManager.Instance.onGameManagerLoaded.AddListener(async() =>
-            {
+            await Task.Delay(100);
                 // LoadScene("LoadingScene", LoadSceneMode.Additive);
                 await _uiController.LoadingScene(GameManager.Instance.gameServices.SignInAnon());
-
-            });
+                
         }
 
         // public void LoadScene(string sceneName, LoadSceneMode loadSceneMode)

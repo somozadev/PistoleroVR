@@ -1,3 +1,4 @@
+using System.Linq;
 using General;
 using General.Damageable;
 using TMPro;
@@ -28,12 +29,33 @@ namespace VR
 
         [SerializeField] private ObjectPooling _bulletsPooling;
 
-        private void Awake()
+        [SerializeField] private bool gunBought;
+        [SerializeField] private int price;
+        [SerializeField] private Vector3 startPos;
+        [SerializeField] private Quaternion startRot;
+
+        private void Start()
         {
             _interactable = GetComponent<XRGrabInteractable>();
             _bulletsText = GetComponentInChildren<TMP_Text>();
+
+            if (GetComponentInParent<ShopInstance>() != null)
+            {
+                price = GetComponentInParent<ShopInstance>().ShopItem.GetPrice;
+                _interactable.selectEntered.AddListener(PerformBuy);
+                _interactable.selectExited.AddListener(DropItem);
+                _interactable.hoverEntered.AddListener(IsHovered);
+                _interactable.hoverExited.AddListener(IsHoveredExit);
+            }
+
             _interactable.activated.AddListener(PerformShoot);
-            _bulletsPooling = GameManager.Instance.objectPoolingManager.GetNewObjectPool("RevolverVRBullets", ref _bulletPrefab, 5);
+
+
+            startPos = transform.localPosition;
+            startRot = transform.localRotation;
+
+            _bulletsPooling =
+                GameManager.Instance.objectPoolingManager.GetNewObjectPool("RevolverVRBullets", ref _bulletPrefab, 5);
         }
 
         private void Update()
@@ -58,6 +80,58 @@ namespace VR
         private void PerformShoot(ActivateEventArgs args) => Shoot();
 
 
+        private void IsHoveredExit(HoverExitEventArgs args)
+        {
+            if (gunBought) return;
+            _interactable.interactionLayers = 2;
+        }
+
+        private void PerformBuy(SelectEnterEventArgs args)
+        {
+            if (gunBought) return;
+            if (GameManager.Instance.players.First().PlayerData._economy >= price)
+            {
+                GameManager.Instance.players.First().PlayerData.Buy(price);
+                gunBought = true;
+            }
+        }
+
+        private void DropItem(SelectExitEventArgs args)
+        {
+            if (gunBought)
+            {
+                _interactable.interactionLayers = 2;
+                GetComponent<Rigidbody>().isKinematic = false;
+                transform.parent = null;
+            }
+            else
+            {
+                transform.localPosition = startPos;
+                transform.localRotation = startRot;
+            }
+        }
+
+        private void IsHovered(HoverEnterEventArgs args)
+        {
+            if (gunBought) return;
+            int currentEconomy = GameManager.Instance.players.First().PlayerData._economy;
+            if (GetComponentInParent<ShopInstance>() != null)
+            {
+                int currentPrice = GetComponentInParent<ShopInstance>().ShopItem.GetPrice;
+
+                if (currentEconomy >= currentPrice)
+                {
+                    Debug.Log("ENOUGH MONEY");
+                    _interactable.interactionLayers = 2;
+                }
+                else
+                    _interactable.interactionLayers = 0;
+            }
+            else
+                _interactable.interactionLayers = 0;
+        }
+
+
         private Vector3 GetBulletWorldPosition(BulletVR bullet)
         {
             //p + v*t + 0.5*g*t*t
@@ -68,6 +142,7 @@ namespace VR
 
         private void MoveBulletVR()
         {
+            if(_bulletsPooling==null) return;
             _bulletsPooling.GetPool().ForEach(bullet =>
             {
                 if (!bullet.activeSelf) return;
@@ -106,6 +181,7 @@ namespace VR
                 bullet._trail.transform.position = end;
             }
         }
+
         private void Shoot()
         {
             Vector3 velocity = _raycastOrigin.forward.normalized * _bulletSpeed;
@@ -124,7 +200,7 @@ namespace VR
             bool hasRb = false;
             if (hitObject.TryGetComponent(out Rigidbody rb))
             {
-                rb.AddExplosionForce(1500f,hitPosition,0.2f);
+                rb.AddExplosionForce(1500f, hitPosition, 0.2f);
                 hasRb = true;
             }
 

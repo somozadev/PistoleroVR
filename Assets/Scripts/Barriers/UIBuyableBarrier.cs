@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using General;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,6 +18,7 @@ public class UIBuyableBarrier : MonoBehaviour
 
     private bool _currentlyInBarrier;
     private BuyableBarrier _currentBarrier;
+    private PlayerData _playerData;
 
     private void OnValidate()
     {
@@ -60,6 +63,13 @@ public class UIBuyableBarrier : MonoBehaviour
         if (_currentlyInBarrier)
         {
             Debug.Log(_currentBarrier.barrierPrice + " shall be payed!");
+            //
+            if (GameManager.Instance.players.First().PlayerData._economy >= _currentBarrier.barrierPrice)
+            {
+                GameManager.Instance.players.First().PlayerData.Buy(_currentBarrier.barrierPrice);
+                //unlock blocking objects!
+                gameObject.SetActive(false);
+            }
         }
     }
 

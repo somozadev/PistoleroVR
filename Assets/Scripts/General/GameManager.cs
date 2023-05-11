@@ -22,11 +22,9 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start() => onGameManagerLoaded?.Invoke();
 
     #endregion
 
-    public UnityEvent onGameManagerLoaded;
     public List<Player> players;
     public ObjectPoolingManager objectPoolingManager;
     public SceneController sceneController;

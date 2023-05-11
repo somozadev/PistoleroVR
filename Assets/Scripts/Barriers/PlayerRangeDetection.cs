@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using General;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerRangeDetection : MonoBehaviour
@@ -8,10 +9,13 @@ public class PlayerRangeDetection : MonoBehaviour
     [SerializeField] protected float range;
     [SerializeField] protected Color color;
     public FillType fillType;
+    
+    
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag.Equals("Player"))
             _playerEnterRange?.Invoke();
+        
     }
 
     protected virtual void OnTriggerExit(Collider other)
@@ -20,8 +24,6 @@ public class PlayerRangeDetection : MonoBehaviour
             _playerLeaveRange.Invoke();
     }
 
-
-    
     public void AddListenerPlayerEnter(UnityAction action){ _playerEnterRange.AddListener(action);}
     public void RemoveListenerPlayerEnter(UnityAction action){_playerEnterRange.RemoveListener(action);}
     public void AddListenerPLayerLeave(UnityAction action){_playerLeaveRange.AddListener(action);}

@@ -272,7 +272,7 @@ Transform:
   m_Children:
   - {fileID: 7628332032714741073}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4803093258084145256
 MonoBehaviour:
@@ -286,9 +286,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab210d149c44f898cb25f2664f44504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 0
-  color: {r: 0, g: 0, b: 0, a: 0}
-  _item: {fileID: 11400000, guid: 1cd1bce50c724684682bc9b261be0f62, type: 2}
+  _playerEnterRange:
+    m_PersistentCalls:
+      m_Calls: []
+  _playerLeaveRange:
+    m_PersistentCalls:
+      m_Calls: []
+  range: 5
+  color: {r: 0.72882366, g: 0, b: 1, a: 1}
+  fillType: 0
+  _item: {fileID: 11400000, guid: 4e16cd24f31f05f41acde7e029f71ba4, type: 2}
   _instantiatePivot: {fileID: 2465413544093247682}
   _initialPlacementPivot: {fileID: 2088721495178797710}
   _price: {fileID: 8855383770519168285}
@@ -445,7 +452,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: PRICE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0b40d01dfe998d64daaf1eb6c654414e, type: 2}
   m_sharedMaterial: {fileID: -1357318653060255954, guid: 0b40d01dfe998d64daaf1eb6c654414e, type: 2}
@@ -472,7 +479,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 11.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

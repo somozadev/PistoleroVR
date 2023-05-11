@@ -13,6 +13,7 @@ namespace General
         [SerializeField] private float _target;
         [SerializeField] private int _awaitingLoadingTime = 300;
 
+
         public async Task LoadingScene(AsyncOperation asyncLoad)
         {
             do
@@ -63,6 +64,7 @@ namespace General
 
         public void LoadingSceneStart()
         {
+            EventManager.OnLoadingStarts();
             enabled = true;
             _target = 0f;
             _loadingSlider.fillAmount = 0f;
