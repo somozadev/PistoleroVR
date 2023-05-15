@@ -29,6 +29,8 @@ namespace VR
         [SerializeField] private Transform _orientation;
         [SerializeField] private ObjectPooling _bulletsPooling;
 
+        [SerializeField] private bool isShopGun;
+
         [SerializeField] private bool gunBought;
         [SerializeField] private int price;
         [SerializeField] private Vector3 startPos;
@@ -41,15 +43,15 @@ namespace VR
 
             if (GetComponentInParent<ShopInstance>() != null)
             {
+                isShopGun = true;
                 price = GetComponentInParent<ShopInstance>().ShopItem.GetPrice;
-                _interactable.selectEntered.AddListener(PerformBuy);
-                _interactable.selectExited.AddListener(SelectExited);
-                _interactable.hoverEntered.AddListener(HoverEnter);
-                _interactable.hoverExited.AddListener(HoverExit);
             }
 
+            _interactable.selectEntered.AddListener(SelectEnter);
+            _interactable.selectExited.AddListener(SelectExit);
+            _interactable.hoverEntered.AddListener(HoverEnter);
+            _interactable.hoverExited.AddListener(HoverExit);
             _interactable.activated.AddListener(PerformShoot);
-
 
             startPos = transform.localPosition;
             startRot = transform.localRotation;
@@ -58,42 +60,102 @@ namespace VR
                 GameManager.Instance.objectPoolingManager.GetNewObjectPool("RevolverVRBullets", ref _bulletPrefab, 5);
         }
 
-        private void SelectEnter()
+        private void SelectEnter(SelectEnterEventArgs args)
         {
+            if (isShopGun)
+                GetGun();
+            else
+                BuyGun();
         }
 
         private void SelectExit(SelectExitEventArgs args)
-        {if (gunBought)
+        {
+            if (isShopGun)
+                if (gunBought)
+                    SendGunToHand();
+                else
+                    ResetGunPos();
+            else
+                ResetGunPos();
+        }
+
+
+        private void HoverEnter(HoverEnterEventArgs args)
+        {
+            if (gunBought) return;
+
+            if (isShopGun)
             {
-                _interactable.interactionLayers = 2;
-                GetComponent<Rigidbody>().isKinematic = false;
-                transform.parent = null;
+                SetInteractableLayerBasedOnPrice();
             }
             else
+                UnableInteractableLayer();
+        }
+
+        private void HoverExit(HoverExitEventArgs args)
+        {
+            if (gunBought) return;
+            ResetInteractableLayer();
+        }
+
+        #region SelectEnter
+
+        protected virtual void GetGun()
+        {
+            _orientation.rotation = Quaternion.Euler(0, -90, 0);
+        }
+
+        protected virtual void BuyGun()
+        {
+            if (GameManager.Instance.players.First().PlayerData._economy >= price)
             {
-                transform.localPosition = startPos;
-                transform.localRotation = startRot;
+                GameManager.Instance.players.First().PlayerData.Buy(price);
+                gunBought = true;
             }
         }
 
-        protected virtual void HoverEnter(HoverEnterEventArgs args)
+        #endregion
+
+        #region SelectExit
+
+        protected virtual void SendGunToHand()
         {
-            if (gunBought) return;
+            _interactable.interactionLayers = 2;
+            GetComponent<Rigidbody>().isKinematic = false;
+            transform.parent = null;
+        }
+
+        protected virtual void ResetGunPos()
+        {
+            transform.localPosition = startPos;
+            transform.localRotation = startRot;
+        }
+
+        #endregion
+
+        #region HoverEnter
+
+        protected virtual void SetInteractableLayerBasedOnPrice()
+        {
             var currentEconomy = GameManager.Instance.players.First().PlayerData._economy;
-            if (GetComponentInParent<ShopInstance>() != null)
-            {
-                var currentPrice = GetComponentInParent<ShopInstance>().ShopItem.GetPrice;
-                _interactable.interactionLayers = currentEconomy >= currentPrice ? 2 : 0;
-            }
-            else
-                _interactable.interactionLayers = 0;
+            var currentPrice = GetComponentInParent<ShopInstance>().ShopItem.GetPrice;
+            _interactable.interactionLayers = currentEconomy >= currentPrice ? 2 : 0;   
         }
 
-        protected virtual void HoverExit(HoverExitEventArgs args)
+        protected virtual void UnableInteractableLayer()
         {
-            if (gunBought) return;
+            _interactable.interactionLayers = 0;
+        }
+
+        #endregion
+
+        #region HoverExit
+
+        protected virtual void ResetInteractableLayer()
+        {
             _interactable.interactionLayers = 2;
         }
+        #endregion
 
         private void Update()
         {
@@ -115,28 +177,6 @@ namespace VR
         }
 
         private void PerformShoot(ActivateEventArgs args) => Shoot();
-
-
-
-        private void PerformBuy(SelectEnterEventArgs args)
-        {
-            if (gunBought)
-            {
-                _orientation.rotation = Quaternion.Euler(0, -90, 0);
-                Debug.Log("ENTER");
-                return;
-            }
-
-            if (GameManager.Instance.players.First().PlayerData._economy >= price)
-            {
-                GameManager.Instance.players.First().PlayerData.Buy(price);
-                gunBought = true;
-            }
-        }
-
-
-
-
 
         private Vector3 GetBulletWorldPosition(BulletVR bullet)
         {
@@ -224,6 +264,13 @@ namespace VR
         public void CallShootFromDebugger()
         {
             PerformShoot(null);
+        }
+
+        public enum ShootType
+        {
+            Single,
+            Burst,
+            Auto
         }
     }
 }

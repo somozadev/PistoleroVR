@@ -216,8 +216,8 @@ namespace VR
 
         private void CheckForDamage(GameObject hitObject)
         {
-            if (hitObject.TryGetComponent(out Damageable damageable))
-                damageable.Damage(this);
+            // if (hitObject.TryGetComponent(out Damageable damageable))
+                // damageable.Damage(this);
         }
 
         private void UpdateText() => _bulletsText.text = currentBullets.ToString();

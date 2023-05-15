@@ -10,7 +10,7 @@ namespace General.Damageable
             _health = 3; 
         }
 
-        public override void Damage(RevolverVR revolverVR)
+        public override void Damage(BaseGun baseGun)
         {
             _health -= _critDamage;
             //particle effect 

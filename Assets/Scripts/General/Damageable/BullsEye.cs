@@ -15,7 +15,7 @@ namespace General.Damageable
             _health = 1;
         }
 
-        public override void Damage(RevolverVR revolverVR)
+        public override void Damage(BaseGun baseGun)
         {
             _health -= 1;
 

@@ -21,7 +21,7 @@ namespace VR.ShootableItems
             // tag = "Damageable";
             _rb = GetComponent<Rigidbody>();
         }
-        public override void Damage(RevolverVR revolverVR)
+        public override void Damage(BaseGun baseGun)
         {
             StartCoroutine(RestockSelf());
         }
