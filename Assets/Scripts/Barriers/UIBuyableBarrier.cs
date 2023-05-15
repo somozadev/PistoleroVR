@@ -62,12 +62,10 @@ public class UIBuyableBarrier : MonoBehaviour
     {
         if (_currentlyInBarrier)
         {
-            Debug.Log(_currentBarrier.barrierPrice + " shall be payed!");
-            //
             if (GameManager.Instance.players.First().PlayerData._economy >= _currentBarrier.barrierPrice)
             {
                 GameManager.Instance.players.First().PlayerData.Buy(_currentBarrier.barrierPrice);
-                //unlock blocking objects!
+                _currentBarrier.Buy();
                 gameObject.SetActive(false);
             }
         }

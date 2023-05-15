@@ -1,19 +1,31 @@
 using System;
 using General;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 using Unity.Netcode;
 using Unity.XR.CoreUtils;
+using UnityEngine.Assertions;
 using Player = Unity.Services.Lobbies.Models.Player;
 
 public class MovementVR : LocomotionProvider
 {
+    public enum RotationType
+    {
+        Continuous,
+        Snap
+    }
+
     [Header("Control movement status")] [SerializeField]
     private bool canMove;
 
     [SerializeField] private bool canRotate;
+    [SerializeField] private RotationType rotationType;
+    [SerializeField] private float turnAmount = 45f;
+    [SerializeField] private bool readyToSnapTurn;
+
     [Header("Movement Variables")] public float speed;
     public float rotSpeed;
     public float drag;
@@ -27,6 +39,7 @@ public class MovementVR : LocomotionProvider
     private Rigidbody _moveRb;
 
     [SerializeField] private XROrigin _xrOrigin;
+    [SerializeField] private PlayerVignette _playerVignette;
     [SerializeField] private Rigidbody _lookRb;
     [SerializeField] private Transform _characterRig;
     [SerializeField] private Transform _cameraHolder;
@@ -34,12 +47,13 @@ public class MovementVR : LocomotionProvider
     [SerializeField] private Transform _orientationTrf;
     [SerializeField] private Transform _pivotCamTrf;
 
+
     protected override void Awake()
     {
         _xrOrigin = GetComponentInParent<XROrigin>();
         BeginLocomotion();
-        _leftHandMoveAction.EnableDirectAction();
-        _rightHandMoveAction.EnableDirectAction();
+        // _leftHandMoveAction.EnableDirectAction();
+        // _rightHandMoveAction.EnableDirectAction();
     }
 
     private void Start()
@@ -151,6 +165,12 @@ public class MovementVR : LocomotionProvider
     /// <param name="direction"> Desired direction of the movement</param>
     private void Move(Vector3 direction) => _moveRb.AddForce(direction, ForceMode.Force);
 
+    public void UpadteRotationType(RotationType type)
+    {
+        rotationType = type;
+    }
+
+
     /// <summary>
     /// Rotates the camera parent object <see cref="_cameraHolder"/> in the Y axis with a given speed.
     /// </summary>
@@ -167,6 +187,36 @@ public class MovementVR : LocomotionProvider
             return;
         _xrOrigin.RotateAroundCameraUsingOriginUp(Time.fixedDeltaTime * rotSpeedFinal);
     }
+
+    private void RotateSnapTurn(Vector2 inputRight)
+    {
+        if (inputRight.x > 0)
+        {
+            if (readyToSnapTurn)
+            {
+                _playerVignette.VignetteTurning(_playerVignette.RotationConfig);
+                readyToSnapTurn = false;
+                _xrOrigin.RotateAroundCameraUsingOriginUp(Mathf.Abs(turnAmount));
+                _playerVignette.VignetteTurning(_playerVignette.NormalConfig);
+            }
+        }
+        else if (inputRight.x < 0)
+        {
+            if (readyToSnapTurn)
+            {
+                _playerVignette.VignetteTurning(_playerVignette.RotationConfig);
+                readyToSnapTurn = false;
+                _xrOrigin.RotateAroundCameraUsingOriginUp(-turnAmount);
+                _playerVignette.VignetteTurning(_playerVignette.NormalConfig);
+            }
+        }
+        else
+        {
+            readyToSnapTurn = true;
+            Debug.Log(inputRight);
+        }
+    }
+
 
     /// <summary>
     /// Calculates the direction of the movement based on the <paramref name="inputRight"/> value and the <see cref="_orientationTrf"/> tranasform
@@ -221,7 +271,13 @@ public class MovementVR : LocomotionProvider
             if (canMove)
                 Move(translationInWorldSpace);
             if (canRotate)
-                Rotate(inputRight);
+            {
+                if (rotationType.Equals(RotationType.Continuous))
+                    Rotate(inputRight);
+                else
+                    RotateSnapTurn(inputRight);
+            }
+
             SetOrientationWithCam();
             MoveCam();
             EndLocomotion();

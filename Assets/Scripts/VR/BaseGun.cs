@@ -1,5 +1,4 @@
-using System;
-using System.Linq;
+﻿using System.Linq;
 using General;
 using General.Damageable;
 using TMPro;
@@ -9,16 +8,16 @@ using UnityEngine.XR.Interaction.Toolkit;
 namespace VR
 {
     [RequireComponent(typeof(XRGrabInteractable))]
-    public class RevolverVR : MonoBehaviour
+    public class BaseGun : MonoBehaviour
     {
         private XRGrabInteractable _interactable;
         [SerializeField] private float _bulletSpeed = 1000.0f;
         [SerializeField] private float _bulletDrop = 0.0f;
 
-
         [SerializeField] private ParticleSystem _muzzleParticles;
         [SerializeField] private ParticleSystem _impactParticles;
         [SerializeField] private Transform _raycastOrigin;
+
         private Ray _ray;
         private RaycastHit _hit;
         [SerializeField] private LayerMask _layerMask;
@@ -44,9 +43,9 @@ namespace VR
             {
                 price = GetComponentInParent<ShopInstance>().ShopItem.GetPrice;
                 _interactable.selectEntered.AddListener(PerformBuy);
-                _interactable.selectExited.AddListener(DropItem);
-                _interactable.hoverEntered.AddListener(IsHovered);
-                _interactable.hoverExited.AddListener(IsHoveredExit);
+                _interactable.selectExited.AddListener(SelectExited);
+                _interactable.hoverEntered.AddListener(HoverEnter);
+                _interactable.hoverExited.AddListener(HoverExit);
             }
 
             _interactable.activated.AddListener(PerformShoot);
@@ -57,6 +56,43 @@ namespace VR
 
             _bulletsPooling =
                 GameManager.Instance.objectPoolingManager.GetNewObjectPool("RevolverVRBullets", ref _bulletPrefab, 5);
+        }
+
+        private void SelectEnter()
+        {
+        }
+
+        private void SelectExit(SelectExitEventArgs args)
+        {if (gunBought)
+            {
+                _interactable.interactionLayers = 2;
+                GetComponent<Rigidbody>().isKinematic = false;
+                transform.parent = null;
+            }
+            else
+            {
+                transform.localPosition = startPos;
+                transform.localRotation = startRot;
+            }
+        }
+
+        protected virtual void HoverEnter(HoverEnterEventArgs args)
+        {
+            if (gunBought) return;
+            var currentEconomy = GameManager.Instance.players.First().PlayerData._economy;
+            if (GetComponentInParent<ShopInstance>() != null)
+            {
+                var currentPrice = GetComponentInParent<ShopInstance>().ShopItem.GetPrice;
+                _interactable.interactionLayers = currentEconomy >= currentPrice ? 2 : 0;
+            }
+            else
+                _interactable.interactionLayers = 0;
+        }
+
+        protected virtual void HoverExit(HoverExitEventArgs args)
+        {
+            if (gunBought) return;
+            _interactable.interactionLayers = 2;
         }
 
         private void Update()
@@ -81,11 +117,6 @@ namespace VR
         private void PerformShoot(ActivateEventArgs args) => Shoot();
 
 
-        private void IsHoveredExit(HoverExitEventArgs args)
-        {
-            if (gunBought) return;
-            _interactable.interactionLayers = 2;
-        }
 
         private void PerformBuy(SelectEnterEventArgs args)
         {
@@ -103,40 +134,8 @@ namespace VR
             }
         }
 
-        private void DropItem(SelectExitEventArgs args)
-        {
-            if (gunBought)
-            {
-                _interactable.interactionLayers = 2;
-                GetComponent<Rigidbody>().isKinematic = false;
-                transform.parent = null;
-            }
-            else
-            {
-                transform.localPosition = startPos;
-                transform.localRotation = startRot;
-            }
-        }
 
-        private void IsHovered(HoverEnterEventArgs args)
-        {
-            if (gunBought) return;
-            int currentEconomy = GameManager.Instance.players.First().PlayerData._economy;
-            if (GetComponentInParent<ShopInstance>() != null)
-            {
-                int currentPrice = GetComponentInParent<ShopInstance>().ShopItem.GetPrice;
 
-                if (currentEconomy >= currentPrice)
-                {
-                    Debug.Log("ENOUGH MONEY");
-                    _interactable.interactionLayers = 2;
-                }
-                else
-                    _interactable.interactionLayers = 0;
-            }
-            else
-                _interactable.interactionLayers = 0;
-        }
 
 
         private Vector3 GetBulletWorldPosition(BulletVR bullet)

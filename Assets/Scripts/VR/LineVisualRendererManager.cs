@@ -8,6 +8,7 @@ namespace VR
     public class LineVisualRendererManager : MonoBehaviour
     {
         [SerializeField] private XRInteractorLineVisual _lineVisual;
+        [SerializeField] private GameObject _lineVisualReticlePrefab;
         [SerializeField] private XRRayInteractor _rayInteractor;
         private bool isFullyDisabled = false;
 
@@ -31,6 +32,8 @@ namespace VR
 
         public void DisableIfNotOwner()
         {
+            if (_lineVisual.reticle == null)
+                _lineVisual.reticle = _lineVisualReticlePrefab;
             _lineVisual.reticle.SetActive(false);
             _lineVisual.enabled = false;
             isFullyDisabled = true;
@@ -40,6 +43,8 @@ namespace VR
         private void UnableRay(SelectEnterEventArgs arg)
         {
             if (isFullyDisabled) return;
+            if (_lineVisual.reticle == null)
+                _lineVisual.reticle = _lineVisualReticlePrefab;
             _lineVisual.reticle.SetActive(false);
             _lineVisual.enabled = false;
         }
@@ -47,6 +52,8 @@ namespace VR
         private void EnableRay(SelectExitEventArgs arg)
         {
             if (isFullyDisabled) return;
+            if (_lineVisual.reticle == null)
+                _lineVisual.reticle = _lineVisualReticlePrefab;
             _lineVisual.reticle.SetActive(true);
             _lineVisual.enabled = true;
         }

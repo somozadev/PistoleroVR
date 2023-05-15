@@ -914,6 +914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineVisual: {fileID: 265792423752544956}
+  _lineVisualReticlePrefab: {fileID: 0}
   _rayInteractor: {fileID: 265792423752544954}
 --- !u!114 &524109121127883261
 MonoBehaviour:
@@ -1646,6 +1647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineVisual: {fileID: 265792424864367100}
+  _lineVisualReticlePrefab: {fileID: 0}
   _rayInteractor: {fileID: 265792424864367091}
 --- !u!114 &3867348042038038705
 MonoBehaviour:
@@ -1860,6 +1862,9 @@ MonoBehaviour:
   m_System: {fileID: 265792424025099338}
   canMove: 1
   canRotate: 1
+  rotationType: 0
+  turnAmount: 45
+  readyToSnapTurn: 0
   speed: 120
   rotSpeed: 60
   drag: 40
@@ -1889,6 +1894,7 @@ MonoBehaviour:
     m_Reference: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   _moveRb: {fileID: 265792424025099333}
   _xrOrigin: {fileID: 0}
+  _playerVignette: {fileID: 0}
   _lookRb: {fileID: 7611746991403270346}
   _characterRig: {fileID: 6656181582386196020}
   _cameraHolder: {fileID: 2489376759173428968}

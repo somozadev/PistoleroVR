@@ -16,6 +16,7 @@ namespace General
         [SerializeField] private PlayerData _playerData;
 
         public PlayerData PlayerData => _playerData;
+        public MovementVR PlayerMovement => _movementVR;
         private void Awake()
         {
             _playerData = GetComponent<PlayerData>();

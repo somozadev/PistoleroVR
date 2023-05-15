@@ -8,6 +8,7 @@ namespace General
 
         private void OnEnable()
         {
+            scene.SetActive(false);
             EventManager.LoadingStarts += HideScene;
             EventManager.LoadingEnds += ShowScene;
         }

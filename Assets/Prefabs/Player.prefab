@@ -464,7 +464,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: 8248158260566104461, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    m_Reference: {fileID: -1437309302680335167, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   m_TrackingStateAction:
     m_UseReference: 1
     m_Action:
@@ -576,10 +576,10 @@ MonoBehaviour:
   m_DirectionalAnchorRotationAction:
     m_UseReference: 0
     m_Action:
-      m_Name: 
+      m_Name: Directional Anchor Rotation
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 
+      m_Id: 65b4a256-86c8-46cc-8482-3df22a1807dd
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -1007,6 +1007,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineVisual: {fileID: 6758360391761136711}
+  _lineVisualReticlePrefab: {fileID: 0}
   _rayInteractor: {fileID: 6758360391761136712}
 --- !u!1 &9004603084958355860
 GameObject:
@@ -1072,7 +1073,7 @@ Transform:
   - {fileID: 9004603085403277314}
   - {fileID: 1551648146}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7658481193799229613
 MonoBehaviour:
@@ -1091,6 +1092,7 @@ MonoBehaviour:
   _characterCustomization: {fileID: 3835117216272610418}
   _leftHand: {fileID: 6758360391761136711}
   _rightHand: {fileID: 6758360392771796743}
+  _playerData: {fileID: 0}
 --- !u!114 &3835117216272610418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1255,6 +1257,9 @@ MonoBehaviour:
   m_System: {fileID: 6758360393539142129}
   canMove: 1
   canRotate: 1
+  rotationType: 0
+  turnAmount: 45
+  readyToSnapTurn: 0
   speed: 120
   rotSpeed: 60
   drag: 40
@@ -1284,6 +1289,7 @@ MonoBehaviour:
     m_Reference: {fileID: -6493913391331992944, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   _moveRb: {fileID: 6758360393539142142}
   _xrOrigin: {fileID: 6758360393539142143}
+  _playerVignette: {fileID: 0}
   _lookRb: {fileID: 4024133092246834545}
   _characterRig: {fileID: 154615349241291663}
   _cameraHolder: {fileID: 9004603086334655315}
@@ -1729,10 +1735,10 @@ MonoBehaviour:
   m_DirectionalAnchorRotationAction:
     m_UseReference: 0
     m_Action:
-      m_Name: 
+      m_Name: Directional Anchor Rotation
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 
+      m_Id: 79cfa18c-ec1c-433b-9c96-130a55fa3394
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -2160,6 +2166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineVisual: {fileID: 6758360392771796743}
+  _lineVisualReticlePrefab: {fileID: 0}
   _rayInteractor: {fileID: 6758360392771796737}
 --- !u!1 &9004603086334655312
 GameObject:
