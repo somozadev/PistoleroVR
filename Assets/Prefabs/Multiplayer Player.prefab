@@ -2245,6 +2245,8 @@ MonoBehaviour:
   _leftHand: {fileID: 265792424864367100}
   _rightHand: {fileID: 265792423752544956}
   _playerData: {fileID: 0}
+  leftController: {fileID: 0}
+  rightController: {fileID: 0}
 --- !u!114 &7729266562113223113
 MonoBehaviour:
   m_ObjectHideFlags: 0

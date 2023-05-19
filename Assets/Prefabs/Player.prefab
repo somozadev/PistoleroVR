@@ -1073,7 +1073,7 @@ Transform:
   - {fileID: 9004603085403277314}
   - {fileID: 1551648146}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7658481193799229613
 MonoBehaviour:
@@ -1438,10 +1438,10 @@ MonoBehaviour:
   m_PositionInput:
     m_UseReference: 0
     m_Action:
-      m_Name: 
+      m_Name: Position Input
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 
+      m_Id: bfc830eb-eaa0-4aca-8706-1444f96819c5
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -1450,10 +1450,10 @@ MonoBehaviour:
   m_RotationInput:
     m_UseReference: 0
     m_Action:
-      m_Name: 
+      m_Name: Rotation Input
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 
+      m_Id: fb322e41-b8ec-453e-ab4f-d9fffc2b3892
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []

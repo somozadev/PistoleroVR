@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace General
@@ -18,7 +19,7 @@ namespace General
             poolName = name;
             poolId = id;
             poolAmount = amount;
-            AddElementToPool(poolAmount,false);
+            AddElementToPool(poolAmount, false);
         }
 
         public List<GameObject> GetPool()
@@ -31,6 +32,7 @@ namespace General
             for (int i = 0; i < amount; i++)
             {
                 GameObject go = Instantiate(_usedPrefab, transform.position, Quaternion.identity, transform);
+                TryResetTrail(go);
                 if (!lateAdded)
                     go.name = ($"bulletVR_{i}");
                 else
@@ -38,8 +40,17 @@ namespace General
                     poolAmount++;
                     go.name = ($"bulletVR_{poolAmount}");
                 }
+
                 go.SetActive(false);
                 pool.Add(go);
+            }
+        }
+
+        private void TryResetTrail(GameObject go)
+        {
+            if (TryGetComponent(out BulletVR bullet))
+            {
+                bullet._trail.Clear();
             }
         }
 
@@ -50,6 +61,7 @@ namespace General
                 if (!pool[i].gameObject.activeSelf)
                 {
                     Debug.Log($"Pooled element with index {i} of {poolAmount} with state of {pool[i].activeSelf}");
+                    TryResetTrail(pool[i]);
                     pool[i].gameObject.SetActive(true);
                     return pool[i];
                 }
@@ -57,6 +69,7 @@ namespace General
 
             Debug.Log("Can't find element in current pool, creating new one");
             AddElementToPool(1, true);
+            TryResetTrail(pool[pool.Count - 1]);
             pool[pool.Count - 1].SetActive(true);
             return pool[pool.Count - 1];
         }

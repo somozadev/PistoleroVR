@@ -4,7 +4,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace General
 {
-    
     public class HapticInteractable : MonoBehaviour
     {
         [SerializeField] private Haptic _hapticOnActivated;

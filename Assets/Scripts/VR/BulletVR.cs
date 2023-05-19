@@ -11,6 +11,16 @@ public class BulletVR : MonoBehaviour
     public Vector3 _initialVel;
     public float _waitTime;
 
+    private void OnEnable()
+    {
+        _trail.Clear();
+    }
+
+    private void OnDisable()
+    {
+        _trail.Clear();
+    }
+
     private void Awake()
     {
         _trail = GetComponent<TrailRenderer>();

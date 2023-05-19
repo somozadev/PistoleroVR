@@ -8,33 +8,35 @@ using UnityEngine.XR.Interaction.Toolkit;
 namespace VR
 {
     [RequireComponent(typeof(XRGrabInteractable))]
-    public class BaseGun : MonoBehaviour
+    public abstract class BaseGun : MonoBehaviour
     {
         private XRGrabInteractable _interactable;
-        [SerializeField] private float _bulletSpeed = 1000.0f;
+        [SerializeField] protected float _bulletSpeed = 1000.0f;
         [SerializeField] private float _bulletDrop = 0.0f;
-
-        [SerializeField] private ParticleSystem _muzzleParticles;
+        [SerializeField] protected float _bulletDamage; 
+        
+        [SerializeField] protected ParticleSystem _muzzleParticles;
         [SerializeField] private ParticleSystem _impactParticles;
-        [SerializeField] private Transform _raycastOrigin;
+        [SerializeField] protected Transform _raycastOrigin;
 
         private Ray _ray;
         private RaycastHit _hit;
         [SerializeField] private LayerMask _layerMask;
 
-        [SerializeField] private int currentBullets = 6;
+        [SerializeField] protected int currentBullets = 6;
         [SerializeField] private TMP_Text _bulletsText;
         [SerializeField] private GameObject _bulletPrefab;
 
         [SerializeField] private Transform _orientation;
-        [SerializeField] private ObjectPooling _bulletsPooling;
+        [SerializeField] protected ObjectPooling _bulletsPooling;
 
         [SerializeField] private bool isShopGun;
-
         [SerializeField] private bool gunBought;
         [SerializeField] private int price;
-        [SerializeField] private Vector3 startPos;
-        [SerializeField] private Quaternion startRot;
+        private Vector3 startPos;
+        private Quaternion startRot;
+
+        protected string poolingName;
 
         private void Start()
         {
@@ -52,44 +54,43 @@ namespace VR
             _interactable.hoverEntered.AddListener(HoverEnter);
             _interactable.hoverExited.AddListener(HoverExit);
             _interactable.activated.AddListener(PerformShoot);
+            _interactable.deactivated.AddListener(EndShoot);
 
             startPos = transform.localPosition;
             startRot = transform.localRotation;
 
             _bulletsPooling =
-                GameManager.Instance.objectPoolingManager.GetNewObjectPool("RevolverVRBullets", ref _bulletPrefab, 5);
+                GameManager.Instance.objectPoolingManager.GetNewObjectPool(poolingName, ref _bulletPrefab, 5);
         }
+
+        #region GrabbableEventsArgs
 
         private void SelectEnter(SelectEnterEventArgs args)
         {
             if (isShopGun)
-                GetGun();
-            else
                 BuyGun();
+            else
+                GetGun();
         }
 
         private void SelectExit(SelectExitEventArgs args)
         {
             if (isShopGun)
                 if (gunBought)
-                    SendGunToHand();
+                    DropGun();
                 else
                     ResetGunPos();
             else
-                ResetGunPos();
-        }
+                DropGun();
 
+        }
 
         private void HoverEnter(HoverEnterEventArgs args)
         {
-            if (gunBought) return;
+            if (!isShopGun || gunBought) return;
 
-            if (isShopGun)
-            {
-                SetInteractableLayerBasedOnPrice();
-            }
-            else
-                UnableInteractableLayer();
+            SetInteractableLayerBasedOnPrice();
+            UnableInteractableLayer();
         }
 
         private void HoverExit(HoverExitEventArgs args)
@@ -100,17 +101,18 @@ namespace VR
 
         #region SelectEnter
 
-        protected virtual void GetGun()
+        private void GetGun()
         {
-            _orientation.rotation = Quaternion.Euler(0, -90, 0);
+            _orientation.localRotation = Quaternion.Euler(0, -90, 0);
         }
 
-        protected virtual void BuyGun()
+        private void BuyGun()
         {
             if (GameManager.Instance.players.First().PlayerData._economy >= price)
             {
                 GameManager.Instance.players.First().PlayerData.Buy(price);
                 gunBought = true;
+                GetGun();
             }
         }
 
@@ -118,31 +120,32 @@ namespace VR
 
         #region SelectExit
 
-        protected virtual void SendGunToHand()
+        protected virtual void DropGun()
         {
             _interactable.interactionLayers = 2;
             GetComponent<Rigidbody>().isKinematic = false;
             transform.parent = null;
         }
 
-        protected virtual void ResetGunPos()
+        private void ResetGunPos()
         {
             transform.localPosition = startPos;
             transform.localRotation = startRot;
+            transform.rotation = Quaternion.identity;
         }
 
         #endregion
 
         #region HoverEnter
 
-        protected virtual void SetInteractableLayerBasedOnPrice()
+        private void SetInteractableLayerBasedOnPrice()
         {
             var currentEconomy = GameManager.Instance.players.First().PlayerData._economy;
             var currentPrice = GetComponentInParent<ShopInstance>().ShopItem.GetPrice;
-            _interactable.interactionLayers = currentEconomy >= currentPrice ? 2 : 0;   
+            _interactable.interactionLayers = currentEconomy >= currentPrice ? 2 : 0;
         }
 
-        protected virtual void UnableInteractableLayer()
+        private void UnableInteractableLayer()
         {
             _interactable.interactionLayers = 0;
         }
@@ -151,10 +154,13 @@ namespace VR
 
         #region HoverExit
 
-        protected virtual void ResetInteractableLayer()
+        private void ResetInteractableLayer()
         {
             _interactable.interactionLayers = 2;
         }
+
+        #endregion
+
         #endregion
 
         private void Update()
@@ -177,7 +183,7 @@ namespace VR
         }
 
         private void PerformShoot(ActivateEventArgs args) => Shoot();
-
+        private void EndShoot(DeactivateEventArgs args) => NoShoot(); 
         private Vector3 GetBulletWorldPosition(BulletVR bullet)
         {
             //p + v*t + 0.5*g*t*t
@@ -216,7 +222,6 @@ namespace VR
                     var trf = _impactParticles.transform;
                     trf.position = _hit.point;
                     trf.forward = _hit.normal;
-                    // _impactParticles.transform.SetParent(_hit.transform);
                     _impactParticles.Emit(1);
                 }
 
@@ -228,18 +233,8 @@ namespace VR
             }
         }
 
-        private void Shoot()
-        {
-            Vector3 velocity = _raycastOrigin.forward.normalized * _bulletSpeed;
-
-            BulletVR bullet = _bulletsPooling.GetPooledElement().GetComponent<BulletVR>();
-            bullet.enabled = true;
-            bullet.Init(_raycastOrigin.position, velocity);
-
-            currentBullets--;
-            UpdateText();
-            _muzzleParticles.Emit(1);
-        }
+        protected abstract void Shoot();
+        protected abstract void NoShoot();
 
         private bool CheckForForce(GameObject hitObject, Vector3 hitPosition, Vector3 direction)
         {
@@ -259,18 +254,6 @@ namespace VR
                 damageable.Damage(this);
         }
 
-        private void UpdateText() => _bulletsText.text = currentBullets.ToString();
-
-        public void CallShootFromDebugger()
-        {
-            PerformShoot(null);
-        }
-
-        public enum ShootType
-        {
-            Single,
-            Burst,
-            Auto
-        }
+        protected void UpdateText() => _bulletsText.text = currentBullets.ToString();
     }
 }

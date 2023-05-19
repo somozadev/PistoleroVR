@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -15,6 +16,9 @@ namespace General
         [SerializeField] private XRInteractorLineVisual _rightHand;
         [SerializeField] private PlayerData _playerData;
 
+        public XRBaseController leftController;
+        public XRBaseController rightController;
+        
         public PlayerData PlayerData => _playerData;
         public MovementVR PlayerMovement => _movementVR;
         private void Awake()
