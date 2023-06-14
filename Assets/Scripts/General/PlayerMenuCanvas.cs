@@ -16,9 +16,12 @@ namespace General
         private void OnValidate()
         {
             if (_canvas == null)
+            {
                 _canvas = GetComponentInChildren<Canvas>();
+            }
 
             _rotationToggle = _canvas.GetComponentInChildren<Toggle>();
+
 
             SetupEvents();
         }
@@ -34,6 +37,7 @@ namespace General
             GetComponentInParent<Player>().PlayerMovement
                 .UpadteRotationType(!value ? MovementVR.RotationType.Snap : MovementVR.RotationType.Continuous);
         }
+
         private void OpenCloseMenu()
         {
             if (!_menuOpened)
@@ -57,8 +61,5 @@ namespace General
         {
             _menuAction.Disable();
         }
-
-
-       
     }
 }

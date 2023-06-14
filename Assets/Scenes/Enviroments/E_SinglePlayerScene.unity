@@ -86792,8 +86792,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4803093258084145256, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
+      propertyPath: _item
+      value: 
+      objectReference: {fileID: 11400000, guid: 1cd1bce50c724684682bc9b261be0f62, type: 2}
     - target: {fileID: 4803093258084145256, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
       propertyPath: range
       value: 5
@@ -86891,6 +86895,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
+--- !u!114 &1916354852 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4803093258084145256, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
+  m_PrefabInstance: {fileID: 1916354851}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ab210d149c44f898cb25f2664f44504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1918539870
 GameObject:
   m_ObjectHideFlags: 0
@@ -96737,6 +96752,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
+--- !u!114 &1217978954446617526 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4803093258084145256, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
+  m_PrefabInstance: {fileID: 1217978954446617525}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ab210d149c44f898cb25f2664f44504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2062684839113090961
 GameObject:
   m_ObjectHideFlags: 0
@@ -96900,7 +96926,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a4884447446184bb1c3d1586637514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopInstances: []
+  shopInstances:
+  - {fileID: 1217978954446617526}
+  - {fileID: 1916354852}
 --- !u!114 &7748524697710734816
 MonoBehaviour:
   m_ObjectHideFlags: 0

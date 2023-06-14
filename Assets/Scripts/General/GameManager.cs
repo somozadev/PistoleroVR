@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using General;
+using Hordes;
 using Multiplayer;
 using UnityEngine;
 using UnityEngine.Events;
@@ -32,4 +33,6 @@ public class GameManager : MonoBehaviour
    public GameServices gameServices;
    public bool IsHost;
 }
+
+
 

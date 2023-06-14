@@ -10249,8 +10249,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f0ce9fc28c7154c99d27a7f3b0918b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletSpeed: 55
-  _bulletDrop: 8
+  _bulletSpeed: 60
+  _bulletDrop: 2
+  _bulletDamage: 0
   _muzzleParticles: {fileID: 5765912501237351784}
   _impactParticles: {fileID: 2455095677893191853}
   _raycastOrigin: {fileID: 2497018139055983430}
@@ -10259,13 +10260,14 @@ MonoBehaviour:
     m_Bits: 1
   currentBullets: 75
   _bulletsText: {fileID: 7447074980854038741}
-  _bulletPrefab: {fileID: 2065797238585798036, guid: 0dd36307b5bdad7459a410f8444cf299, type: 3}
+  _bulletPrefab: {fileID: 2065797238585798036, guid: 0392ed366e5bfdd43b3d9b4aab18e3af, type: 3}
   _orientation: {fileID: 2995871965730842110}
   _bulletsPooling: {fileID: 0}
   isShopGun: 0
   gunBought: 0
   price: 0
-  fireRate: 10
+  fireRate: 12
+  spreadAmount: 0
 --- !u!114 &559065519414767736
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42c72ae11abeba45be18155423d5ad7, type: 3}
+  m_Name: HollyGun
+  m_EditorClassIdentifier: 
+  id: 4
+  price: 1250
+  prefab: {fileID: 9195638902313919270, guid: b15bc9039e1cebc4fac2bf015517a205, type: 3}

@@ -25500,7 +25500,7 @@ MonoBehaviour:
     m_Bits: 1
   currentBullets: 4
   _bulletsText: {fileID: 7686460555996417752}
-  _bulletPrefab: {fileID: 2065797238585798036, guid: 0dd36307b5bdad7459a410f8444cf299, type: 3}
+  _bulletPrefab: {fileID: 2065797238585798036, guid: 8945a8aaab5afef43aece8a3b54e9605, type: 3}
   _orientation: {fileID: 4489213242585244048}
   _bulletsPooling: {fileID: 0}
   isShopGun: 0
