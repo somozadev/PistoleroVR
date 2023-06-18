@@ -5,7 +5,10 @@ namespace BehaviourTree
     {
         public SequenceNode() : base() {}
 
-        public SequenceNode(List<Node> children) : base(children){
+        public SequenceNode(string name,List<Node> children) : base(children){
+            this.name = name;
+            
+        }        public SequenceNode(List<Node> children) : base(children){
             name = "[AND] SequenceNode";
             
         }

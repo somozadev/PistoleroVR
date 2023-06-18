@@ -8,7 +8,7 @@ namespace ParrelSync.Example
 {
     public class CustomArgumentExample : MonoBehaviour
     {
-        // Start is called before the first frame update
+        // Init is called before the first frame update
         void Start()
         {
             // Is this editor instance running a clone project?

@@ -4,7 +4,7 @@ namespace Enemies
 {
     public class EnemieMovement : MonoBehaviour
     {
-        // Start is called before the first frame update
+        // Init is called before the first frame update
         void Start()
         {
         

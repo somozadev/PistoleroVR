@@ -3,18 +3,17 @@ using UnityEngine;
 
 namespace BehaviourTree
 {
-    public abstract class Tree : MonoBehaviour
+    [Serializable]
+    public abstract class Tree
     {
-        
-        [Header("Tree")]
-        [SerializeField] private Node root = null;
+        [Header("Tree")] [SerializeField] private Node root = null;
 
-        protected void Start()
+        public virtual void Init()
         {
             root = SetupTree();
         }
 
-        private void Update()
+        public void Tick()
         {
             root?.Evaluate();
         }

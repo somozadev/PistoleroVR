@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Hordes.Spawners;
 
 namespace General
 {
