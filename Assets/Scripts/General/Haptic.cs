@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using VR;
 
 namespace General
 {
@@ -15,9 +16,18 @@ namespace General
             _intensity = intensity;
             _duration = duration;
         }
-        
-        public void TriggerHaptics(BaseInteractionEventArgs  eventArgs)
+
+        public void TriggerHaptics(BaseInteractionEventArgs eventArgs)
         {
+            if (eventArgs.interactorObject is XRBaseControllerInteractor controllerInteractor)
+            {
+                TriggerHaptics(controllerInteractor.xrController);
+            }
+        }
+
+        public void TriggerHaptics(BaseInteractionEventArgs eventArgs , BaseGun gun)
+        {
+            if(!gun.canShoot) return;
             if (eventArgs.interactorObject is XRBaseControllerInteractor controllerInteractor)
             {
                 TriggerHaptics(controllerInteractor.xrController);
@@ -29,6 +39,5 @@ namespace General
             if (_intensity > 0)
                 controller.SendHapticImpulse(_intensity, _duration);
         }
-
     }
 }

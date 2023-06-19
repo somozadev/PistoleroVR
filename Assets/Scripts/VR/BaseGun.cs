@@ -10,11 +10,12 @@ namespace VR
     [RequireComponent(typeof(XRGrabInteractable))]
     public abstract class BaseGun : MonoBehaviour
     {
-        private XRGrabInteractable _interactable;
+        [SerializeField] private GameObject selector;
+        [Space(20)] private XRGrabInteractable _interactable;
         [SerializeField] protected float _bulletSpeed = 1000.0f;
         [SerializeField] private float _bulletDrop = 0.0f;
-        [SerializeField] protected float _bulletDamage; 
-        
+        [SerializeField] protected float _bulletDamage;
+
         [SerializeField] protected ParticleSystem _muzzleParticles;
         [SerializeField] private ParticleSystem _impactParticles;
         [SerializeField] protected Transform _raycastOrigin;
@@ -24,6 +25,10 @@ namespace VR
         [SerializeField] private LayerMask _layerMask;
 
         [SerializeField] protected int currentBullets = 6;
+        [SerializeField] protected int currentTotalBullets = 30;
+        [SerializeField] protected int maxTotalBullets = 30;
+        [SerializeField] protected int maxBullets = 6;
+
         [SerializeField] private TMP_Text _bulletsText;
         [SerializeField] private GameObject _bulletPrefab;
 
@@ -36,10 +41,14 @@ namespace VR
         private Vector3 startPos;
         private Quaternion startRot;
 
+        [SerializeField] protected WeaponScriptAnimator _animator;
+        public bool canShoot = true;
+
         protected string poolingName;
 
         private void Start()
         {
+            _animator = GetComponent<WeaponScriptAnimator>();
             _interactable = GetComponent<XRGrabInteractable>();
             _bulletsText = GetComponentInChildren<TMP_Text>();
 
@@ -67,6 +76,7 @@ namespace VR
 
         private void SelectEnter(SelectEnterEventArgs args)
         {
+            selector = args.interactorObject.transform.gameObject;
             if (isShopGun)
                 BuyGun();
             else
@@ -82,7 +92,6 @@ namespace VR
                     ResetGunPos();
             else
                 DropGun();
-
         }
 
         private void HoverEnter(HoverEnterEventArgs args)
@@ -104,6 +113,10 @@ namespace VR
         private void GetGun()
         {
             _orientation.localRotation = Quaternion.Euler(0, -90, 0);
+            if (selector.name == "Left Hand")
+                GameManager.Instance.players[0].leftHandItem = gameObject;
+            else
+                GameManager.Instance.players[0].rightHandItem = gameObject;
         }
 
         private void BuyGun()
@@ -125,6 +138,11 @@ namespace VR
             _interactable.interactionLayers = 2;
             GetComponent<Rigidbody>().isKinematic = false;
             transform.parent = null;
+            if (selector.name == "Left Hand")
+                GameManager.Instance.players[0].leftHandItem = null;
+            else
+                GameManager.Instance.players[0].rightHandItem = null;
+            selector = null;
         }
 
         private void ResetGunPos()
@@ -183,7 +201,8 @@ namespace VR
         }
 
         private void PerformShoot(ActivateEventArgs args) => Shoot();
-        private void EndShoot(DeactivateEventArgs args) => NoShoot(); 
+        private void EndShoot(DeactivateEventArgs args) => NoShoot();
+
         private Vector3 GetBulletWorldPosition(BulletVR bullet)
         {
             //p + v*t + 0.5*g*t*t
@@ -233,7 +252,30 @@ namespace VR
             }
         }
 
-        protected abstract void Shoot();
+        protected virtual void Shoot()
+        {
+            if (currentTotalBullets <= 0)
+            {
+                currentBullets = 0;
+                currentTotalBullets = 0;
+                UpdateText();
+                return;
+            }
+
+            if (currentBullets == 0)
+            {
+                _animator.AnimationReload();
+                if ((currentTotalBullets - maxBullets < 0))
+                    currentTotalBullets = 0;
+                else
+                    currentTotalBullets -= maxBullets;
+                currentBullets = maxBullets;
+                return;
+            }   
+
+            _animator.AnimationShoot();
+        }
+
         protected abstract void NoShoot();
 
         private bool CheckForForce(GameObject hitObject, Vector3 hitPosition, Vector3 direction)
@@ -254,6 +296,14 @@ namespace VR
                 damageable.Damage(this);
         }
 
-        protected void UpdateText() => _bulletsText.text = currentBullets.ToString();
+        protected void UpdateText() => _bulletsText.text =
+            $"{currentBullets.ToString()}" + "\n" + "/" + "\n" + $"{currentTotalBullets.ToString()}";
+
+        public void FillUpAmmo()
+        {
+            currentBullets = maxBullets;
+            currentTotalBullets = maxTotalBullets;
+            UpdateText();
+        }
     }
 }

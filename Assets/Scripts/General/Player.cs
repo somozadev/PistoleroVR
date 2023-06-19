@@ -21,6 +21,12 @@ namespace General
         
         public PlayerData PlayerData => _playerData;
         public MovementVR PlayerMovement => _movementVR;
+
+
+        [Header("current item in hands")] 
+        [SerializeField] public GameObject leftHandItem;
+        [SerializeField] public GameObject rightHandItem;
+     
         private void Awake()
         {
             _playerData = GetComponent<PlayerData>();

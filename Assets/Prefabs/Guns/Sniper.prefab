@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1122290356005832438
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15024,8 +15024,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3076181626051730348}
-  m_LocalRotation: {x: 0.27236173, y: 0.7463757, z: -0.23931758, w: 0.5580946}
-  m_LocalPosition: {x: 0, y: 0, z: -0.26119995}
+  m_LocalRotation: {x: 0.5775731, y: 0.029312944, z: 0.006239507, w: 0.8157887}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15033,10 +15033,10 @@ RectTransform:
   - {fileID: 1122290356005832438}
   m_Father: {fileID: 6319623085459779209}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 41.395, y: 110.484, z: 10.713}
+  m_LocalEulerAnglesHint: {x: 70.388, y: 9.437, z: 7.54}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.016099967, y: 0.14770001}
+  m_AnchoredPosition: {x: -0.0369, y: 0.086}
   m_SizeDelta: {x: 0.1153, y: 0.1153}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6925896751560387
@@ -20073,8 +20073,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0.00122, y: -0}
+  m_SizeDelta: {x: 53.22436, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5434330556758902080
 CanvasRenderer:
@@ -20104,7 +20104,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 6
+  m_text: '8
+
+    /
+
+    32'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -20131,7 +20135,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 29.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -25282,6 +25286,8 @@ GameObject:
   - component: {fileID: 654674657274703289}
   - component: {fileID: 6989522624191426495}
   - component: {fileID: 7552182438334650334}
+  - component: {fileID: 8234223244896912709}
+  - component: {fileID: 6847106688907200892}
   m_Layer: 6
   m_Name: Sniper
   m_TagString: Untagged
@@ -25499,6 +25505,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   currentBullets: 4
+  currentTotalBullets: 30
+  maxBullets: 6
   _bulletsText: {fileID: 7686460555996417752}
   _bulletPrefab: {fileID: 2065797238585798036, guid: 8945a8aaab5afef43aece8a3b54e9605, type: 3}
   _orientation: {fileID: 4489213242585244048}
@@ -25506,6 +25514,8 @@ MonoBehaviour:
   isShopGun: 0
   gunBought: 0
   price: 0
+  _animator: {fileID: 0}
+  canShoot: 1
 --- !u!114 &7552182438334650334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25533,6 +25543,42 @@ MonoBehaviour:
   _hapticSelectExited:
     _intensity: 0
     _duration: 0
+  _gun: {fileID: 0}
+--- !u!95 &8234223244896912709
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7418930290385543712}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 33d1596611b0dba42b37b29e317e0a31, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6847106688907200892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7418930290385543712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d84ed7b2c7052340bf5c62b6a660d33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _gun: {fileID: 0}
 --- !u!1 &8840164758705976752
 GameObject:
   m_ObjectHideFlags: 0

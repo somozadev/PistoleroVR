@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using VR;
 
@@ -16,6 +14,11 @@ public class HollyGunVR : BaseGun
     private void Awake()
     {
         poolingName = "HollyGunVRBullets";
+        maxBullets = 3;
+        currentBullets = maxBullets;
+        currentTotalBullets = 30;
+        maxTotalBullets = currentTotalBullets;
+        UpdateText();
     }
 
     private void ShootFromGivenOrigin(Transform origin, ParticleSystem particles)
@@ -29,6 +32,11 @@ public class HollyGunVR : BaseGun
 
     protected override void Shoot()
     {
+        if (!canShoot) return;
+
+        _animator.SetShootSpeed(1f);
+        _animator.SetReloadSpeed(0.8f);
+        base.Shoot();
         ShootFromGivenOrigin(_raycastOrigin, _muzzleParticles);
         ShootFromGivenOrigin(_raycastOrigin2, _muzzleParticles2);
         ShootFromGivenOrigin(_raycastOrigin3, _muzzleParticles3);

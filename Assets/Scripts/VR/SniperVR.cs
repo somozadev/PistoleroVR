@@ -7,10 +7,20 @@ namespace VR
         private void Awake()
         {
             poolingName = "SniperVRBullets";
+            maxBullets = 8;
+            currentBullets = maxBullets;
+            currentTotalBullets = 32;
+            maxTotalBullets = currentTotalBullets;
+            UpdateText();
         }
 
         protected override void Shoot()
         {
+            if (!canShoot) return;
+
+            _animator.SetShootSpeed(0.8f);
+            _animator.SetReloadSpeed(0.8f);
+            base.Shoot();
             Vector3 velocity = _raycastOrigin.forward.normalized * _bulletSpeed;
 
             BulletVR bullet = _bulletsPooling.GetPooledElement().GetComponent<BulletVR>();

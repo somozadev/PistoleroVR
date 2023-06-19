@@ -15,10 +15,19 @@ namespace VR
         private void Awake()
         {
             poolingName = "MachinegunVRBullets";
+            maxBullets = 100;
+            currentBullets = maxBullets;
+            currentTotalBullets = 300;
+            maxTotalBullets = currentTotalBullets;
+            UpdateText();
         }
 
         protected override void Shoot()
         {
+            if (!canShoot) return;
+
+            _animator.SetShootSpeed(1.7f);
+            _animator.SetReloadSpeed(0.5f);
             isShooting = true;
             StartCoroutine(ShootingLoop());
         }
@@ -39,6 +48,9 @@ namespace VR
         {
             while (isShooting)
             {
+                // if (!canShoot) break;
+                if (_animator.GetCurrentAnimation() == "Reload") break;
+                base.Shoot();
                 GameManager.Instance.players.First().leftController.SendHapticImpulse(.5f, fireRate / 200);
                 GameManager.Instance.players.First().rightController.SendHapticImpulse(.5f, fireRate / 200);
                 Vector3 shootDirection = _raycastOrigin.forward;
@@ -54,7 +66,6 @@ namespace VR
                 currentBullets--;
                 UpdateText();
                 _muzzleParticles.Emit(1);
-
                 yield return new WaitForSeconds(fireRate / 100);
             }
         }
