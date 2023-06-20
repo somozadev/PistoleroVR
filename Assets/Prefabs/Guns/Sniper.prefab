@@ -222,7 +222,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7029806013341814020}
   - component: {fileID: 2307857956967658870}
-  - component: {fileID: 8997835005454393056}
   - component: {fileID: 6719873074922167885}
   m_Layer: 6
   m_Name: Camera
@@ -297,14 +296,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &8997835005454393056
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197626498902299084}
-  m_Enabled: 1
 --- !u!114 &6719873074922167885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25495,6 +25486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538efd1387e84f1583b390c4474f79fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selector: {fileID: 0}
   _bulletSpeed: 1000
   _bulletDrop: 0
   _bulletDamage: 0
@@ -25506,6 +25498,7 @@ MonoBehaviour:
     m_Bits: 1
   currentBullets: 4
   currentTotalBullets: 30
+  maxTotalBullets: 30
   maxBullets: 6
   _bulletsText: {fileID: 7686460555996417752}
   _bulletPrefab: {fileID: 2065797238585798036, guid: 8945a8aaab5afef43aece8a3b54e9605, type: 3}

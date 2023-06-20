@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using General;
+using General.Sound;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -15,9 +16,9 @@ namespace VR
         private void Awake()
         {
             poolingName = "MachinegunVRBullets";
-            maxBullets = 100;
+            maxBullets = 65;
             currentBullets = maxBullets;
-            currentTotalBullets = 300;
+            currentTotalBullets = 325;
             maxTotalBullets = currentTotalBullets;
             UpdateText();
         }
@@ -25,6 +26,7 @@ namespace VR
         protected override void Shoot()
         {
             if (!canShoot) return;
+            if (!CheckAmmo()) return;
 
             _animator.SetShootSpeed(1.7f);
             _animator.SetReloadSpeed(0.5f);
@@ -48,8 +50,9 @@ namespace VR
         {
             while (isShooting)
             {
-                // if (!canShoot) break;
+                if (!CheckAmmo()) break;
                 if (_animator.GetCurrentAnimation() == "Reload") break;
+                currentBullets--;
                 base.Shoot();
                 GameManager.Instance.players.First().leftController.SendHapticImpulse(.5f, fireRate / 200);
                 GameManager.Instance.players.First().rightController.SendHapticImpulse(.5f, fireRate / 200);
@@ -63,11 +66,15 @@ namespace VR
                 bullet.enabled = true;
                 bullet.Init(_raycastOrigin.position, velocity);
 
-                currentBullets--;
                 UpdateText();
                 _muzzleParticles.Emit(1);
                 yield return new WaitForSeconds(fireRate / 100);
             }
+        }
+
+        protected override void PlaySound()
+        {
+            AudioManager.Instance.PlayOneShot("Machinegun");
         }
     }
 }

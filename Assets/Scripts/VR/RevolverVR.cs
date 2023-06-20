@@ -1,3 +1,4 @@
+using General.Sound;
 using UnityEngine;
 
 namespace VR
@@ -18,6 +19,7 @@ namespace VR
         protected override void Shoot()
         {
             if (!canShoot) return;
+            if(!CheckAmmo()) return;
 
             _animator.SetShootSpeed(1f);
             _animator.SetReloadSpeed(1f);
@@ -32,9 +34,13 @@ namespace VR
             UpdateText();
             _muzzleParticles.Emit(1);
         }
-
         protected override void NoShoot()
         {
+        }
+
+        protected override void PlaySound()
+        {
+            AudioManager.Instance.PlayOneShot("Revolver");
         }
     }
 }

@@ -1,3 +1,4 @@
+using General.Sound;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -11,7 +12,7 @@ namespace VR
         private void Awake()
         {
             poolingName = "ShotgunVRBullets";
-            maxBullets = 12;
+            maxBullets = 2;
             currentTotalBullets = 48;
             currentBullets = maxBullets;
             maxTotalBullets = currentTotalBullets;
@@ -21,9 +22,11 @@ namespace VR
         protected override void Shoot()
         {
             if (!canShoot) return;
+            if(!CheckAmmo()) return;
 
             _animator.SetShootSpeed(1.1f);
             _animator.SetReloadSpeed(1.1f);
+            currentBullets--;
             base.Shoot();
             for (int i = 0; i < bulletsSpawned; i++)
             {
@@ -37,7 +40,6 @@ namespace VR
                 bullet.Init(_raycastOrigin.position, velocity);
             }
 
-            currentBullets--;
 
             UpdateText();
             _muzzleParticles.Emit(1);
@@ -45,6 +47,10 @@ namespace VR
 
         protected override void NoShoot()
         {
+        }
+        protected override void PlaySound()
+        {
+            AudioManager.Instance.PlayOneShot("Shotgun");
         }
     }
 }

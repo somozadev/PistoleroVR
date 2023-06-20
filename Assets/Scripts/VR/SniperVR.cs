@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using General.Sound;
+using UnityEngine;
 
 namespace VR
 {
@@ -7,7 +8,7 @@ namespace VR
         private void Awake()
         {
             poolingName = "SniperVRBullets";
-            maxBullets = 8;
+            maxBullets = 1;
             currentBullets = maxBullets;
             currentTotalBullets = 32;
             maxTotalBullets = currentTotalBullets;
@@ -17,9 +18,11 @@ namespace VR
         protected override void Shoot()
         {
             if (!canShoot) return;
+            if(!CheckAmmo()) return;
 
             _animator.SetShootSpeed(0.8f);
             _animator.SetReloadSpeed(0.8f);
+            currentBullets--;
             base.Shoot();
             Vector3 velocity = _raycastOrigin.forward.normalized * _bulletSpeed;
 
@@ -27,13 +30,17 @@ namespace VR
             bullet.enabled = true;
             bullet.Init(_raycastOrigin.position, velocity);
 
-            currentBullets--;
             UpdateText();
             _muzzleParticles.Emit(1);
         }
 
         protected override void NoShoot()
         {
+        }
+
+        protected override void PlaySound()
+        {
+            AudioManager.Instance.PlayOneShot("Sniper");
         }
     }
 }

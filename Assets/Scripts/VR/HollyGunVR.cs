@@ -1,3 +1,4 @@
+using General.Sound;
 using UnityEngine;
 using VR;
 
@@ -33,16 +34,22 @@ public class HollyGunVR : BaseGun
     protected override void Shoot()
     {
         if (!canShoot) return;
+        if(!CheckAmmo()) return;
 
         _animator.SetShootSpeed(1f);
         _animator.SetReloadSpeed(0.8f);
+        currentBullets--;
         base.Shoot();
         ShootFromGivenOrigin(_raycastOrigin, _muzzleParticles);
         ShootFromGivenOrigin(_raycastOrigin2, _muzzleParticles2);
         ShootFromGivenOrigin(_raycastOrigin3, _muzzleParticles3);
         ShootFromGivenOrigin(_raycastOrigin4, _muzzleParticles4);
-        currentBullets--;
         UpdateText();
+    }
+
+    protected override void PlaySound()
+    {
+        AudioManager.Instance.PlayOneShot("HollyGun");
     }
 
     protected override void NoShoot()

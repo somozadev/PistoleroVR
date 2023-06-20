@@ -23,6 +23,7 @@ namespace VR.ShootableItems
         }
         public override void Damage(BaseGun baseGun)
         {
+            base.Damage(baseGun);
             StartCoroutine(RestockSelf());
         }
 

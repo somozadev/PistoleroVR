@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using General;
 using General.Damageable;
+using General.Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -254,16 +255,18 @@ namespace VR
 
         protected virtual void Shoot()
         {
-            if (currentTotalBullets <= 0)
-            {
-                currentBullets = 0;
-                currentTotalBullets = 0;
-                UpdateText();
-                return;
-            }
+            //cuando currentBullets == -1 y currentTotalBullets == 0 es que no more ammo!!!!
 
             if (currentBullets == 0)
             {
+                if ((currentBullets == 0 && currentTotalBullets == 0))
+                {
+                    PlaySound();
+                    return;
+                }
+
+                PlaySound();
+                AudioManager.Instance.PlayOneShot("Reload");
                 _animator.AnimationReload();
                 if ((currentTotalBullets - maxBullets < 0))
                     currentTotalBullets = 0;
@@ -271,11 +274,30 @@ namespace VR
                     currentTotalBullets -= maxBullets;
                 currentBullets = maxBullets;
                 return;
-            }   
+            }
 
+            PlaySound();
             _animator.AnimationShoot();
         }
 
+        protected bool CheckAmmo()
+        {
+            if (currentBullets <= 0 && currentTotalBullets == 0)
+            {
+                //no ammo, mayb puff sound or fart or smth
+                currentBullets = 0;
+                currentTotalBullets = 0;
+                UpdateText();
+                _animator.AnimationShoot();
+                AudioManager.Instance.PlayOneShot("NoAmmo");
+                canShoot = false;
+                return false;
+            }
+
+            return true;
+        }
+
+        protected abstract void PlaySound();
         protected abstract void NoShoot();
 
         private bool CheckForForce(GameObject hitObject, Vector3 hitPosition, Vector3 direction)
@@ -303,6 +325,7 @@ namespace VR
         {
             currentBullets = maxBullets;
             currentTotalBullets = maxTotalBullets;
+            canShoot = true;
             UpdateText();
         }
     }
