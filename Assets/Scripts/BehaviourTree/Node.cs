@@ -4,11 +4,10 @@ using UnityEngine;
 
 namespace BehaviourTree
 {
-    [Serializable]
     public class Node
     {
-        [SerializeField] protected string name;
-        [SerializeField] protected NodeState state; //the current node state
+        protected string name;
+        protected NodeState state; //the current node state
         public Node parent;//the parent nodes from this one
         public List<Node> children = new List<Node>();//the children nodes from this one
         private Dictionary<string, object> _data = new Dictionary<string, object>(); //the shared data

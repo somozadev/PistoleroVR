@@ -5,10 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
-using Unity.Netcode;
 using Unity.XR.CoreUtils;
-using UnityEngine.Assertions;
-using Player = Unity.Services.Lobbies.Models.Player;
 
 public class MovementVR : LocomotionProvider
 {
@@ -41,9 +38,7 @@ public class MovementVR : LocomotionProvider
     [SerializeField] private XROrigin _xrOrigin;
     [SerializeField] private PlayerVignette _playerVignette;
     [SerializeField] private Rigidbody _lookRb;
-    [SerializeField] private Transform _characterRig;
     [SerializeField] private Transform _cameraHolder;
-    [SerializeField] private Transform _cameraVR;
     [SerializeField] private Transform _orientationTrf;
     [SerializeField] private Transform _pivotCamTrf;
 
@@ -51,7 +46,7 @@ public class MovementVR : LocomotionProvider
     protected override void Awake()
     {
         _xrOrigin = GetComponentInParent<XROrigin>();
-        BeginLocomotion();
+        // BeginLocomotion();
         // _leftHandMoveAction.EnableDirectAction();
         // _rightHandMoveAction.EnableDirectAction();
     }

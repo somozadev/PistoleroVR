@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -7,6 +8,11 @@ namespace General
     public class PlayerMenuCanvas : MonoBehaviour
     {
         [SerializeField] private InputAction _menuAction;
+
+        [Header("Hands controllers InputActions references")] 
+        [SerializeField]
+        private InputActionProperty _leftHandMenuAction;
+
         [SerializeField] private bool _menuOpened;
         [SerializeField] private Canvas _canvas;
 
@@ -26,10 +32,17 @@ namespace General
             SetupEvents();
         }
 
+        public void MenuButtonPressed(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                OpenCloseMenu();
+        }
+
         private void SetupEvents()
         {
             _rotationToggle.onValueChanged.AddListener(ChangeTurningMode);
-            _menuAction.performed += ctx => OpenCloseMenu();
+            // _menuAction.performed += ctx => OpenCloseMenu();
+            _leftHandMenuAction.action.performed += ctx => OpenCloseMenu();
         }
 
         private void ChangeTurningMode(bool value)
