@@ -20,7 +20,7 @@ namespace General.Damageable
             
             if (_health <= 0)
             {
-                //unable control from player *maybe change it's character to invisible and instance a ragdoll of him?
+                //unable control from player *maybe change it's character to invisible and Instance a ragdoll of him?
                 gameObject.SetActive(false);
             }
         }

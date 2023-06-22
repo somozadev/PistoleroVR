@@ -43,6 +43,7 @@ public class MovementVR : LocomotionProvider
     [SerializeField] private Transform _pivotCamTrf;
 
 
+    public Transform CameraHolder => _cameraHolder;
     protected override void Awake()
     {
         _xrOrigin = GetComponentInParent<XROrigin>();
@@ -189,26 +190,26 @@ public class MovementVR : LocomotionProvider
         {
             if (readyToSnapTurn)
             {
-                _playerVignette.VignetteTurning(_playerVignette.RotationConfig);
+                // _playerVignette.VignetteTurning(_playerVignette.RotationConfig);
                 readyToSnapTurn = false;
                 _xrOrigin.RotateAroundCameraUsingOriginUp(Mathf.Abs(turnAmount));
-                _playerVignette.VignetteTurning(_playerVignette.NormalConfig);
+                // _playerVignette.VignetteTurning(_playerVignette.NormalConfig);
             }
         }
         else if (inputRight.x < 0)
         {
             if (readyToSnapTurn)
             {
-                _playerVignette.VignetteTurning(_playerVignette.RotationConfig);
+                // _playerVignette.VignetteTurning(_playerVignette.RotationConfig);
                 readyToSnapTurn = false;
                 _xrOrigin.RotateAroundCameraUsingOriginUp(-turnAmount);
-                _playerVignette.VignetteTurning(_playerVignette.NormalConfig);
+                // _playerVignette.VignetteTurning(_playerVignette.NormalConfig);
             }
         }
         else
         {
             readyToSnapTurn = true;
-            Debug.Log(inputRight);
+            // Debug.Log(inputRight);
         }
     }
 

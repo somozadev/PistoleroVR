@@ -14,7 +14,7 @@ public class UILookToTarget : MonoBehaviour
 
     void Update()
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.transform.position),
-            rotSpeed * Time.deltaTime);
+        if (target != null)
+            transform.LookAt(target.transform);
     }
 }

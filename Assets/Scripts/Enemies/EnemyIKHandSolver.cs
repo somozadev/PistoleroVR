@@ -8,7 +8,7 @@ namespace Enemies
 
         private void Start()
         {
-            target = GameManager.Instance.players[0].PlayerMovement.transform;
+            target = GameManager.Instance.players[0].PlayerMovement.CameraHolder.transform;
         }
 
         private void LateUpdate()
