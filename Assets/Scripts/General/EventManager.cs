@@ -39,7 +39,8 @@ namespace General
 
         public static void OnTimerStarted()
         {
-            TimerStarted?.Invoke();}
+            TimerStarted?.Invoke();
+        }
 
         public static void OnTimerEnded()
         {

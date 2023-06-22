@@ -32,15 +32,17 @@ namespace VR.Poke
 
         private void OnEnable()
         {
-            EventManager.TimerStarted += SetConditions;
-            EventManager.RewardClaimed += RewardClaimed;
+            _timer = GameManager.Instance.GetComponent<TimeManager>();
+            coinLocalPosInit = _coinAmountParticle.transform.localPosition;
+ 
+            _interactable.selectEntered.AddListener(Select);
+            EventManager.TimerStarted += RewardClaimed;
             EventManager.TimerEnded += RewardClaimed;
         }
 
         private void OnDisable()
         {
-            EventManager.TimerStarted -= SetConditions;
-            EventManager.RewardClaimed -= RewardClaimed;
+            EventManager.TimerStarted -= RewardClaimed;
             EventManager.TimerEnded -= RewardClaimed;
         }
 
@@ -59,32 +61,11 @@ namespace VR.Poke
             }
         }
 
-        private void SetConditions()
-        {
-            _timer = GameManager.Instance.GetComponent<TimeManager>();
-
-            _rewarded = _timer.rewardClaimed;
-            coinLocalPosInit = _coinAmountParticle.transform.localPosition;
-            _interactable.selectEntered.AddListener(Select);
-
-            if (_rewarded)
-            {
-                _interactable.enabled = false;
-                _pannelText.text = ("<color=orange>" + _timer.remainingTime + "</color>");
-            }
-            else
-            {
-                _interactable.enabled = true;
-                _pannelText.text = "daily <color=orange>rewards!</color>";
-            }
-        }
-
         private void Update()
         {
             if (_rewarded)
             {
                 _pannelText.text = ("<color=orange>" + _timer.remainingTime + "</color>");
-
             }
         }
 
@@ -103,7 +84,6 @@ namespace VR.Poke
         private IEnumerator SelectedCor()
         {
             _toolTip.gameObject.SetActive(false);
-            _toolTip.transform.localScale = Vector3.zero;
             var elapsedTime = 0f;
             _coinAmountParticle.SetActive(true);
             _coinAmountParticle.GetComponentInChildren<TMP_Text>().text =
@@ -111,7 +91,7 @@ namespace VR.Poke
             while (elapsedTime < 2)
             {
                 elapsedTime += Time.deltaTime;
-                var curvePercent = _animationCurve.Evaluate(elapsedTime / 2f);
+                var curvePercent = _animationCurve.Evaluate(elapsedTime / 1f);
                 _coinAmountParticle.transform.localScale = Vector3.Slerp(_coinAmountParticle.transform.localScale,
                     new Vector3(0.00826f, 0.00826f, 0.00826f), curvePercent);
                 _coinAmountParticle.transform.localPosition = Vector3.Slerp(_coinAmountParticle.transform.localPosition,
@@ -122,11 +102,14 @@ namespace VR.Poke
             _coinAmountParticle.SetActive(false);
             _coinAmountParticle.transform.localScale = Vector3.zero;
             _coinAmountParticle.transform.localPosition = coinLocalPosInit;
+            _toolTip.gameObject.SetActive(true);
             
             // _rewardObject.SetActive(false);
             //start timer again 
-            
+
             EventManager.OnRewardClaimed();
+            _rewarded = true;
+            RewardClaimed();
         }
     }
 }

@@ -75,6 +75,8 @@ namespace General
             if (hoursPassed >= _timePassedNeeded)
             {
                 rewardClaimed = false;
+                await SaveToCloud(data, "LastDateTime", DateTime.Now.ToString());
+                await SaveToCloud(data, "RewardClaimed", rewardClaimed.ToString());
                 EventManager.OnTimerEnded();
                 //update Text here to now can reward! 
             }

@@ -10,7 +10,6 @@ namespace General.Services
     {
         public string _playerId;
         public PlayerData playerData;
-        public static SaveClient Client = new SaveClient();
         private TimeManager timeManager;
 
         private async void Awake()
@@ -21,10 +20,14 @@ namespace General.Services
             await UnityServices.InitializeAsync();
             await SignInAnon();
             SetupEvents();
-            await playerData.LoadData();
-            Client.Init();
-            await timeManager.StartTimer();
+            await playerData.LoadData();await timeManager.StartTimer();
         }
+
+        // private async void Start()
+        // {
+        //     await UnityServices.InitializeAsync();
+        //     await timeManager.StartTimer();
+        // }
 
         private void SetupEvents()
         {
