@@ -10,9 +10,9 @@ namespace General.Services
 {
     public class EconomyManager : MonoBehaviour
     {
-        public string name;
+        [FormerlySerializedAs("name")] public string key;
         public float value;
-        [FormerlySerializedAs("_lastAddedValue")] public float lastAddedValue;
+       public float lastAddedValue;
         public static EconomyManager Instance { get; private set; }
 
         void Awake()
@@ -29,10 +29,6 @@ namespace General.Services
 
         public async Task RefreshEconomyConfiguration()
         {
-            // Calling SyncConfigurationAsync(), will update the cached configuration list (the lists of Currency,
-            // Inventory Item, and Purchase definitions) with any definitions that have been published or changed by
-            // Economy or overriden by Game Overrides since the last time the player's configuration was cached. It also
-            // ensures that other services like Cloud Code are working with the same configuration that has been cached.
             await EconomyService.Instance.Configuration.SyncConfigurationAsync();
         }
 
@@ -48,12 +44,6 @@ namespace General.Services
             {
                 balanceResult = await Utils.RetryEconomyFunction(GetEconomyBalances, e.RetryAfter);
             }
-            catch (Exception e)
-            {
-                Debug.Log("Problem getting Economy currency balances:");
-                Debug.LogException(e);
-            }
-
             if (this == null) return;
 
             SetBalances(balanceResult);
@@ -72,18 +62,10 @@ namespace General.Services
                     currenciesString.Append($", {balance.CurrencyId}:{balance.Balance}");
                 }
 
-                name = balance.CurrencyId;
+                key = balance.CurrencyId;
                 value = balance.Balance;
             }
 
-            if (currenciesString.Length > 0)
-            {
-                Debug.Log($"Currency balances updated. Value(s): {currenciesString.Remove(0, 2)}");
-            }
-            else
-            {
-                Debug.Log("Currency balances updated -- none found.");
-            }
             EventManager.OnEconomyUpdated();
         }
 

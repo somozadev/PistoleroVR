@@ -106,13 +106,13 @@ public class MovementVR : LocomotionProvider
 
     /// <summary>
     /// Unity calls <see cref="FixedUpdate"/> around 50 times per second, used for physics and avoid jittering.
-    /// Saves input from both hands in <paramref name="inputL"/> and <paramref name="inputR"/> respectively. With it,
-    /// calls <see cref="ComputeDesiredDirection"/> with left input to get <paramref name="translationInWorldSpace"/> the direction of the movement.
+    /// Saves input from both hands in <paramref key="inputL"/> and <paramref key="inputR"/> respectively. With it,
+    /// calls <see cref="ComputeDesiredDirection"/> with left input to get <paramref key="translationInWorldSpace"/> the direction of the movement.
     /// Finally, calls <see cref="MoveRig"/> passing both the direction and the right input in order to move the character by physics.
     /// </summary>
-    /// <param name="inputL"> Left hand controller input value </param>
-    /// <param name="inputR"> Right hand controller input value </param>
-    /// <param name="translationInWorldSpace"> Desired direction of the movement </param>
+    /// <param key="inputL"> Left hand controller input value </param>
+    /// <param key="inputR"> Right hand controller input value </param>
+    /// <param key="translationInWorldSpace"> Desired direction of the movement </param>
     protected void FixedUpdate()
     {
         var inputL = ReadInputLeftHand();
@@ -144,7 +144,7 @@ public class MovementVR : LocomotionProvider
     /// given by the extra rotation from the <see cref="ReadInputRightHand"/>.
     /// In other words, sets the orientation gameobject to the camera looking orientation on the Y axis. 
     /// </summary>
-    ///<param name="localEulerAngles"> stores the vector3 of the localEulerAngles of the <see cref="_orientationTrf"/></param>
+    ///<param key="localEulerAngles"> stores the vector3 of the localEulerAngles of the <see cref="_orientationTrf"/></param>
     protected virtual void SetOrientationWithCam()
     {
         var localEulerAngles = _orientationTrf.localEulerAngles;
@@ -156,9 +156,9 @@ public class MovementVR : LocomotionProvider
     }
 
     /// <summary>
-    /// Applies a force to the main rigidbody <see cref="_moveRb"/> on the given <paramref name="direction"/>
+    /// Applies a force to the main rigidbody <see cref="_moveRb"/> on the given <paramref key="direction"/>
     /// </summary>
-    /// <param name="direction"> Desired direction of the movement</param>
+    /// <param key="direction"> Desired direction of the movement</param>
     private void Move(Vector3 direction) => _moveRb.AddForce(direction, ForceMode.Force);
 
     public void UpadteRotationType(RotationType type)
@@ -170,8 +170,8 @@ public class MovementVR : LocomotionProvider
     /// <summary>
     /// Rotates the camera parent object <see cref="_cameraHolder"/> in the Y axis with a given speed.
     /// </summary>
-    /// <param name="rotSpeedFinal">Based on given rotSpeed value, calculares if it should be positive or negative based on the <paramref name="inputRight"/> x value</param>
-    /// <param name="inputRight">The Vector2 of the current right hand input, calculated in <see cref="ReadInputRightHand()"/></param>
+    /// <param key="rotSpeedFinal">Based on given rotSpeed value, calculares if it should be positive or negative based on the <paramref key="inputRight"/> x value</param>
+    /// <param key="inputRight">The Vector2 of the current right hand input, calculated in <see cref="ReadInputRightHand()"/></param>
     private void Rotate(Vector2 inputRight)
     {
         var rotSpeedFinal = rotSpeed;
@@ -215,12 +215,12 @@ public class MovementVR : LocomotionProvider
 
 
     /// <summary>
-    /// Calculates the direction of the movement based on the <paramref name="inputRight"/> value and the <see cref="_orientationTrf"/> tranasform
+    /// Calculates the direction of the movement based on the <paramref key="inputRight"/> value and the <see cref="_orientationTrf"/> tranasform
     /// </summary>
     /// 
-    /// <param name="input">The vector2 value of the current left hand input. Calculated in  <see cref="ReadInputLeftHand()"/></param>
-    /// <param name="forwardDir">A vector3 based on the forward direction of the <see cref="_orientationTrf"/> and the <paramref name="input"/></param>
-    /// <param name="moveDirection">The final vector3 direction, normalizing <paramref name="forwardDir"/> and multiplying it by a constant 1000, the <see cref="speed"/> and <see cref="Time.fixedDeltaTime"/></param>
+    /// <param key="input">The vector2 value of the current left hand input. Calculated in  <see cref="ReadInputLeftHand()"/></param>
+    /// <param key="forwardDir">A vector3 based on the forward direction of the <see cref="_orientationTrf"/> and the <paramref key="input"/></param>
+    /// <param key="moveDirection">The final vector3 direction, normalizing <paramref key="forwardDir"/> and multiplying it by a constant 1000, the <see cref="speed"/> and <see cref="Time.fixedDeltaTime"/></param>
     /// <returns></returns>
     private Vector3 ComputeDesiredDirection(Vector2 input)
     {
@@ -253,13 +253,13 @@ public class MovementVR : LocomotionProvider
 
     /// <summary>
     /// If the locomotion system allows it by <see cref="LocomotionProvider.CanBeginLocomotion"/> and <see cref="LocomotionProvider.BeginLocomotion"/>
-    /// and the control bool <see cref="canMove"/> is true, <see cref="Move"/> will be called, passing in the direction <paramref name="translationInWorldSpace"/>
-    /// and if the control bool <see cref="canRotate"/> is true, <see cref="Rotate"/> will be called, passing in the value of  <paramref name="inputRight"/>.
+    /// and the control bool <see cref="canMove"/> is true, <see cref="Move"/> will be called, passing in the direction <paramref key="translationInWorldSpace"/>
+    /// and if the control bool <see cref="canRotate"/> is true, <see cref="Rotate"/> will be called, passing in the value of  <paramref key="inputRight"/>.
     ///
     /// As well as calling <see cref="SetOrientationWithCam"/>, <see cref="MoveCam"/> and <see cref="LocomotionProvider.EndLocomotion"/> in that order.
     /// </summary>
-    /// <param name="translationInWorldSpace">Direction calculated in <see cref="ComputeDesiredDirection"/></param>
-    /// <param name="inputRight">Input value of the right hand, calculated in <see cref="ReadInputRightHand"/></param>
+    /// <param key="translationInWorldSpace">Direction calculated in <see cref="ComputeDesiredDirection"/></param>
+    /// <param key="inputRight">Input value of the right hand, calculated in <see cref="ReadInputRightHand"/></param>
     private void MoveRig(Vector3 translationInWorldSpace, Vector2 inputRight)
     {
         if (CanBeginLocomotion() && BeginLocomotion())

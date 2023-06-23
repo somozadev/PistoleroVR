@@ -19,11 +19,12 @@ namespace VR.Poke
 
         [SerializeField] private XRBaseInteractable[] _hats;
         [SerializeField] private TMP_Text[] _hatsUI;
+        [SerializeField] private int[] _hatsPrices;
+
         [SerializeField] private Transform _light;
-
-
-        [SerializeField] private GameObject _selectedHat;
-
+        [SerializeField] public GameObject selectedHat;
+        public XRBaseInteractable[] Hats => _hats;
+        public TMP_Text[] HatsUI => _hatsUI;
 
         [SerializeField] private AnimationCurve _animationCurveHover = new(
             new Keyframe(0, 0),
@@ -36,105 +37,216 @@ namespace VR.Poke
             OnEnable();
         }
 
-        private void OnEnable() { EventManager.EconomyUpdated += UpdateCurrentBalance; }
-        private void OnDisable() { EventManager.EconomyUpdated -= UpdateCurrentBalance; }
+        private void OnEnable()
+        {
+            UpdateShop();
+            UpdateCurrentBalance();
+            EventManager.EconomyUpdated += UpdateCurrentBalance;
+            EventManager.PlayerDataLoaded += UpdateShop;
+        }
+
+        private void UpdateShop()
+        {
+            try
+            {
+                bool[] uhats = GameManager.Instance.players[0].PlayerData._unlockedHats;
+                for (int i = 0; i < _hats.Length; i++)
+                {
+                    if (uhats[i + 1])
+                    {
+                        if (_hats[i].isActiveAndEnabled)
+                        {
+                            _hats[i].gameObject.SetActive(false);
+                            _hatsUI[i].gameObject.SetActive(false);
+                            _hatsPrices[i] = 0;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public void HatBought()
+        {
+            for (int i = 0; i < _hats.Length; i++)
+            {
+                if (selectedHat == _hats[i].transform.gameObject)
+                {
+                    _hatsUI[i].gameObject.SetActive(false);
+                    _hats[i].gameObject.SetActive(false);
+                }
+            }
+        }
+
+        private void OnDisable()
+        {
+            EventManager.EconomyUpdated -= UpdateCurrentBalance;
+            EventManager.PlayerDataLoaded += UpdateShop;
+        }
 
         private void UpdateCurrentBalance()
         {
-            Debug.LogError($"your balance<color=orange> { EconomyManager.Instance.value.ToString(CultureInfo.InvariantCulture)} $ </color>");
-            currentBalance.text = $"your balance<color=orange> { EconomyManager.Instance.value.ToString(CultureInfo.InvariantCulture)} $ </color>";
+            Debug.LogError(
+                $"your balance <color=orange> {EconomyManager.Instance.value.ToString(CultureInfo.InvariantCulture)} $");
+            currentBalance.text =
+                $"your balance <color=orange> {EconomyManager.Instance.value.ToString(CultureInfo.InvariantCulture)} $";
         }
 
         private void Start()
+        {
+            for (int i = 0; i < _hatsPrices.Length; i++)
+                _hatsUI[i].text = _hatsPrices[i] + " $";
+
+            foreach (var hat in _hats)
             {
-                foreach (var hat in _hats)
+                if (hat.isActiveAndEnabled)
                 {
                     hat.hoverEntered.AddListener(HoverEnterHat);
                     hat.hoverExited.AddListener(HoverExitHat);
                     hat.selectEntered.AddListener(SelectHat);
                 }
             }
+        }
 
-
-            public void HoverEnterHat(BaseInteractionEventArgs args)
+        public int GetSelectedHatPrice()
+        {
+            int returner = 0;
+            for (int i = 0; i < _hats.Length; i++)
             {
-                if (args.interactorObject is XRRayInteractor)
-                {
-                    var hat = args.interactableObject;
-                    StartCoroutine(HatHoverEnterAnim(hat));
-                }
+                if (selectedHat == _hats[i].transform.gameObject)
+                    returner = _hatsPrices[i];
             }
 
-            public void HoverExitHat(BaseInteractionEventArgs args)
+            return returner;
+        }
+
+        public int GetSelectedHatId()
+        {
+            int id = 0;
+            for (int i = 0; i < _hats.Length; i++)
             {
-                if (args.interactorObject is XRRayInteractor)
-                {
-                    var hat = args.interactableObject;
-                    StartCoroutine(HatHoverExitAnim(hat));
-                }
+                if (selectedHat == _hats[i].transform.gameObject)
+                    id = i+1;
             }
 
-            public void SelectHat(BaseInteractionEventArgs args)
+            return id;
+        }
+
+        private int GetSelectedHatPrice(int id)
+        {
+            int returner = 0;
+            for (int i = 0; i < _hats.Length; i++)
             {
-                if (args.interactorObject is XRRayInteractor)
-                {
-                    var hat = args.interactableObject;
-                    StartCoroutine(HatSelectedAnim(hat));
-                    UpdateHatText(hat);
-                    _selectedHat = hat.transform.gameObject;
-                }
+                if (i == id)
+                    returner = _hatsPrices[i];
             }
 
-            private void UpdateHatText(IXRInteractable hat)
-            {
-                for (int i = 0; i < _hats.Length; i++)
-                {
-                    if (_hats[i].gameObject == hat.transform.gameObject)
-                    {
-                        string currentText = _hatsUI[i].text;
-                    }
-                }
-            }
+            return returner;
+        }
 
-            private IEnumerator HatHoverEnterAnim(IXRInteractable hat)
+        public void HoverEnterHat(BaseInteractionEventArgs args)
+        {
+            if (args.interactorObject is XRRayInteractor)
             {
-                var elapsedTime = 0f;
-                while (elapsedTime < 1)
-                {
-                    elapsedTime += Time.deltaTime;
-                    var curvePercent = _animationCurveHover.Evaluate(elapsedTime / 1f);
-                    hat.transform.localScale =
-                        Vector3.Slerp(hat.transform.localScale, new Vector3(120, 120, 120), curvePercent);
-                    yield return null;
-                }
+                var hat = args.interactableObject;
+                StartCoroutine(HatHoverEnterAnim(hat));
             }
+        }
 
-            private IEnumerator HatHoverExitAnim(IXRInteractable hat)
+        public void HoverExitHat(BaseInteractionEventArgs args)
+        {
+            if (args.interactorObject is XRRayInteractor)
             {
-                var elapsedTime = 0f;
-                while (elapsedTime < 1)
-                {
-                    elapsedTime += Time.deltaTime;
-                    var curvePercent = _animationCurveHover.Evaluate(elapsedTime / 1f);
-                    hat.transform.localScale =
-                        Vector3.Slerp(hat.transform.localScale, new Vector3(100, 100, 100), curvePercent);
-                    yield return null;
-                }
+                var hat = args.interactableObject;
+                ResetHatText(hat);
+                StartCoroutine(HatHoverExitAnim(hat));
             }
+        }
 
-            private IEnumerator HatSelectedAnim(IXRInteractable hat)
+        public void SelectHat(BaseInteractionEventArgs args)
+        {
+            if (args.interactorObject is XRRayInteractor)
             {
-                _light.gameObject.SetActive(true);
-                hat.transform.localScale = new Vector3(120, 120, 120);
-                var elapsedTime = 0f;
-                while (elapsedTime < 1)
+                var hat = args.interactableObject;
+                StartCoroutine(HatSelectedAnim(hat));
+                UpdateHatText(hat);
+                selectedHat = hat.transform.gameObject;
+            }
+        }
+
+        private void ResetHatText(IXRInteractable hat)
+        {
+            for (int i = 0; i < _hats.Length; i++)
+            {
+                if (_hats[i].gameObject != hat.transform.gameObject)
                 {
-                    elapsedTime += Time.deltaTime;
-                    var newDirection = Vector3.RotateTowards(_light.forward, (hat.transform.position - _light.position),
-                        elapsedTime / 1f, 0f);
-                    _light.rotation = Quaternion.LookRotation(newDirection);
-                    yield return null;
+                    TMP_Text currentText = _hatsUI[i];
+                    currentText.text = GetSelectedHatPrice(i) + " $";
                 }
             }
         }
+
+        private void UpdateHatText(IXRInteractable hat)
+        {
+            for (int i = 0; i < _hats.Length; i++)
+            {
+                if (_hats[i].gameObject == hat.transform.gameObject)
+                {
+                    TMP_Text currentText = _hatsUI[i];
+                    if (EconomyManager.Instance.value >= GetSelectedHatPrice(i))
+                    {
+                        currentText.text = $"<color=green>{currentText.text}";
+                    }
+                    else
+                    {
+                        currentText.text = $"<color=red>{currentText.text}";
+                    }
+                }
+            }
+        }
+
+        private IEnumerator HatHoverEnterAnim(IXRInteractable hat)
+        {
+            var elapsedTime = 0f;
+            while (elapsedTime < 1)
+            {
+                elapsedTime += Time.deltaTime;
+                var curvePercent = _animationCurveHover.Evaluate(elapsedTime / 1f);
+                hat.transform.localScale =
+                    Vector3.Slerp(hat.transform.localScale, new Vector3(120, 120, 120), curvePercent);
+                yield return null;
+            }
+        }
+
+        private IEnumerator HatHoverExitAnim(IXRInteractable hat)
+        {
+            var elapsedTime = 0f;
+            while (elapsedTime < 1)
+            {
+                elapsedTime += Time.deltaTime;
+                var curvePercent = _animationCurveHover.Evaluate(elapsedTime / 1f);
+                hat.transform.localScale =
+                    Vector3.Slerp(hat.transform.localScale, new Vector3(100, 100, 100), curvePercent);
+                yield return null;
+            }
+        }
+
+        private IEnumerator HatSelectedAnim(IXRInteractable hat)
+        {
+            _light.gameObject.SetActive(true);
+            hat.transform.localScale = new Vector3(120, 120, 120);
+            var elapsedTime = 0f;
+            while (elapsedTime < 1)
+            {
+                elapsedTime += Time.deltaTime;
+                var newDirection = Vector3.RotateTowards(_light.forward, (hat.transform.position - _light.position),
+                    elapsedTime / 1f, 0f);
+                _light.rotation = Quaternion.LookRotation(newDirection);
+                yield return null;
+            }
+        }
     }
+}

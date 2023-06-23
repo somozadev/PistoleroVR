@@ -9,11 +9,11 @@ namespace General
     [Serializable]
     public class PlayerData : MonoBehaviour
     {
-        public int _economy;
+        public int _economy; //not saved economy currency but ingame economy (0 each new run)
         public int _kills;
         public int _runs;
         public bool[] _unlockedHats;
-
+        public int _selectedHat;
 
         public void Buy(int price)
         {
@@ -23,17 +23,49 @@ namespace General
                 _economy -= price;
         }
 
+        public void Gain(int amount)
+        {
+            _economy += amount;
+        }
+
+        public async void UnlockHat(int price, int id)
+        {
+            _unlockedHats[id] = true;
+            await GameManager.Instance.gameServices.CallToSubstractEconomyToPlayer(price);
+            await SaveData();
+        }
+
+        public async void SetSelectHat(int id)
+        {
+            _selectedHat = id;
+            UpdateHatSelected();
+            await SaveData();
+            EventManager.OnPlayerDataLoaded();
+        }
+
+        public void UpdateHatSelected()
+        {
+            GetComponent<CharacterCustomization>().SetHatWithIndex(_selectedHat);
+        }
+
+        private async void OnApplicationQuit()
+        {
+            await SaveData();
+        }
+
         [ContextMenu("SaveData")]
         public async Task SaveData()
         {
+            _unlockedHats ??= new bool[] { true, false, false, false };
             var data = new Dictionary<string, object>
-                { { "Economy", _economy }, { "Kills", _kills }, { "Runs", _runs }, { "Hats", _unlockedHats } };
+                { { "Kills", _kills }, { "Runs", _runs }, { "Hats", _unlockedHats }, { "SelectedHat", _selectedHat } };
             await CloudSaveService.Instance.Data.ForceSaveAsync(data);
+            
         }
 
         public override string ToString()
         {
-            return "Economy: " + _economy + "Kills: " + _kills + "Runs: " + _runs + "UnlockedHats: " + _unlockedHats;
+            return "Kills: " + _kills + "Runs: " + _runs + "UnlockedHats: " + _unlockedHats;
         }
 
         [ContextMenu("LoadData")]
@@ -44,15 +76,18 @@ namespace General
             Debug.Log("DATA: " + data);
             foreach (var (key, value) in data)
             {
-                if (key == "Economy")
-                    _economy = int.Parse(value);
                 if (key == "Kills")
                     _kills = int.Parse(value);
                 if (key == "Runs")
                     _runs = int.Parse(value);
                 if (key == "Hats")
                     _unlockedHats = StringToBoolArray(value);
+                if (key == "SelectedHat")
+                    _selectedHat = int.Parse(value);
             }
+
+            UpdateHatSelected();
+            EventManager.OnPlayerDataLoaded();
         }
 
         private bool[] StringToBoolArray(string str)

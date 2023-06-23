@@ -28,10 +28,13 @@ namespace General
             EventManager.RewardClaimed -= RewardClaimed;
         }
 
-        private void RewardClaimed()
+        private async void RewardClaimed()
         {
             rewardClaimed = true;
             lastDateTime = DateTime.Now;
+            if (!rewardClaimed)
+                await SaveToCloud(data, "LastDateTime", DateTime.Now.ToString());
+            await SaveToCloud(data, "RewardClaimed", rewardClaimed.ToString());
         }
 
         public async Task StartTimer()

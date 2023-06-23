@@ -15,7 +15,7 @@ namespace VR.Poke
         [SerializeField] private GameObject _rewardObject;
         [SerializeField] private TMP_Text _pannelText;
 
-        private TimeManager _timer;
+        [SerializeField] private TimeManager _timer;
         [SerializeField] private XRBaseInteractable _interactable;
         [SerializeField] private GameObject _toolTip;
         [SerializeField] private GameObject _coinAmountParticle;

@@ -1,7 +1,6 @@
-using System;
+using General.Services;
 using General.Sound;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace VR.Poke
@@ -10,7 +9,8 @@ namespace VR.Poke
     {
         [SerializeField] private Transform _visualTarget;
         [SerializeField] private Vector3 _localAxis;
-
+        [SerializeField] private HatSelect hats;
+        [SerializeField] private HatsInventory hatsInventory;
         [SerializeField] private float _followAngleTreshold;
         [SerializeField] private float _resetSpeed = 5;
         private Vector3 _initiaLocalPos;
@@ -60,12 +60,27 @@ namespace VR.Poke
             }
         }
 
-        private void Freeze(BaseInteractionEventArgs args)
+        private async void Freeze(BaseInteractionEventArgs args)
         {
             if (args.interactorObject is XRPokeInteractor)
             {
                 _freeze = true;
                 AudioManager.Instance.PlayOneShot("UiTap");
+                if (hats.selectedHat != null)
+                {
+                    int price = hats.GetSelectedHatPrice();
+                    int id = hats.GetSelectedHatId();
+                   
+                    if(price > EconomyManager.Instance.value)
+                        return;
+                    
+                    GameManager.Instance.players[0].PlayerData.UnlockHat(price, id);
+                    
+                    hats.HatBought();
+                    hatsInventory.LoadHats();
+                    hats.selectedHat = null;
+                }
+                
             }
         }
 

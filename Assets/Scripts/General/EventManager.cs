@@ -19,6 +19,10 @@ namespace General
         public delegate void OnTimerEndedEventHandler();
 
         public static event OnTimerEndedEventHandler TimerEnded;
+        
+        public delegate void OnPlayerDataLoadedHandler();
+
+        public static event OnPlayerDataLoadedHandler PlayerDataLoaded;
 
         public delegate void OnLoadingStartsEventHandler();
 
@@ -47,6 +51,10 @@ namespace General
             TimerEnded?.Invoke();
         }
 
+        public static void OnPlayerDataLoaded()
+        {
+            PlayerDataLoaded?.Invoke();
+        }
         public static void OnLoadingEnds()
         {
             LoadingEnds?.Invoke();

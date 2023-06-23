@@ -43,6 +43,53 @@ namespace General.Services
             }
         }
 
+        public async Task CallSubstractMoneyFromPlayerEndpoint(int amount)
+        {
+            try
+            {
+                if (!AuthenticationService.Instance.IsSignedIn)
+                    throw new CloudCodeResultUnavailableException(null,"Not logged in to authentication in CallGrantRandomCurrencyEndpoint.");
+
+                var grantResult = await CloudCodeService.Instance.CallEndpointAsync<SubstractGivenCurrencyResult>(
+                    "SubstractMoneyFromPlayer",
+                    new Dictionary<string, object> { { "amount", amount } });
+
+                if (this == null) return;
+
+                Debug.Log("CloudCode script substracted currency id: " +
+                          $"{grantResult.currencyId} amount: {grantResult.amount}");
+            }
+            catch (CloudCodeException e)
+            {
+                HandleCloudCodeException(e);
+                throw new CloudCodeResultUnavailableException(e,
+                    "Handled exception in CallGrantRandomCurrencyEndpoint.");
+            }
+        }
+        public async Task CallAddMoneyFromPlayerEndpoint(int amount)
+        {
+            try
+            {
+                if (!AuthenticationService.Instance.IsSignedIn)
+                    throw new CloudCodeResultUnavailableException(null,"Not logged in to authentication in CallGrantRandomCurrencyEndpoint.");
+
+                var grantResult = await CloudCodeService.Instance.CallEndpointAsync<SubstractGivenCurrencyResult>(
+                    "AddMoneyToPlayer",
+                    new Dictionary<string, object> { { "amount", amount } });
+
+                if (this == null) return;
+
+                Debug.Log("CloudCode script substracted currency id: " +
+                          $"{grantResult.currencyId} amount: {grantResult.amount}");
+            }
+            catch (CloudCodeException e)
+            {
+                HandleCloudCodeException(e);
+                throw new CloudCodeResultUnavailableException(e,
+                    "Handled exception in CallGrantRandomCurrencyEndpoint.");
+            }
+        }
+
         public async Task CallGrantRandomCurrencyEndpoint()
         {
             try
@@ -156,6 +203,12 @@ namespace General.Services
 
         // Struct used to receive result from Cloud Code.
         public struct GrantRandomCurrencyResult
+        {
+            public string currencyId;
+            public int amount;
+        }
+        
+        public struct SubstractGivenCurrencyResult
         {
             public string currencyId;
             public int amount;
