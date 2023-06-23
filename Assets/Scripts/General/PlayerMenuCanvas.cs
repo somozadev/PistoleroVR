@@ -19,6 +19,9 @@ namespace General
         private Toggle _rotationToggle;
 
 
+        public TMP_Text playerIdText;
+
+
         private void OnValidate()
         {
             if (_canvas == null)
