@@ -13,7 +13,8 @@ namespace VR.Poke
         public void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
-            initialMats = _renderer.materials;
+            if (initialMats == null)
+                initialMats = _renderer.materials;
         }
 
         public bool ImAvailable() => _available;

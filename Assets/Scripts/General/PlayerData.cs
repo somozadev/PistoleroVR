@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Services.CloudSave;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 namespace General
 {
@@ -12,7 +14,7 @@ namespace General
         public int _economy; //not saved economy currency but ingame economy (0 each new run)
         public int _kills;
         public int _runs;
-        public bool[] _unlockedHats;
+        public bool[] _unlockedHats = new bool[4];
         public int _selectedHat;
 
         public void Buy(int price)
@@ -53,6 +55,18 @@ namespace General
             await SaveData();
         }
 
+        private async void OnApplicationFocus(bool hasFocus)
+        {
+            if (!hasFocus)
+                await SaveData();
+        }
+
+        private async void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+                await SaveData();
+        }
+
         [ContextMenu("SaveData")]
         public async Task SaveData()
         {
@@ -60,7 +74,6 @@ namespace General
             var data = new Dictionary<string, object>
                 { { "Kills", _kills }, { "Runs", _runs }, { "Hats", _unlockedHats }, { "SelectedHat", _selectedHat } };
             await CloudSaveService.Instance.Data.ForceSaveAsync(data);
-            
         }
 
         public override string ToString()
@@ -73,7 +86,7 @@ namespace General
         {
             var data = await CloudSaveService.Instance.Data.LoadAllAsync();
 
-            Debug.Log("DATA: " + data);
+            // Debug.Log("DATA: " + data);
             foreach (var (key, value) in data)
             {
                 if (key == "Kills")

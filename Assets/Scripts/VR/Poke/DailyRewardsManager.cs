@@ -5,7 +5,6 @@ using General;
 using General.Services;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace VR.Poke
@@ -28,13 +27,12 @@ namespace VR.Poke
             new Keyframe(1, 1)
         );
 
-        private bool _rewarded = false;
+        public bool _rewarded;
 
         private void OnEnable()
         {
             _timer = GameManager.Instance.GetComponent<TimeManager>();
             coinLocalPosInit = _coinAmountParticle.transform.localPosition;
- 
             _interactable.selectEntered.AddListener(Select);
             EventManager.TimerStarted += RewardClaimed;
             EventManager.TimerEnded += RewardClaimed;

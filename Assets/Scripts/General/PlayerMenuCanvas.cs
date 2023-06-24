@@ -22,7 +22,7 @@ namespace General
         public TMP_Text playerIdText;
 
 
-        private void OnValidate()
+        private void Awake()
         {
             if (_canvas == null)
             {

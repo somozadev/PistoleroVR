@@ -14,7 +14,7 @@ namespace General.Services
 
         private async void Awake()
         {
-            await Task.Delay(1000);
+            // await Task.Delay(1000);
             timeManager = GetComponent<TimeManager>();
             if (playerData == null)
                 playerData = FindObjectOfType<PlayerData>();
@@ -23,7 +23,7 @@ namespace General.Services
             SetupEvents();
             await playerData.LoadData();
             await timeManager.StartTimer();
-        }
+         }
 
         private void SetupEvents()
         {

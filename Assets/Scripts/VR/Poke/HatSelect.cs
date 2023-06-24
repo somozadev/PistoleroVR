@@ -89,8 +89,8 @@ namespace VR.Poke
 
         private void UpdateCurrentBalance()
         {
-            Debug.LogError(
-                $"your balance <color=orange> {EconomyManager.Instance.value.ToString(CultureInfo.InvariantCulture)} $");
+            // Debug.LogError(
+            //     $"your balance <color=orange> {EconomyManager.Instance.value.ToString(CultureInfo.InvariantCulture)} $");
             currentBalance.text =
                 $"your balance <color=orange> {EconomyManager.Instance.value.ToString(CultureInfo.InvariantCulture)} $";
         }

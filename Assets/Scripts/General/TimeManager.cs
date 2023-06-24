@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Services.CloudSave;
 using UnityEngine;
+using VR.Poke;
 
 namespace General
 {
     public class TimeManager : MonoBehaviour
     {
+
+        [SerializeField] private DailyRewardsManager _dailyRewardsManager;
+        
         public bool rewardClaimed;
 
         private bool allThingsLoaded = false;
@@ -32,8 +36,7 @@ namespace General
         {
             rewardClaimed = true;
             lastDateTime = DateTime.Now;
-            if (!rewardClaimed)
-                await SaveToCloud(data, "LastDateTime", DateTime.Now.ToString());
+            await SaveToCloud(data, "LastDateTime", DateTime.Now.ToString());
             await SaveToCloud(data, "RewardClaimed", rewardClaimed.ToString());
         }
 
@@ -54,6 +57,10 @@ namespace General
 
             EventManager.OnTimerStarted();
             allThingsLoaded = true;
+            _dailyRewardsManager._rewarded = rewardClaimed;
+            _dailyRewardsManager.gameObject.SetActive(true);
+
+            
         }
 
         private async void OnApplicationQuit()

@@ -9,6 +9,7 @@ namespace VR.Poke
         [SerializeField] private GameObject hatsShop;
         [SerializeField] private GameObject hatsShopButton;
         [SerializeField] private GameObject hatsInventory;
+        [SerializeField] private GameObject currentHatDisplay;
 
         private void OnEnable()
         {
@@ -27,11 +28,10 @@ namespace VR.Poke
 
         private void ActivateSystems()
         {
-            Debug.Log("HATS CALLED");
-
             hatsShop.SetActive(true);
             hatsShopButton.SetActive(true);
             hatsInventory.SetActive(true);
+            currentHatDisplay.SetActive(true);
         }
     }
 }
