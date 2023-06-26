@@ -275,8 +275,17 @@ public class MovementVR : LocomotionProvider
             }
 
             SetOrientationWithCam();
-            MoveCam();
+            // MoveCam();
             EndLocomotion();
         }
     }
+
+
+
+    public void ResetTo(Transform target)
+    {
+        _xrOrigin.MoveCameraToWorldLocation(target.position);
+        _xrOrigin.MatchOriginUpCameraForward(target.up, target.forward);
+    }
+    
 }

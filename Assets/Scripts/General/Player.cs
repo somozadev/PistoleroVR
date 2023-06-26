@@ -14,13 +14,18 @@ namespace General
         [SerializeField] private XRInteractorLineVisual _leftHand;
         [SerializeField] private XRInteractorLineVisual _rightHand;
         [SerializeField] private PlayerData _playerData;
-
+        [SerializeField] private PlayerHealth _playerHealth;
+        [SerializeField] private CountdownPlayerCanvas _countdownPlayerCanvas;
+        [SerializeField] private PlayerIngameCanvas _playerIngameCanvas;
         public XRBaseController leftController;
         public XRBaseController rightController;
         
         public PlayerData PlayerData => _playerData;
         public MovementVR PlayerMovement => _movementVR;
+        public PlayerHealth PlayerHealth => _playerHealth;
 
+        public CountdownPlayerCanvas CountdownPlayerCanvas => _countdownPlayerCanvas;
+        public PlayerIngameCanvas PlayerIngameCanvas => _playerIngameCanvas;
 
         [Header("current item in hands")] 
         [SerializeField] public GameObject leftHandItem;
@@ -28,12 +33,14 @@ namespace General
      
         private void Awake()
         {
+            _playerHealth = GetComponentInChildren<PlayerHealth>();
             _playerData = GetComponent<PlayerData>();
             _movementVR = GetComponentInChildren<MovementVR>();
             _rigVR = GetComponentInChildren<RigVR>();
             _characterCustomization = GetComponent<CharacterCustomization>();
             _leftHand = GetComponentsInChildren<XRInteractorLineVisual>()[1];
             _rightHand = GetComponentsInChildren<XRInteractorLineVisual>()[0];
+            _countdownPlayerCanvas = GetComponent<CountdownPlayerCanvas>();
         }
 
         private void OnValidate()

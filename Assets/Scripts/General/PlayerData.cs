@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Unity.Services.CloudSave;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
+using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace General
@@ -11,11 +12,20 @@ namespace General
     [Serializable]
     public class PlayerData : MonoBehaviour
     {
+        [SerializeField] private PlayerIngameCanvas _ingameCanvas;
+
+
         public int _economy; //not saved economy currency but ingame economy (0 each new run)
         public int _kills;
         public int _runs;
         public bool[] _unlockedHats = new bool[4];
         public int _selectedHat;
+
+        private void Awake()
+        {
+            _ingameCanvas = GetComponentInChildren<PlayerIngameCanvas>();
+        }
+
 
         public void Buy(int price)
         {
@@ -23,11 +33,14 @@ namespace General
                 _economy = 0;
             else
                 _economy -= price;
+
+            _ingameCanvas.UpdateEconomy(_economy);
         }
 
         public void Gain(int amount)
         {
             _economy += amount;
+            _ingameCanvas.UpdateEconomy(_economy);
         }
 
         public async void UnlockHat(int price, int id)

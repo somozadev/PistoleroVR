@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using General;
 using UnityEngine;
 
 namespace Enemies.BT
@@ -9,22 +11,25 @@ namespace Enemies.BT
         
         private EntitiesManager _entitiesManager;
 
-        public delegate void NewWave();
-
-        public event NewWave OnNewWave;
-
         public Transform target;
+
+        public int WaveNumber => _wave; 
+        
         private void Awake()
         {
             _entitiesManager = GetComponentInChildren<EntitiesManager>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            _entitiesManager.SetupForNewWave(_wave);
-            _entitiesManager.InstantiateEntities();
+            EventManager.NewWave+= StartNewWave;
         }
-        
+
+        private void OnDisable()
+        {
+            EventManager.NewWave-= StartNewWave;
+        }
+
         [ContextMenu("StartNewWave")]
         private void StartNewWave()
         {

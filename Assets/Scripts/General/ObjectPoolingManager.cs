@@ -28,16 +28,15 @@ namespace General
         public ObjectPooling GetNewObjectPool(string name, ref GameObject prefab, int amount)
         {
             if (IsPoolCreated(name)) return objectPools.FirstOrDefault(p => p.Key == name).Value;
-            else
-            {
-                ObjectPooling pool = new GameObject(name, typeof(ObjectPooling)).GetComponent<ObjectPooling>();
-                pool.transform.SetParent(transform);
-                pool.Init(name, ids, amount, ref prefab);
-                ids++;
-                objectPools.Add(name, pool);
-                return pool;
-            }
+            
+            ObjectPooling pool = new GameObject(name, typeof(ObjectPooling)).GetComponent<ObjectPooling>();
+            pool.transform.SetParent(transform);
+            pool.Init(name, ids, amount, ref prefab);
+            ids++;
+            objectPools.Add(name, pool);
+            return pool;
         }
+        
 
         public ObjectPooling GetPoolByName(string name)
         {

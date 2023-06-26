@@ -12,18 +12,18 @@ namespace General.Damageable
         private void Awake()
         {
             _animator = GetComponent<Animator>();
-            _health = 1;
+            // _health = 1;
         }
 
         public override void Damage(BaseGun baseGun)
         {
-            _health -= 1;
-
-            if (_health <= 0)
-            {
+            // _health -= 1;
+            //
+            // if (_health <= 0)
+            // {
                 _animator.SetTrigger("Hit");
                 StartCoroutine(SlowReset());
-            }
+            // }
         }
 
         
@@ -32,7 +32,7 @@ namespace General.Damageable
         {
             yield return new WaitForSeconds(1f);
             _animator.SetTrigger("Restore");
-            _health = 1;
+            // _health = 1;
         }
     }
 

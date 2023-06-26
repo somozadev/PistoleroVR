@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using General;
 // using NUnit.Framework;
 using UnityEngine;
 using Random = System.Random;
@@ -12,6 +13,9 @@ namespace Enemies.BT
         private int _savedToTryLaterEntitiesForNoSpace;
         public int waveMaxEntities;
 
+        [SerializeField] private ObjectPooling _entitiesPooling;
+        
+        
         private EntitySpawnPoint[] _spawnPoints;
         [SerializeField] private List<Entity> _entities;
         [SerializeField] private GameObject _prefab;
@@ -19,14 +23,31 @@ namespace Enemies.BT
         public List<Entity> Entities => _entities;
         public float JoinRange => _joinRange;
 
+        private int _waveNumber;
+
+        public void CheckIfNoMoreEntities()
+        {
+            if(_entities.Count<=0)
+            {
+                GameManager.Instance.players[0].CountdownPlayerCanvas.SetCountdownNumber(5);
+                GameManager.Instance.players[0].CountdownPlayerCanvas.NewWave();
+                
+                
+            }
+        }
+
         private void Awake()
         {
+            _entitiesPooling = GameManager.Instance.objectPoolingManager.GetNewObjectPool("entititesPooling", ref _prefab, 5);
             _spawnPoints = GetComponentsInChildren<EntitySpawnPoint>();
         }
 
         public void SetupForNewWave(int waveNumber)
         {
+            _waveNumber = waveNumber;
             waveMaxEntities = (int)(waveNumber * 1.2310f) + 2;
+            
+            
         }
 
         public void InstantiateEntities()
@@ -54,7 +75,10 @@ namespace Enemies.BT
             EntitySpawnPoint selected = GetRandomAvailableSpawnPoint();
             if (selected != null)
             {
-                _entities.Add(selected.UseToInstantiate(_prefab).GetComponent<Entity>());
+                var entity = selected.UseToInstantiate(_entitiesPooling).GetComponent<Entity>();
+                entity.AssignWavesManager(this);
+                entity.EntityHealth.BaseHealth += _waveNumber/5f;
+                _entities.Add(entity);
             }
             else
             {

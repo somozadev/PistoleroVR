@@ -1,3 +1,4 @@
+using General;
 using General.Services;
 using General.Sound;
 using UnityEngine;
@@ -60,7 +61,7 @@ namespace VR.Poke
             }
         }
 
-        private async void Freeze(BaseInteractionEventArgs args)
+        private void Freeze(BaseInteractionEventArgs args)
         {
             if (args.interactorObject is XRPokeInteractor)
             {

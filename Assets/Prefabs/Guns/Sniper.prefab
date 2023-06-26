@@ -25489,7 +25489,7 @@ MonoBehaviour:
   selector: {fileID: 0}
   _bulletSpeed: 1000
   _bulletDrop: 0
-  _bulletDamage: 0
+  _bulletDamage: 100
   _muzzleParticles: {fileID: 7918011471932299391}
   _impactParticles: {fileID: 4727234909114272960}
   _raycastOrigin: {fileID: 1549793328051504649}

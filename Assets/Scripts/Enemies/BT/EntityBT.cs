@@ -24,6 +24,16 @@ namespace Enemies.BT
             base.Init();
         }
 
+        public void StopTree()
+        {
+            _canTick = false;
+        }
+
+        public void StartTree()
+        {
+            _canTick = true;
+        }
+
         protected override Node SetupTree()
         {
             Node root = new SelectorNode("Root", _agent.GetComponent<Entity>(), _target, _entitiesManager,

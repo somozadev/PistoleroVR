@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using Random = UnityEngine.Random;
 
 namespace General.Sound
 {
@@ -10,10 +13,7 @@ namespace General.Sound
 
         private static AudioManager instance;
 
-        public static AudioManager Instance
-        {
-            get { return instance; }
-        }
+        public static AudioManager Instance => instance;
 
         void Awake()
         {
@@ -37,6 +37,8 @@ namespace General.Sound
         [Header("Volumes")] [Space(20)] public float masterVol, musicVol, fxVol, uiVol;
         public bool masterVolMute, musicVolMute, fxVolMute, uiVolMute;
 
+        public AudioMixer AudioMixer => audioMixer;
+        
         [ContextMenu("Initialize")]
         private void Initialize()
         {
@@ -148,7 +150,40 @@ namespace General.Sound
         public void Play(string name)
         {
             var s = Array.Find(sounds, sound => sound.name == name);
+            if (s.config.mixerGroup.Equals(AudioMixerGroup.MUSIC))
+                currentThemeSound = s;
             s.config.source.Play();
+        }
+
+        public void PlayThemes()
+        {
+            var names = GetAllThemes();
+            var id = Random.Range(0, names.Length);
+            var s = Array.Find(sounds, sound => sound.name == names[id]);
+            StartCoroutine(Fade(false, currentThemeSound, .5f, 0f));
+            currentThemeSound.config.source.enabled = false;
+            StartCoroutine(Fade(true, s, 1f, s.config.volume));
+            Play(s.name);
+        }
+
+        private IEnumerator Fade(bool fadeIn, Sound sound, float duration, float targetVol)
+        {
+            sound.config.source.enabled = true;
+            if (!fadeIn)
+            {
+                var clip = sound.config.source.clip;
+                double sourceLenght = (double)clip.samples / clip.frequency;
+                yield return new WaitForSecondsRealtime((float)(sourceLenght - duration));
+            }
+
+            var time = 0f;
+            var startVol = sound.config.source.volume;
+            while (time < duration)
+            {
+                time += Time.unscaledDeltaTime;
+                sound.config.source.volume = Mathf.Lerp(startVol, targetVol, time / duration);
+                yield return null;
+            }
         }
 
         public void PlayOneShot(string name)
@@ -180,6 +215,19 @@ namespace General.Sound
                     Pause(sound.name);
                 }
             }
+        }
+
+        public string[] GetAllThemes()
+        {
+            var names = new List<string>();
+            foreach (var s in sounds)
+            {
+                if (s.config.mixerGroup.Equals(AudioMixerGroup.MUSIC))
+                    if (s.name != "StartSceneTheme")
+                        names.Add(s.name);
+            }
+
+            return names.ToArray();
         }
     }
 }

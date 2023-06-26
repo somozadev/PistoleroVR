@@ -34,11 +34,11 @@ namespace General
                 GameObject go = Instantiate(_usedPrefab, transform.position, Quaternion.identity, transform);
                 TryResetTrail(go);
                 if (!lateAdded)
-                    go.name = ($"bulletVR_{i}");
+                    go.name = ($"{poolName}_{i}");
                 else
                 {
                     poolAmount++;
-                    go.name = ($"bulletVR_{poolAmount}");
+                    go.name = ($"{poolName}_{poolAmount}");
                 }
 
                 go.SetActive(false);

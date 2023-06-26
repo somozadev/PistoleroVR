@@ -20,7 +20,7 @@ public class UIBuyableBarrier : MonoBehaviour
     private BuyableBarrier _currentBarrier;
     private PlayerData _playerData;
 
-    private void OnValidate()
+    private void Awake()
     {
         if (_barriers.Count == 0)
             foreach (BuyableBarrier barrier in FindObjectsOfType<BuyableBarrier>())

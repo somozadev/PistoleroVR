@@ -7,6 +7,7 @@ namespace BehaviourTree
     public abstract class Tree
     {
         [Header("Tree")] [SerializeField] private Node root = null;
+        protected bool _canTick;
 
         public virtual void Init()
         {
@@ -15,7 +16,8 @@ namespace BehaviourTree
 
         public void Tick()
         {
-            root?.Evaluate();
+            if (_canTick)
+                root?.Evaluate();
         }
 
         protected abstract Node SetupTree();

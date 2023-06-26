@@ -59289,9 +59289,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d0cf02ce545dbe468806e53999d6bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selector: {fileID: 0}
   _bulletSpeed: 15
   _bulletDrop: 40
-  _bulletDamage: 0
+  _bulletDamage: 15
   _muzzleParticles: {fileID: 3059300614741745134}
   _impactParticles: {fileID: 6173745434232415613}
   _raycastOrigin: {fileID: 4708984709190572681}
@@ -59300,6 +59301,7 @@ MonoBehaviour:
     m_Bits: 1
   currentBullets: 4
   currentTotalBullets: 30
+  maxTotalBullets: 30
   maxBullets: 6
   _bulletsText: {fileID: 3852433687653047135}
   _bulletPrefab: {fileID: 2065797238585798036, guid: 6291eaa11c780cb4eadd0a1ef09e559c, type: 3}

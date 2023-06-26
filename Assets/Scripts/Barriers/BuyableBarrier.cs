@@ -8,7 +8,7 @@ public class BuyableBarrier : PlayerRangeDetection
     [SerializeField] private InteractType interactType;
     [SerializeField] private GameObject barrierElements;
     
-    private void OnValidate()
+    private void OnEnable()
     {
         barrierPrice = GetComponentInParent<BuyableBarrierParent>().GetPrice();
         if (barrierElements == null)

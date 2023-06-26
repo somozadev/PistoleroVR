@@ -1,4 +1,6 @@
-﻿namespace VR.Powerups
+﻿using General;
+
+namespace VR.Powerups
 {
     public class MaxAmmo : PowerUp
     {

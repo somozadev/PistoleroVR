@@ -20,7 +20,7 @@ namespace VR
         [SerializeField] protected ParticleSystem _muzzleParticles;
         [SerializeField] private ParticleSystem _impactParticles;
         [SerializeField] protected Transform _raycastOrigin;
-
+        [SerializeField] private ShopInstance _shopInstance;
         private Ray _ray;
         private RaycastHit _hit;
         [SerializeField] private LayerMask _layerMask;
@@ -47,12 +47,16 @@ namespace VR
 
         protected string poolingName;
 
+        public float BulletDamage => _bulletDamage;
+
+
         private void Start()
         {
             _animator = GetComponent<WeaponScriptAnimator>();
             _interactable = GetComponent<XRGrabInteractable>();
             _bulletsText = GetComponentInChildren<TMP_Text>();
-
+            if (GetComponentInParent<ShopInstance>())
+                _shopInstance = GetComponentInParent<ShopInstance>();
             if (GetComponentInParent<ShopInstance>() != null)
             {
                 isShopGun = true;
@@ -79,9 +83,10 @@ namespace VR
         {
             selector = args.interactorObject.transform.gameObject;
             if (isShopGun)
-                BuyGun();
-            else
-                GetGun();
+                if (!gunBought)
+                    BuyGun();
+                else
+                    GetGun();
         }
 
         private void SelectExit(SelectExitEventArgs args)
@@ -98,7 +103,7 @@ namespace VR
         private void HoverEnter(HoverEnterEventArgs args)
         {
             if (!isShopGun || gunBought) return;
-
+            if (_shopInstance == null) return;
             SetInteractableLayerBasedOnPrice();
             UnableInteractableLayer();
         }
@@ -127,6 +132,7 @@ namespace VR
                 GameManager.Instance.players.First().PlayerData.Buy(price);
                 gunBought = true;
                 GetGun();
+                //instantiate new gun // reload players gun on buy *
             }
         }
 
@@ -150,7 +156,6 @@ namespace VR
         {
             transform.localPosition = startPos;
             transform.localRotation = startRot;
-            transform.rotation = Quaternion.identity;
         }
 
         #endregion
@@ -160,7 +165,7 @@ namespace VR
         private void SetInteractableLayerBasedOnPrice()
         {
             var currentEconomy = GameManager.Instance.players.First().PlayerData._economy;
-            var currentPrice = GetComponentInParent<ShopInstance>().ShopItem.GetPrice;
+            var currentPrice = _shopInstance.ShopItem.GetPrice;
             _interactable.interactionLayers = currentEconomy >= currentPrice ? 2 : 0;
         }
 
@@ -255,8 +260,6 @@ namespace VR
 
         protected virtual void Shoot()
         {
-            //cuando currentBullets == -1 y currentTotalBullets == 0 es que no more ammo!!!!
-
             if (currentBullets == 0)
             {
                 if ((currentBullets == 0 && currentTotalBullets == 0))

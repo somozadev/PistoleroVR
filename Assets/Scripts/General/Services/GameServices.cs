@@ -44,7 +44,7 @@ namespace General.Services
                 }
 
                 _playerId = AuthenticationService.Instance.PlayerId;
-                GameManager.Instance.players[0].GetComponent<PlayerMenuCanvas>().playerIdText.text = _playerId;
+                GameManager.Instance.players[0].GetComponent<PlayerMenuCanvas>().playerIdText.text = "playerId: "+ _playerId;
                 // Debug.Log($"Player id:{AuthenticationService.Instance.PlayerId}");
                 await EconomyManager.Instance.RefreshEconomyConfiguration();
                 if (this == null) return;

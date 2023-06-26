@@ -10,7 +10,7 @@ namespace General
         [SerializeField] private UiController _uiController;
         [SerializeField] private string _currentScene;
 
-        private void OnValidate()
+        private void OnEnable()
         {
             if (_uiController == null)
                 _uiController = FindObjectOfType<UiController>();

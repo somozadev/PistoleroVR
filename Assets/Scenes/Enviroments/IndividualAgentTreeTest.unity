@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18310449, g: 0.22877477, b: 0.30664122, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -231,7 +231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &282688130
 Transform:
   m_ObjectHideFlags: 0
@@ -362,8 +362,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1111290452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 3.3158, z: 10}
+  m_LocalPosition: {x: 0, y: -7.81, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -396,7 +396,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.016666668
   m_MinRegionArea: 1.03
   m_NavMeshData: {fileID: 23800000, guid: cae454cd00bb6f447b9e17318e5d637c, type: 2}
   m_BuildHeightMesh: 0
@@ -418,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1140247345
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -570,7 +570,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1430304522
 Light:
   m_ObjectHideFlags: 0
@@ -936,6 +936,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentEntities: 0
   waveMaxEntities: 0
+  _entitiesPooling: {fileID: 0}
   _entities: []
   _prefab: {fileID: 176001345946757190, guid: ff6323e3a65ff904fafad7e898788a38, type: 3}
   _joinRange: 6
@@ -985,7 +986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _used: 0
   _waitToCheckTime: 0.5
---- !u!1001 &9037827233281458547
+--- !u!1001 &2083051732
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -995,9 +996,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 176001345946757190, guid: ff6323e3a65ff904fafad7e898788a38, type: 3}
       propertyPath: m_Name
-      value: Entity
+      value: Entity (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 176001345946757190, guid: ff6323e3a65ff904fafad7e898788a38, type: 3}
+    - target: {fileID: 5147778793029826639, guid: ff6323e3a65ff904fafad7e898788a38, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7595529225234685815, guid: ff6323e3a65ff904fafad7e898788a38, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

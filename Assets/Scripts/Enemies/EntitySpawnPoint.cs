@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
+using General;
 using UnityEngine;
 
 namespace Enemies
@@ -13,10 +12,13 @@ namespace Enemies
         private const float SpawnRange = 2f;
 
         public bool IsInUse() => _used;
-        public GameObject UseToInstantiate(GameObject prefab)
-        { //TODO: CHANGE TO USE POOLING
-            _instantiatedGo = Instantiate(prefab, transform.position, Quaternion.identity, transform.parent);
-            // _used = true;
+
+        public GameObject UseToInstantiate(ObjectPooling pool)
+        {
+            //TODO: CHANGE TO USE POOLING
+            _instantiatedGo = pool.GetPooledElement();
+            _instantiatedGo.transform.position = transform.position;
+            _instantiatedGo.GetComponent<BT.Entity>().ResetForNewUse();
             StartCoroutine(WaitInstantiatedToLeave());
             return _instantiatedGo;
         }

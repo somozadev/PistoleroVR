@@ -1,4 +1,5 @@
 using System;
+using General.Sound;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -24,6 +25,7 @@ namespace General.UI_StartScene
         private void LoadSinglePLayerScene()
         {
             GameManager.Instance.sceneController.LoadScene("E_SinglePlayerScene", LoadSceneMode.Single);
+            AudioManager.Instance.PlayThemes();
         }
     }
 }

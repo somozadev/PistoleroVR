@@ -8,7 +8,7 @@ namespace General
     {
         [SerializeField] private Canvas canvas;
 
-        private void OnValidate()
+        private void OnEnable()
         {
             if (canvas == null)
                 canvas = GetComponent<Canvas>();

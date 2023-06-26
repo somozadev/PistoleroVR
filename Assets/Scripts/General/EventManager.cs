@@ -4,6 +4,9 @@ namespace General
 {
     public static class EventManager
     {
+        public delegate void NewWaveEventHandler();
+        public static event NewWaveEventHandler NewWave;
+
         public delegate void OnEconomyUpdatedEventHandler();
 
         public static event OnEconomyUpdatedEventHandler EconomyUpdated;
@@ -31,6 +34,12 @@ namespace General
         public static event OnLoadingEndsEventHandler LoadingEnds;
         public static event OnLoadingStartsEventHandler LoadingStarts;
 
+
+        public static void OnNewWave()
+        {
+            NewWave?.Invoke();
+        }
+        
         public static void OnEconomyUpdated()
         {
             EconomyUpdated?.Invoke();
