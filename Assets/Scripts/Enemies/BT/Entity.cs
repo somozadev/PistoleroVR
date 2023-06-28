@@ -19,8 +19,9 @@ namespace Enemies.BT
         [SerializeField] private EntityRagdoll _ragdoll;
         [SerializeField] private EntityHealth _health;
         [SerializeField] private EntitySounder _sounder;
-
+        [SerializeField] private ParticleSystem _hitPraticle;
         [SerializeField] private EntitiesManager _entitiesManager;
+        [SerializeField] private EntityPowerup _entityPowerup;
         [SerializeField] private NavMeshAgent agent;
         [SerializeField] private float _attackRange;
         [SerializeField] private int _attackDamage = 15;
@@ -30,6 +31,10 @@ namespace Enemies.BT
         private int _gainAmount = 15;
         public float AttackRange => _attackRange;
         public EntityHealth EntityHealth => _health;
+        public EntityPowerup EntityPowerup => _entityPowerup;
+        public EntitiesManager EntitiesManager => _entitiesManager;
+        public ParticleSystem HitParticle => _hitPraticle;
+        
 
         public void SetGainAmount(int value)
         {
@@ -89,6 +94,8 @@ namespace Enemies.BT
 
         public void Die()
         {
+            if (UnityEngine.Random.value <= _entityPowerup.Probability)
+                _entityPowerup.DropPowerUp();
             _targetData.Gain(_gainAmount);
             _sounder.PlayDeadSound();
             _entitiesManager.Entities.Remove(this);
@@ -97,6 +104,7 @@ namespace Enemies.BT
             agent.ResetPath();
             _ragdoll.ActivateRagdoll();
             _sounder.StopSounding();
+            GameManager.Instance.players[0].PlayerData.AddKill();
             StartCoroutine(DieCoroutine());
         }
 

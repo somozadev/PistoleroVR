@@ -13,7 +13,8 @@ namespace Enemies.BT
 
         public Transform target;
 
-        public int WaveNumber => _wave; 
+        public int WaveNumber => _wave;
+        public EntitiesManager EntitiesManager => _entitiesManager;
         
         private void Awake()
         {
@@ -28,6 +29,12 @@ namespace Enemies.BT
         private void OnDisable()
         {
             EventManager.NewWave-= StartNewWave;
+        }
+
+        public void EndGame()
+        {
+            GameManager.Instance.objectPoolingManager.DeleteObjectPooling("entititesPooling");
+            Destroy(_entitiesManager.gameObject);
         }
 
         [ContextMenu("StartNewWave")]

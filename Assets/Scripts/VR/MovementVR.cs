@@ -36,7 +36,6 @@ public class MovementVR : LocomotionProvider
     private Rigidbody _moveRb;
 
     [SerializeField] private XROrigin _xrOrigin;
-    [SerializeField] private PlayerVignette _playerVignette;
     [SerializeField] private Rigidbody _lookRb;
     [SerializeField] private Transform _cameraHolder;
     [SerializeField] private Transform _orientationTrf;
@@ -44,6 +43,19 @@ public class MovementVR : LocomotionProvider
 
 
     public Transform CameraHolder => _cameraHolder;
+
+    public void DisableMovement()
+    {
+        canMove = false;
+        canRotate = false;
+    }
+
+    public void EnableMovement()
+    {
+        canMove = true;
+        canRotate = true;
+    }
+
     protected override void Awake()
     {
         _xrOrigin = GetComponentInParent<XROrigin>();
@@ -190,26 +202,21 @@ public class MovementVR : LocomotionProvider
         {
             if (readyToSnapTurn)
             {
-                // _playerVignette.VignetteTurning(_playerVignette.RotationConfig);
                 readyToSnapTurn = false;
                 _xrOrigin.RotateAroundCameraUsingOriginUp(Mathf.Abs(turnAmount));
-                // _playerVignette.VignetteTurning(_playerVignette.NormalConfig);
             }
         }
         else if (inputRight.x < 0)
         {
             if (readyToSnapTurn)
             {
-                // _playerVignette.VignetteTurning(_playerVignette.RotationConfig);
                 readyToSnapTurn = false;
                 _xrOrigin.RotateAroundCameraUsingOriginUp(-turnAmount);
-                // _playerVignette.VignetteTurning(_playerVignette.NormalConfig);
             }
         }
         else
         {
             readyToSnapTurn = true;
-            // Debug.Log(inputRight);
         }
     }
 
@@ -281,11 +288,9 @@ public class MovementVR : LocomotionProvider
     }
 
 
-
     public void ResetTo(Transform target)
     {
         _xrOrigin.MoveCameraToWorldLocation(target.position);
         _xrOrigin.MatchOriginUpCameraForward(target.up, target.forward);
     }
-    
 }

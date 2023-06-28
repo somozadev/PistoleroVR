@@ -8,8 +8,10 @@ namespace General
 {
     public class Player : MonoBehaviour
     {
+        
         [SerializeField] private MovementVR _movementVR;
         [SerializeField] private RigVR _rigVR;
+        [SerializeField] private PlayerInteractionManager _playerInteractionManager;
         [SerializeField] private CharacterCustomization _characterCustomization;
         [SerializeField] private XRInteractorLineVisual _leftHand;
         [SerializeField] private XRInteractorLineVisual _rightHand;
@@ -17,22 +19,27 @@ namespace General
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private CountdownPlayerCanvas _countdownPlayerCanvas;
         [SerializeField] private PlayerIngameCanvas _playerIngameCanvas;
+        [SerializeField] private GameOverCanvas _playerGameOverCanvas;
         public XRBaseController leftController;
         public XRBaseController rightController;
-        
+
         public PlayerData PlayerData => _playerData;
         public MovementVR PlayerMovement => _movementVR;
         public PlayerHealth PlayerHealth => _playerHealth;
 
         public CountdownPlayerCanvas CountdownPlayerCanvas => _countdownPlayerCanvas;
         public PlayerIngameCanvas PlayerIngameCanvas => _playerIngameCanvas;
+        public GameOverCanvas PlayerGameOverCanvas => _playerGameOverCanvas;
+        public PlayerInteractionManager PlayerInteractionManager => _playerInteractionManager;
 
-        [Header("current item in hands")] 
-        [SerializeField] public GameObject leftHandItem;
+        [Header("current item in hands")] [SerializeField]
+        public GameObject leftHandItem;
+
         [SerializeField] public GameObject rightHandItem;
-     
+
         private void Awake()
         {
+            _playerInteractionManager = GetComponent<PlayerInteractionManager>();
             _playerHealth = GetComponentInChildren<PlayerHealth>();
             _playerData = GetComponent<PlayerData>();
             _movementVR = GetComponentInChildren<MovementVR>();

@@ -75,8 +75,8 @@ namespace General
         private void Start()
         {
             _playerHeightSlider.value = GetComponentInChildren<XROrigin>().CameraYOffset;
-            _playerHeightSlider.onValueChanged.AddListener(delegate{UpdatePlayerHeight();});
-            _playerHeightSlider.onValueChanged.AddListener(delegate{HeightSlider();});
+            _playerHeightSlider.onValueChanged.AddListener(delegate { UpdatePlayerHeight(); });
+            _playerHeightSlider.onValueChanged.AddListener(delegate { HeightSlider(); });
         }
 
 
@@ -109,11 +109,13 @@ namespace General
             if (!_menuOpened)
             {
                 _menuOpened = true;
+                Time.timeScale = 0;
                 _canvas.gameObject.SetActive(true);
             }
             else
             {
                 _menuOpened = false;
+                Time.timeScale = 1;
                 _canvas.gameObject.SetActive(false);
             }
         }

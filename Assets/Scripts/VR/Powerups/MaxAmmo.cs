@@ -1,4 +1,5 @@
 ﻿using General;
+using General.Sound;
 
 namespace VR.Powerups
 {
@@ -11,6 +12,8 @@ namespace VR.Powerups
                 if (GameManager.Instance.players[0].leftHandItem.GetComponent<BaseGun>())
                 {
                     GameManager.Instance.players[0].leftHandItem.GetComponent<BaseGun>().FillUpAmmo();
+                    GameManager.Instance.players[0].leftHandItem.GetComponent<BaseGun>().Animator.AnimationReload();
+                    AudioManager.Instance.PlayOneShot("Reload");
                 }
             }
             else if (GameManager.Instance.players[0].rightHandItem != null)
@@ -18,8 +21,11 @@ namespace VR.Powerups
                 if (GameManager.Instance.players[0].rightHandItem.GetComponent<BaseGun>())
                 {
                     GameManager.Instance.players[0].rightHandItem.GetComponent<BaseGun>().FillUpAmmo();
+                    GameManager.Instance.players[0].rightHandItem.GetComponent<BaseGun>().Animator.AnimationReload();
+                    AudioManager.Instance.PlayOneShot("Reload");
                 }
             }
+            Destroy(gameObject);
         }
     }
 }

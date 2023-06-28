@@ -4223,7 +4223,7 @@ GameObject:
   - component: {fileID: 92825660}
   - component: {fileID: 92825662}
   - component: {fileID: 92825661}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4429,7 +4429,7 @@ GameObject:
   - component: {fileID: 96332979}
   - component: {fileID: 96332981}
   - component: {fileID: 96332980}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ColliderBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6261,7 +6261,7 @@ GameObject:
   - component: {fileID: 133945316}
   - component: {fileID: 133945318}
   - component: {fileID: 133945317}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8589,7 +8589,7 @@ GameObject:
   - component: {fileID: 193847726}
   - component: {fileID: 193847728}
   - component: {fileID: 193847727}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8789,7 +8789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &198619657
 Transform:
   m_ObjectHideFlags: 0
@@ -9604,7 +9604,7 @@ GameObject:
   - component: {fileID: 219109544}
   - component: {fileID: 219109546}
   - component: {fileID: 219109547}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BarrierGroupGraveyard2
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -9789,7 +9789,7 @@ GameObject:
   - component: {fileID: 223992885}
   - component: {fileID: 223992887}
   - component: {fileID: 223992886}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ColliderBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9857,7 +9857,7 @@ GameObject:
   - component: {fileID: 225743504}
   - component: {fileID: 225743506}
   - component: {fileID: 225743505}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11587,7 +11587,7 @@ GameObject:
   - component: {fileID: 265334702}
   - component: {fileID: 265334704}
   - component: {fileID: 265334703}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14682,7 +14682,7 @@ GameObject:
   - component: {fileID: 342666902}
   - component: {fileID: 342666904}
   - component: {fileID: 342666903}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14876,7 +14876,7 @@ GameObject:
   - component: {fileID: 348562080}
   - component: {fileID: 348562082}
   - component: {fileID: 348562081}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15131,7 +15131,7 @@ GameObject:
   - component: {fileID: 353216505}
   - component: {fileID: 353216507}
   - component: {fileID: 353216506}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15341,17 +15341,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf682ed97cb79349bcecc45c8ed7939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barriers:
-  - {fileID: 219109547}
-  - {fileID: 447148945}
-  - {fileID: 487140771}
-  - {fileID: 874916946}
-  - {fileID: 937585568}
-  - {fileID: 1015713921}
-  - {fileID: 1244642173}
-  - {fileID: 1323255388}
-  - {fileID: 1594032509}
-  - {fileID: 2107810593}
   _text: {fileID: 1220344434}
   _image: {fileID: 1379096915}
   _buyAction:
@@ -15379,6 +15368,11 @@ MonoBehaviour:
       m_Action: Buy
       m_Flags: 0
     m_Flags: 0
+  _currentlyInBarrier: 0
+  _currentBarrier: {fileID: 0}
+  _groupBarriers:
+  - {fileID: 447148945}
+  - {fileID: 487140771}
 --- !u!1001 &357656872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16359,17 +16353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf682ed97cb79349bcecc45c8ed7939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barriers:
-  - {fileID: 219109547}
-  - {fileID: 447148945}
-  - {fileID: 487140771}
-  - {fileID: 874916946}
-  - {fileID: 937585568}
-  - {fileID: 1015713921}
-  - {fileID: 1244642173}
-  - {fileID: 1323255388}
-  - {fileID: 1594032509}
-  - {fileID: 2107810593}
   _text: {fileID: 241795962}
   _image: {fileID: 1379979237}
   _buyAction:
@@ -16397,6 +16380,12 @@ MonoBehaviour:
       m_Action: Buy
       m_Flags: 0
     m_Flags: 0
+  _currentlyInBarrier: 0
+  _currentBarrier: {fileID: 0}
+  _groupBarriers:
+  - {fileID: 1244642173}
+  - {fileID: 1323255388}
+  - {fileID: 1015713921}
 --- !u!1 &382093531
 GameObject:
   m_ObjectHideFlags: 0
@@ -16442,17 +16431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf682ed97cb79349bcecc45c8ed7939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barriers:
-  - {fileID: 219109547}
-  - {fileID: 447148945}
-  - {fileID: 487140771}
-  - {fileID: 874916946}
-  - {fileID: 937585568}
-  - {fileID: 1015713921}
-  - {fileID: 1244642173}
-  - {fileID: 1323255388}
-  - {fileID: 1594032509}
-  - {fileID: 2107810593}
   _text: {fileID: 938827637}
   _image: {fileID: 1163907104}
   _buyAction:
@@ -16480,6 +16458,11 @@ MonoBehaviour:
       m_Action: Buy
       m_Flags: 0
     m_Flags: 0
+  _currentlyInBarrier: 0
+  _currentBarrier: {fileID: 0}
+  _groupBarriers:
+  - {fileID: 937585568}
+  - {fileID: 1594032509}
 --- !u!1 &382237450
 GameObject:
   m_ObjectHideFlags: 0
@@ -16491,7 +16474,7 @@ GameObject:
   - component: {fileID: 382237451}
   - component: {fileID: 382237453}
   - component: {fileID: 382237452}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17367,7 +17350,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &394426970
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17930,43 +17913,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4392548273825606, guid: 374dab7bf8d35714d995d7ae3744728b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.858
+      value: 7.709
       objectReference: {fileID: 0}
     - target: {fileID: 4392548273825606, guid: 374dab7bf8d35714d995d7ae3744728b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.827
+      value: -0.08
       objectReference: {fileID: 0}
     - target: {fileID: 4392548273825606, guid: 374dab7bf8d35714d995d7ae3744728b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.037
+      value: 11.972
       objectReference: {fileID: 0}
     - target: {fileID: 4392548273825606, guid: 374dab7bf8d35714d995d7ae3744728b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.7323168
+      value: -0.0016008957
       objectReference: {fileID: 0}
     - target: {fileID: 4392548273825606, guid: 374dab7bf8d35714d995d7ae3744728b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.12274394
+      value: -0.19064362
       objectReference: {fileID: 0}
     - target: {fileID: 4392548273825606, guid: 374dab7bf8d35714d995d7ae3744728b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6605956
+      value: 0.9812928
       objectReference: {fileID: 0}
     - target: {fileID: 4392548273825606, guid: 374dab7bf8d35714d995d7ae3744728b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.11072271
+      value: -0.026776142
       objectReference: {fileID: 0}
     - target: {fileID: 4392548273825606, guid: 374dab7bf8d35714d995d7ae3744728b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 1.9190001
+      value: 3.047
       objectReference: {fileID: 0}
     - target: {fileID: 4392548273825606, guid: 374dab7bf8d35714d995d7ae3744728b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 275.575
+      value: 179.594
       objectReference: {fileID: 0}
     - target: {fileID: 4392548273825606, guid: 374dab7bf8d35714d995d7ae3744728b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -18.936
+      value: -21.999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20051,8 +20034,8 @@ GameObject:
   - component: {fileID: 447148942}
   - component: {fileID: 447148944}
   - component: {fileID: 447148945}
-  m_Layer: 0
-  m_Name: GroupTrain2
+  m_Layer: 10
+  m_Name: BarrierGroupTrain2
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -21713,7 +21696,7 @@ GameObject:
   - component: {fileID: 487140768}
   - component: {fileID: 487140770}
   - component: {fileID: 487140771}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BarrierGroupTrain1
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -23027,7 +23010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &526466013
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23345,7 +23328,7 @@ GameObject:
   - component: {fileID: 537148186}
   - component: {fileID: 537148188}
   - component: {fileID: 537148187}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23658,7 +23641,7 @@ GameObject:
   - component: {fileID: 545430475}
   - component: {fileID: 545430477}
   - component: {fileID: 545430476}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23788,7 +23771,7 @@ GameObject:
   - component: {fileID: 551264179}
   - component: {fileID: 551264181}
   - component: {fileID: 551264180}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24108,7 +24091,7 @@ GameObject:
   - component: {fileID: 558366024}
   - component: {fileID: 558366026}
   - component: {fileID: 558366025}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ColliderBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24525,17 +24508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf682ed97cb79349bcecc45c8ed7939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barriers:
-  - {fileID: 219109547}
-  - {fileID: 447148945}
-  - {fileID: 487140771}
-  - {fileID: 874916946}
-  - {fileID: 937585568}
-  - {fileID: 1015713921}
-  - {fileID: 1244642173}
-  - {fileID: 1323255388}
-  - {fileID: 1594032509}
-  - {fileID: 2107810593}
   _text: {fileID: 239318073}
   _image: {fileID: 1179012483}
   _buyAction:
@@ -24563,6 +24535,12 @@ MonoBehaviour:
       m_Action: Buy
       m_Flags: 0
     m_Flags: 0
+  _currentlyInBarrier: 0
+  _currentBarrier: {fileID: 0}
+  _groupBarriers:
+  - {fileID: 2107810593}
+  - {fileID: 219109547}
+  - {fileID: 874916946}
 --- !u!1001 &570466892
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26711,7 +26689,7 @@ GameObject:
   - component: {fileID: 612099186}
   - component: {fileID: 612099188}
   - component: {fileID: 612099187}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27684,7 +27662,7 @@ GameObject:
   - component: {fileID: 625162784}
   - component: {fileID: 625162786}
   - component: {fileID: 625162785}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ColliderBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27752,7 +27730,7 @@ GameObject:
   - component: {fileID: 626449133}
   - component: {fileID: 626449135}
   - component: {fileID: 626449134}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28572,7 +28550,7 @@ GameObject:
   - component: {fileID: 639108486}
   - component: {fileID: 639108488}
   - component: {fileID: 639108487}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28940,6 +28918,10 @@ PrefabInstance:
     - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
       propertyPath: m_Name
       value: ShopInstance_GodGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
       propertyPath: m_IsActive
@@ -31051,7 +31033,7 @@ GameObject:
   - component: {fileID: 709323965}
   - component: {fileID: 709323967}
   - component: {fileID: 709323966}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33457,7 +33439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &757249342
 Transform:
   m_ObjectHideFlags: 0
@@ -37148,6 +37130,10 @@ PrefabInstance:
       value: ShopInstance_MachineGun
       objectReference: {fileID: 0}
     - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -39650,17 +39636,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf682ed97cb79349bcecc45c8ed7939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barriers:
-  - {fileID: 219109547}
-  - {fileID: 447148945}
-  - {fileID: 487140771}
-  - {fileID: 874916946}
-  - {fileID: 937585568}
-  - {fileID: 1015713921}
-  - {fileID: 1244642173}
-  - {fileID: 1323255388}
-  - {fileID: 1594032509}
-  - {fileID: 2107810593}
   _text: {fileID: 451168094}
   _image: {fileID: 728262000}
   _buyAction:
@@ -39688,6 +39663,9 @@ MonoBehaviour:
       m_Action: Buy
       m_Flags: 0
     m_Flags: 0
+  _currentlyInBarrier: 0
+  _currentBarrier: {fileID: 0}
+  _groupBarriers: []
 --- !u!1001 &865886012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39827,7 +39805,7 @@ GameObject:
   - component: {fileID: 874916943}
   - component: {fileID: 874916945}
   - component: {fileID: 874916946}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BarrierGroupGraveyard3
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -41370,7 +41348,7 @@ GameObject:
   - component: {fileID: 906968997}
   - component: {fileID: 906968999}
   - component: {fileID: 906968998}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41865,7 +41843,7 @@ GameObject:
   - component: {fileID: 923350896}
   - component: {fileID: 923350898}
   - component: {fileID: 923350897}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43223,7 +43201,7 @@ GameObject:
   - component: {fileID: 937585565}
   - component: {fileID: 937585567}
   - component: {fileID: 937585568}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BarrierGroupChurch1
   m_TagString: Untagged
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
@@ -44402,7 +44380,7 @@ GameObject:
   - component: {fileID: 961888449}
   - component: {fileID: 961888451}
   - component: {fileID: 961888450}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45539,7 +45517,7 @@ GameObject:
   - component: {fileID: 987202818}
   - component: {fileID: 987202820}
   - component: {fileID: 987202819}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47313,7 +47291,7 @@ GameObject:
   - component: {fileID: 1015713918}
   - component: {fileID: 1015713920}
   - component: {fileID: 1015713921}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BarrierGroupDesert3
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -48943,7 +48921,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1055505902
 Transform:
   m_ObjectHideFlags: 0
@@ -50725,17 +50703,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf682ed97cb79349bcecc45c8ed7939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barriers:
-  - {fileID: 219109547}
-  - {fileID: 447148945}
-  - {fileID: 487140771}
-  - {fileID: 874916946}
-  - {fileID: 937585568}
-  - {fileID: 1015713921}
-  - {fileID: 1244642173}
-  - {fileID: 1323255388}
-  - {fileID: 1594032509}
-  - {fileID: 2107810593}
   _text: {fileID: 1324145791}
   _image: {fileID: 2049228117}
   _buyAction:
@@ -50763,6 +50730,12 @@ MonoBehaviour:
       m_Action: Buy
       m_Flags: 0
     m_Flags: 0
+  _currentlyInBarrier: 0
+  _currentBarrier: {fileID: 0}
+  _groupBarriers:
+  - {fileID: 2107810593}
+  - {fileID: 219109547}
+  - {fileID: 874916946}
 --- !u!1001 &1081853239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52301,7 +52274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1120980669
 Transform:
   m_ObjectHideFlags: 0
@@ -52932,17 +52905,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf682ed97cb79349bcecc45c8ed7939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barriers:
-  - {fileID: 219109547}
-  - {fileID: 447148945}
-  - {fileID: 487140771}
-  - {fileID: 874916946}
-  - {fileID: 937585568}
-  - {fileID: 1015713921}
-  - {fileID: 1244642173}
-  - {fileID: 1323255388}
-  - {fileID: 1594032509}
-  - {fileID: 2107810593}
   _text: {fileID: 935723899}
   _image: {fileID: 526466014}
   _buyAction:
@@ -52970,6 +52932,11 @@ MonoBehaviour:
       m_Action: Buy
       m_Flags: 0
     m_Flags: 0
+  _currentlyInBarrier: 0
+  _currentBarrier: {fileID: 0}
+  _groupBarriers:
+  - {fileID: 487140771}
+  - {fileID: 447148945}
 --- !u!1001 &1137071206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54310,7 +54277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1163907103
 RectTransform:
   m_ObjectHideFlags: 0
@@ -55127,7 +55094,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1179012482
 RectTransform:
   m_ObjectHideFlags: 0
@@ -55281,7 +55248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1182189833
 RectTransform:
   m_ObjectHideFlags: 0
@@ -56894,7 +56861,7 @@ GameObject:
   - component: {fileID: 1219187030}
   - component: {fileID: 1219187032}
   - component: {fileID: 1219187031}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ColliderBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57802,7 +57769,7 @@ GameObject:
   - component: {fileID: 1243702748}
   - component: {fileID: 1243702750}
   - component: {fileID: 1243702749}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ColliderBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57870,7 +57837,7 @@ GameObject:
   - component: {fileID: 1244642170}
   - component: {fileID: 1244642172}
   - component: {fileID: 1244642173}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BarrierGroupDesert1
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -59280,6 +59247,10 @@ PrefabInstance:
     - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
       propertyPath: m_Name
       value: ShopInstance_Sniper
+      objectReference: {fileID: 0}
+    - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
       propertyPath: m_IsActive
@@ -61010,7 +60981,7 @@ GameObject:
   - component: {fileID: 1323255385}
   - component: {fileID: 1323255387}
   - component: {fileID: 1323255388}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BarrierGroupDesert2
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -62561,7 +62532,7 @@ GameObject:
   - component: {fileID: 1360118066}
   - component: {fileID: 1360118068}
   - component: {fileID: 1360118067}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62689,7 +62660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1362860565
 RectTransform:
   m_ObjectHideFlags: 0
@@ -62825,7 +62796,7 @@ GameObject:
   - component: {fileID: 1364931821}
   - component: {fileID: 1364931823}
   - component: {fileID: 1364931822}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63869,7 +63840,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1379096914
 RectTransform:
   m_ObjectHideFlags: 0
@@ -63945,7 +63916,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1379979236
 RectTransform:
   m_ObjectHideFlags: 0
@@ -66072,7 +66043,7 @@ GameObject:
   - component: {fileID: 1431007035}
   - component: {fileID: 1431007037}
   - component: {fileID: 1431007036}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66144,7 +66115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1432962383
 Transform:
   m_ObjectHideFlags: 0
@@ -66234,7 +66205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1434926468
 Transform:
   m_ObjectHideFlags: 0
@@ -66913,7 +66884,7 @@ GameObject:
   - component: {fileID: 1443927980}
   - component: {fileID: 1443927982}
   - component: {fileID: 1443927981}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ColliderBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69735,7 +69706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4707029914767858, guid: 2350092dab2555d48a660d5439d82826, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.827
+      value: -0.061
       objectReference: {fileID: 0}
     - target: {fileID: 4707029914767858, guid: 2350092dab2555d48a660d5439d82826, type: 3}
       propertyPath: m_LocalPosition.z
@@ -70151,17 +70122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf682ed97cb79349bcecc45c8ed7939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barriers:
-  - {fileID: 219109547}
-  - {fileID: 447148945}
-  - {fileID: 487140771}
-  - {fileID: 874916946}
-  - {fileID: 937585568}
-  - {fileID: 1015713921}
-  - {fileID: 1244642173}
-  - {fileID: 1323255388}
-  - {fileID: 1594032509}
-  - {fileID: 2107810593}
   _text: {fileID: 586752770}
   _image: {fileID: 1786892230}
   _buyAction:
@@ -70189,6 +70149,11 @@ MonoBehaviour:
       m_Action: Buy
       m_Flags: 0
     m_Flags: 0
+  _currentlyInBarrier: 0
+  _currentBarrier: {fileID: 0}
+  _groupBarriers:
+  - {fileID: 937585568}
+  - {fileID: 1594032509}
 --- !u!1001 &1526477011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70482,7 +70447,7 @@ GameObject:
   - component: {fileID: 1530306938}
   - component: {fileID: 1530306940}
   - component: {fileID: 1530306939}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71703,7 +71668,7 @@ GameObject:
   - component: {fileID: 1569592858}
   - component: {fileID: 1569592860}
   - component: {fileID: 1569592859}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71775,7 +71740,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1570408168
 Transform:
   m_ObjectHideFlags: 0
@@ -73162,7 +73127,7 @@ GameObject:
   - component: {fileID: 1594032506}
   - component: {fileID: 1594032508}
   - component: {fileID: 1594032509}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BarrierGroupChurch2
   m_TagString: Untagged
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
@@ -74150,7 +74115,7 @@ GameObject:
   - component: {fileID: 1612832930}
   - component: {fileID: 1612832932}
   - component: {fileID: 1612832931}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ColliderBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75636,17 +75601,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf682ed97cb79349bcecc45c8ed7939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barriers:
-  - {fileID: 219109547}
-  - {fileID: 447148945}
-  - {fileID: 487140771}
-  - {fileID: 874916946}
-  - {fileID: 937585568}
-  - {fileID: 1015713921}
-  - {fileID: 1244642173}
-  - {fileID: 1323255388}
-  - {fileID: 1594032509}
-  - {fileID: 2107810593}
   _text: {fileID: 1958599521}
   _image: {fileID: 1362860566}
   _buyAction:
@@ -75674,6 +75628,12 @@ MonoBehaviour:
       m_Action: Buy
       m_Flags: 0
     m_Flags: 0
+  _currentlyInBarrier: 0
+  _currentBarrier: {fileID: 0}
+  _groupBarriers:
+  - {fileID: 1244642173}
+  - {fileID: 1323255388}
+  - {fileID: 1015713921}
 --- !u!1001 &1640016048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80456,7 +80416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4707029914767858, guid: 2350092dab2555d48a660d5439d82826, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.827
+      value: -0.06100005
       objectReference: {fileID: 0}
     - target: {fileID: 4707029914767858, guid: 2350092dab2555d48a660d5439d82826, type: 3}
       propertyPath: m_LocalPosition.z
@@ -81507,7 +81467,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4707029914767858, guid: 2350092dab2555d48a660d5439d82826, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.827
+      value: -0.06100005
       objectReference: {fileID: 0}
     - target: {fileID: 4707029914767858, guid: 2350092dab2555d48a660d5439d82826, type: 3}
       propertyPath: m_LocalPosition.z
@@ -84061,7 +84021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1786892229
 RectTransform:
   m_ObjectHideFlags: 0
@@ -84807,7 +84767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4146679778507918, guid: e7578350df46f804b815d550b0b861bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.207
+      value: 2.83
       objectReference: {fileID: 0}
     - target: {fileID: 4146679778507918, guid: e7578350df46f804b815d550b0b861bf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -85852,7 +85812,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1825485047
 Transform:
   m_ObjectHideFlags: 0
@@ -87841,7 +87801,7 @@ GameObject:
   - component: {fileID: 1871882619}
   - component: {fileID: 1871882621}
   - component: {fileID: 1871882620}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89534,7 +89494,7 @@ GameObject:
   - component: {fileID: 1898856672}
   - component: {fileID: 1898856674}
   - component: {fileID: 1898856673}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90368,6 +90328,10 @@ PrefabInstance:
       value: ShopInstance_Shotgun
       objectReference: {fileID: 0}
     - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -90502,7 +90466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1918539871
 Transform:
   m_ObjectHideFlags: 0
@@ -90817,17 +90781,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf682ed97cb79349bcecc45c8ed7939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barriers:
-  - {fileID: 219109547}
-  - {fileID: 447148945}
-  - {fileID: 487140771}
-  - {fileID: 874916946}
-  - {fileID: 937585568}
-  - {fileID: 1015713921}
-  - {fileID: 1244642173}
-  - {fileID: 1323255388}
-  - {fileID: 1594032509}
-  - {fileID: 2107810593}
   _text: {fileID: 480074264}
   _image: {fileID: 394426971}
   _buyAction:
@@ -90855,6 +90808,12 @@ MonoBehaviour:
       m_Action: Buy
       m_Flags: 0
     m_Flags: 0
+  _currentlyInBarrier: 0
+  _currentBarrier: {fileID: 0}
+  _groupBarriers:
+  - {fileID: 1244642173}
+  - {fileID: 1323255388}
+  - {fileID: 1015713921}
 --- !u!1001 &1929307735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93070,7 +93029,7 @@ GameObject:
   - component: {fileID: 1970864085}
   - component: {fileID: 1970864087}
   - component: {fileID: 1970864086}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ColliderBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93637,7 +93596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1991067939
 Transform:
   m_ObjectHideFlags: 0
@@ -93665,7 +93624,7 @@ GameObject:
   - component: {fileID: 1993344563}
   - component: {fileID: 1993344565}
   - component: {fileID: 1993344564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ColliderBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95081,7 +95040,7 @@ GameObject:
   - component: {fileID: 2033257139}
   - component: {fileID: 2033257141}
   - component: {fileID: 2033257140}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96082,7 +96041,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2049228116
 RectTransform:
   m_ObjectHideFlags: 0
@@ -97095,17 +97054,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf682ed97cb79349bcecc45c8ed7939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _barriers:
-  - {fileID: 219109547}
-  - {fileID: 447148945}
-  - {fileID: 487140771}
-  - {fileID: 874916946}
-  - {fileID: 937585568}
-  - {fileID: 1015713921}
-  - {fileID: 1244642173}
-  - {fileID: 1323255388}
-  - {fileID: 1594032509}
-  - {fileID: 2107810593}
   _text: {fileID: 2090735096}
   _image: {fileID: 1182189834}
   _buyAction:
@@ -97133,6 +97081,12 @@ MonoBehaviour:
       m_Action: Buy
       m_Flags: 0
     m_Flags: 0
+  _currentlyInBarrier: 0
+  _currentBarrier: {fileID: 0}
+  _groupBarriers:
+  - {fileID: 2107810593}
+  - {fileID: 219109547}
+  - {fileID: 874916946}
 --- !u!1001 &2078390381
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97641,7 +97595,7 @@ GameObject:
   - component: {fileID: 2086200066}
   - component: {fileID: 2086200068}
   - component: {fileID: 2086200067}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98810,7 +98764,7 @@ GameObject:
   - component: {fileID: 2107810590}
   - component: {fileID: 2107810592}
   - component: {fileID: 2107810593}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BarrierGroupGraveyard1
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -99808,7 +99762,7 @@ GameObject:
   - component: {fileID: 2131727272}
   - component: {fileID: 2131727274}
   - component: {fileID: 2131727273}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Col1 (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100736,6 +100690,10 @@ PrefabInstance:
     - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
       propertyPath: m_Name
       value: ShopInstance_Revolver
+      objectReference: {fileID: 0}
+    - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2731661840633587162, guid: dc7ec6639b5f99c48963d2407b95af9c, type: 3}
       propertyPath: m_IsActive

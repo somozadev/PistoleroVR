@@ -11,7 +11,7 @@ namespace General.Damageable
         [SerializeField] private float _critValue = 1.5f;
         [SerializeField] private EntityHealth _entityHealth;
         [SerializeField] private Entity _entity;
-
+        
         private void Awake()
         {
             _entityHealth = GetComponentInParent<EntityHealth>();
@@ -20,6 +20,7 @@ namespace General.Damageable
 
         public override void Damage(BaseGun baseGun)
         {
+            _entity.HitParticle.Play();
             base.Damage(baseGun);
             _entity.SetGainAmount(25);
             _entityHealth.Health -= (baseGun.BulletDamage * _critValue);

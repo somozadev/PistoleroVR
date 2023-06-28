@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using System.Net.NetworkInformation;
 using General;
 using General.Damageable;
 using General.Sound;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -46,7 +48,7 @@ namespace VR
         public bool canShoot = true;
 
         protected string poolingName;
-
+        public WeaponScriptAnimator Animator => _animator;
         public float BulletDamage => _bulletDamage;
 
 
@@ -83,11 +85,62 @@ namespace VR
         {
             selector = args.interactorObject.transform.gameObject;
             if (isShopGun)
+            {
                 if (!gunBought)
+                {
+                    if (Vector3.Distance(transform.position, selector.transform.position) >= _shopInstance.Range)
+                        return;
                     BuyGun();
+                }
                 else
                     GetGun();
+            }
+            else
+                GetGun();
         }
+
+        private bool TryBuyAmmo()
+        {
+            Player p = GameManager.Instance.players[0];
+
+            if (p.leftHandItem != null)
+            {
+                if (p.leftHandItem.GetComponent<BaseGun>().currentBullets ==
+                    p.leftHandItem.GetComponent<BaseGun>().maxBullets &&
+                    p.leftHandItem.GetComponent<BaseGun>().currentTotalBullets ==
+                    p.leftHandItem.GetComponent<BaseGun>().maxTotalBullets) return false;
+
+                if (Utils.CheckTypes(typeof(RevolverVR), p.leftHandItem, _shopInstance.ShopItem.GetPrefab) ||
+                    Utils.CheckTypes(typeof(ShotgunVR), p.leftHandItem, _shopInstance.ShopItem.GetPrefab) ||
+                    Utils.CheckTypes(typeof(MachinegunVR), p.leftHandItem, _shopInstance.ShopItem.GetPrefab) ||
+                    Utils.CheckTypes(typeof(SniperVR), p.leftHandItem, _shopInstance.ShopItem.GetPrefab) ||
+                    Utils.CheckTypes(typeof(HollyGunVR), p.leftHandItem, _shopInstance.ShopItem.GetPrefab))
+                {
+                    p.leftHandItem.GetComponent<BaseGun>().FillUpAmmo();
+                    return true;
+                }
+            }
+            else if (p.rightHandItem != null)
+            {
+                if (p.rightHandItem.GetComponent<BaseGun>().currentBullets ==
+                    p.rightHandItem.GetComponent<BaseGun>().maxBullets &&
+                    p.rightHandItem.GetComponent<BaseGun>().currentTotalBullets ==
+                    p.rightHandItem.GetComponent<BaseGun>().maxTotalBullets) return false;
+
+                if (Utils.CheckTypes(typeof(RevolverVR), p.rightHandItem, _shopInstance.ShopItem.GetPrefab) ||
+                    Utils.CheckTypes(typeof(ShotgunVR), p.rightHandItem, _shopInstance.ShopItem.GetPrefab) ||
+                    Utils.CheckTypes(typeof(MachinegunVR), p.rightHandItem, _shopInstance.ShopItem.GetPrefab) ||
+                    Utils.CheckTypes(typeof(SniperVR), p.rightHandItem, _shopInstance.ShopItem.GetPrefab) ||
+                    Utils.CheckTypes(typeof(HollyGunVR), p.rightHandItem, _shopInstance.ShopItem.GetPrefab))
+                {
+                    p.rightHandItem.GetComponent<BaseGun>().FillUpAmmo();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
 
         private void SelectExit(SelectExitEventArgs args)
         {
@@ -127,12 +180,22 @@ namespace VR
 
         private void BuyGun()
         {
+            // if()
+            if (GameManager.Instance.players.First().PlayerData._economy >= price / 3)
+            {
+                if (TryBuyAmmo())
+                {
+                    GameManager.Instance.players.First().PlayerData.Buy(price / 3);
+                    return;
+                }
+            }
+
             if (GameManager.Instance.players.First().PlayerData._economy >= price)
             {
                 GameManager.Instance.players.First().PlayerData.Buy(price);
                 gunBought = true;
                 GetGun();
-                //instantiate new gun // reload players gun on buy *
+                _shopInstance.RefillGun();
             }
         }
 
@@ -260,6 +323,9 @@ namespace VR
 
         protected virtual void Shoot()
         {
+            if (Time.timeScale == 0)
+                return;
+
             if (currentBullets == 0)
             {
                 if ((currentBullets == 0 && currentTotalBullets == 0))

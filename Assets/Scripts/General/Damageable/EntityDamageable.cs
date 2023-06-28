@@ -20,6 +20,7 @@ namespace General.Damageable
 
         public override void Damage(BaseGun baseGun)
         {
+            _entity.HitParticle.Play();
             base.Damage(baseGun);
             _entityHealth.Health -= baseGun.BulletDamage;
             _entity.SetGainAmount(10);

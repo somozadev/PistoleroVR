@@ -12,4 +12,6 @@ public class ShopItem : ScriptableObject
     
     public GameObject GetPrefab => prefab;
     public int GetPrice => price;
+    
+    
 }

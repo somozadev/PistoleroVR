@@ -9,9 +9,8 @@ namespace General
 {
     public class TimeManager : MonoBehaviour
     {
-
         [SerializeField] private DailyRewardsManager _dailyRewardsManager;
-        
+
         public bool rewardClaimed;
 
         private bool allThingsLoaded = false;
@@ -59,8 +58,14 @@ namespace General
             allThingsLoaded = true;
             _dailyRewardsManager._rewarded = rewardClaimed;
             _dailyRewardsManager.gameObject.SetActive(true);
+        }
 
-            
+        private async void OnApplicationPause(bool paused)
+        {
+            if (!paused) return;
+            if (!rewardClaimed)
+                await SaveToCloud(data, "LastDateTime", DateTime.Now.ToString());
+            await SaveToCloud(data, "RewardClaimed", rewardClaimed.ToString());
         }
 
         private async void OnApplicationQuit()

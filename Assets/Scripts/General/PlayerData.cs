@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Services.CloudSave;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
-using UnityEngine.Serialization;
-using UnityEngine.XR.Interaction.Toolkit;
 
 namespace General
 {
@@ -20,12 +17,17 @@ namespace General
         public int _runs;
         public bool[] _unlockedHats = new bool[4];
         public int _selectedHat;
+        [SerializeField] private bool _doubleXp;
 
         private void Awake()
         {
             _ingameCanvas = GetComponentInChildren<PlayerIngameCanvas>();
         }
 
+        public void SetDoubleXP(bool doubleXp)
+        {
+            _doubleXp = doubleXp;
+        }
 
         public void Buy(int price)
         {
@@ -39,8 +41,15 @@ namespace General
 
         public void Gain(int amount)
         {
+            if (_doubleXp)
+                amount *= 2;
             _economy += amount;
             _ingameCanvas.UpdateEconomy(_economy);
+        }
+
+        public void AddKill()
+        {
+            _kills++;
         }
 
         public async void UnlockHat(int price, int id)

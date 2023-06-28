@@ -11,8 +11,12 @@ namespace General
         private GameObject _countdownCanvas;
 
         [SerializeField] private TMP_Text countdown;
+        [SerializeField] private TMP_Text wavesText;
         private int countdownNumber = 10;
 
+        public int CurrentWave = 1;
+        
+        
         [SerializeField] AnimationCurve _animationCurve = new(
             new Keyframe(0, 0),
             new Keyframe(.5f, 1)
@@ -42,6 +46,7 @@ namespace General
         private IEnumerator NewCountdown()
         {
             _countdownCanvas.gameObject.SetActive(true);
+            wavesText.text = $"WAVE {CurrentWave} STARTING IN ";
             yield return StartCoroutine(Animate());
             _countdownCanvas.gameObject.SetActive(false);
             countdownNumber = 10;

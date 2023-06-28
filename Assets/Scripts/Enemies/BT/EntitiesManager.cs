@@ -23,16 +23,15 @@ namespace Enemies.BT
         public List<Entity> Entities => _entities;
         public float JoinRange => _joinRange;
 
-        private int _waveNumber;
+        [SerializeField] private int _waveNumber;
 
         public void CheckIfNoMoreEntities()
         {
             if(_entities.Count<=0)
             {
                 GameManager.Instance.players[0].CountdownPlayerCanvas.SetCountdownNumber(5);
+                GameManager.Instance.players[0].CountdownPlayerCanvas.CurrentWave = _waveNumber;
                 GameManager.Instance.players[0].CountdownPlayerCanvas.NewWave();
-                
-                
             }
         }
 
