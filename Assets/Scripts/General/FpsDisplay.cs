@@ -12,7 +12,7 @@ namespace General
 
         private void Update()
         {
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
             frameCount++;
             if (time >= pollingTime)
             {

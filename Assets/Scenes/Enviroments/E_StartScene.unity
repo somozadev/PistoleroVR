@@ -15965,7 +15965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1303063412
 Transform:
   m_ObjectHideFlags: 0
@@ -16382,6 +16382,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276500fbaae6b3f41acdc4c465b4c625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  children:
+  - {fileID: 1947692586}
+  - {fileID: 1346990519}
+  - {fileID: 1303063411}
+  - {fileID: 3616674869042116683}
   players:
   - {fileID: 7855078537062701712}
   objectPoolingManager: {fileID: 1335847024}
@@ -16707,7 +16712,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1346990520
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19535,6 +19540,34 @@ PrefabInstance:
     - target: {fileID: 3688363309948528089, guid: 4e4c598ca35ab464bbb50897f74e2961, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580938965339931046, guid: 4e4c598ca35ab464bbb50897f74e2961, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580938965339931046, guid: 4e4c598ca35ab464bbb50897f74e2961, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580938965339931046, guid: 4e4c598ca35ab464bbb50897f74e2961, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9116842850372264098}
+    - target: {fileID: 4580938965339931046, guid: 4e4c598ca35ab464bbb50897f74e2961, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580938965339931046, guid: 4e4c598ca35ab464bbb50897f74e2961, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MenuButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580938965339931046, guid: 4e4c598ca35ab464bbb50897f74e2961, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: General.PlayerMenuCanvas, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580938965339931046, guid: 4e4c598ca35ab464bbb50897f74e2961, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4652175224202226516, guid: 4e4c598ca35ab464bbb50897f74e2961, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -25220,7 +25253,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1947692587
 Transform:
   m_ObjectHideFlags: 0
@@ -30173,7 +30206,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3722527953198639312
 Transform:
   m_ObjectHideFlags: 0

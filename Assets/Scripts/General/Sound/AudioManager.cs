@@ -20,7 +20,7 @@ namespace General.Sound
             if (instance == null)
                 instance = this;
             else
-                Destroy(this);
+                Destroy(gameObject);
             DontDestroyOnLoad(gameObject);
             Initialize();
         }
@@ -38,7 +38,7 @@ namespace General.Sound
         public bool masterVolMute, musicVolMute, fxVolMute, uiVolMute;
 
         public AudioMixer AudioMixer => audioMixer;
-        
+
         [ContextMenu("Initialize")]
         private void Initialize()
         {
@@ -141,18 +141,20 @@ namespace General.Sound
 
         #endregion
 
-        [ContextMenu("PlayMainTheme")]
-        private void Test()
-        {
-            Play("StartSceneTheme");
-        }
-
         public void Play(string name)
         {
             var s = Array.Find(sounds, sound => sound.name == name);
             if (s.config.mixerGroup.Equals(AudioMixerGroup.MUSIC))
                 currentThemeSound = s;
             s.config.source.Play();
+        }
+
+        public void PlayStartingTheme()
+        {
+            PauseAllOtherMusic("StartSceneTheme");
+
+            if (!IsPlaying("StartSceneTheme"))
+                Play("StartSceneTheme");
         }
 
         public void PlayThemes()

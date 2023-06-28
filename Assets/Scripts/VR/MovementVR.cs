@@ -142,14 +142,6 @@ public class MovementVR : LocomotionProvider
         SpeedControl();
     }
 
-    /// <summary>
-    /// Sets <see cref="_cameraHolder"/> position to follow <see cref="_pivotCamTrf"/> position, due the fact that camera is outside the
-    /// gameobject in charge of movement (its rigidbody).
-    /// </summary>
-    protected virtual void MoveCam()
-    {
-        _cameraHolder.position = _pivotCamTrf.position;
-    }
 
     /// <summary>
     /// Sets the <see cref="_orientationTrf"/> rotation to a new quaternion based on the <see cref ="_lookRb"/> y euler angle multiplied by an offset,
@@ -263,7 +255,7 @@ public class MovementVR : LocomotionProvider
     /// and the control bool <see cref="canMove"/> is true, <see cref="Move"/> will be called, passing in the direction <paramref key="translationInWorldSpace"/>
     /// and if the control bool <see cref="canRotate"/> is true, <see cref="Rotate"/> will be called, passing in the value of  <paramref key="inputRight"/>.
     ///
-    /// As well as calling <see cref="SetOrientationWithCam"/>, <see cref="MoveCam"/> and <see cref="LocomotionProvider.EndLocomotion"/> in that order.
+    /// As well as calling <see cref="SetOrientationWithCam"/> and <see cref="LocomotionProvider.EndLocomotion"/> in that order.
     /// </summary>
     /// <param key="translationInWorldSpace">Direction calculated in <see cref="ComputeDesiredDirection"/></param>
     /// <param key="inputRight">Input value of the right hand, calculated in <see cref="ReadInputRightHand"/></param>
@@ -282,7 +274,6 @@ public class MovementVR : LocomotionProvider
             }
 
             SetOrientationWithCam();
-            // MoveCam();
             EndLocomotion();
         }
     }
@@ -290,7 +281,8 @@ public class MovementVR : LocomotionProvider
 
     public void ResetTo(Transform target)
     {
-        _xrOrigin.MoveCameraToWorldLocation(target.position);
+        //otra opcion es calcular la posicion del xrorigin relativa a su padre, y mover al padre para que la posicion absoluta del player sea la deseada del target
+        _xrOrigin.MoveCameraToWorldLocation(target.position + Vector3.up);
         _xrOrigin.MatchOriginUpCameraForward(target.up, target.forward);
     }
 }

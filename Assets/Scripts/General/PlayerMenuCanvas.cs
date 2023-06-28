@@ -1,8 +1,10 @@
 using System;
+using General.Sound;
 using TMPro;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace General
@@ -120,6 +122,13 @@ namespace General
             }
         }
 
+        public void MenuButton()
+        {
+            GameManager.Instance.sceneController.LoadScene("E_StartScene", LoadSceneMode.Single);
+            OpenCloseMenu();
+            AudioManager.Instance.PlayStartingTheme();
+        }
+        
         private void OnEnable()
         {
             _menuAction.Enable();

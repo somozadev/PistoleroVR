@@ -21,6 +21,8 @@ namespace General
 
         private bool _inmortal = false;
 
+        public Volume HitEffectVolume => _hitEffectVolume;
+        
         public void SetInmortal(bool inmortal)
         {
             if (inmortal)
@@ -68,10 +70,6 @@ namespace General
             _player.PlayerInteractionManager.DisableInteraction();
             _hitEffectVolume.weight = 1;
             _wavesManager.EndGame();
-            //disable player movement, 
-            //disable more waves
-            //disable enemies trees
-            //disable player interaction 
 
         }
 
