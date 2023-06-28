@@ -109,6 +109,7 @@ public class MovementVR : LocomotionProvider
         _leftHandMoveAction.DisableDirectAction();
         _rightHandMoveAction.DisableDirectAction();
         EndLocomotion();
+        transform.position = Vector3.zero;
     }
 
     private void OnDestroy()

@@ -24,18 +24,24 @@ public class GameOverCanvas : MonoBehaviour
         _wavesText.text = $"wave {number}";
         _gameOverCanvas.gameObject.SetActive(true);
     }
+
     public void MenuButton()
     {
         GameManager.Instance.sceneController.LoadScene("E_StartScene", LoadSceneMode.Single);
+        GameManager.Instance.players[0].PlayerMovement.transform.position = Vector3.zero;
         AudioManager.Instance.PlayStartingTheme();
-        gameObject.SetActive(false);
+        _gameOverCanvas.gameObject.SetActive(false);
     }
+
     public void ReturnToStartScene()
     {
         //load start scene 
         //move player to start position
+
+
         _player.PlayerMovement.EnableMovement();
         _player.PlayerInteractionManager.EnableInteraction();
         _player.PlayerHealth.HitEffectVolume.weight = 0;
+        MenuButton();
     }
 }

@@ -146,6 +146,8 @@ namespace General.Sound
             var s = Array.Find(sounds, sound => sound.name == name);
             if (s.config.mixerGroup.Equals(AudioMixerGroup.MUSIC))
                 currentThemeSound = s;
+            s.config.source.volume = s.config.volume;
+            s.config.source.enabled = true;
             s.config.source.Play();
         }
 
@@ -162,21 +164,30 @@ namespace General.Sound
             var names = GetAllThemes();
             var id = Random.Range(0, names.Length);
             var s = Array.Find(sounds, sound => sound.name == names[id]);
-            StartCoroutine(Fade(false, currentThemeSound, .5f, 0f));
-            currentThemeSound.config.source.enabled = false;
+            StartCoroutine(Fade(true, currentThemeSound, 1f, 0f));
+            // currentThemeSound.config.source.enabled = false;
+            Pause(currentThemeSound.name);
             StartCoroutine(Fade(true, s, 1f, s.config.volume));
             Play(s.name);
+
+            StartCoroutine(WaitToPlayAnotherTrack());
+        }
+
+        private IEnumerator WaitToPlayAnotherTrack()
+        {
+            yield return new WaitForSecondsRealtime(currentThemeSound.config.source.clip.length - 2f);
+            PlayThemes();
         }
 
         private IEnumerator Fade(bool fadeIn, Sound sound, float duration, float targetVol)
         {
             sound.config.source.enabled = true;
-            if (!fadeIn)
-            {
-                var clip = sound.config.source.clip;
-                double sourceLenght = (double)clip.samples / clip.frequency;
-                yield return new WaitForSecondsRealtime((float)(sourceLenght - duration));
-            }
+            // if (!fadeIn)
+            // {
+            //     var clip = sound.config.source.clip;
+            //     double sourceLenght = (double)clip.samples / clip.frequency;
+            //     yield return new WaitForSecondsRealtime((float)(sourceLenght - duration));
+            // }
 
             var time = 0f;
             var startVol = sound.config.source.volume;

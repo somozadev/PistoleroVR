@@ -68,6 +68,7 @@ namespace General
             _movement.DisableMovement();
             _gameOverCanvas.OnDie(_wavesManager.WaveNumber);
             _player.PlayerInteractionManager.DisableInteraction();
+            _player.PlayerData.AddRun();
             _hitEffectVolume.weight = 1;
             _wavesManager.EndGame();
 

@@ -52,6 +52,13 @@ namespace General
             _kills++;
         }
 
+        public async void AddRun()
+        {
+            _runs++;
+            EventManager.OnPlayerDataUpdated();
+            await SaveData();
+        }
+
         public async void UnlockHat(int price, int id)
         {
             _unlockedHats[id] = true;

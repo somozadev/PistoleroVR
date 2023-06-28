@@ -169,7 +169,7 @@ namespace VR
 
         #region SelectEnter
 
-        private void GetGun()
+        protected virtual void GetGun()
         {
             _orientation.localRotation = Quaternion.Euler(0, -90, 0);
             if (selector.name == "Left Hand")

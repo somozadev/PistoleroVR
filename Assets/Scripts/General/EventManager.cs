@@ -5,6 +5,7 @@ namespace General
     public static class EventManager
     {
         public delegate void NewWaveEventHandler();
+
         public static event NewWaveEventHandler NewWave;
 
         public delegate void OnEconomyUpdatedEventHandler();
@@ -22,10 +23,14 @@ namespace General
         public delegate void OnTimerEndedEventHandler();
 
         public static event OnTimerEndedEventHandler TimerEnded;
-        
+
         public delegate void OnPlayerDataLoadedHandler();
 
         public static event OnPlayerDataLoadedHandler PlayerDataLoaded;
+
+        public delegate void OnPlayerDataUpdatedHandler();
+
+        public static event OnPlayerDataUpdatedHandler PlayerDataUpdated;
 
         public delegate void OnLoadingStartsEventHandler();
 
@@ -39,7 +44,7 @@ namespace General
         {
             NewWave?.Invoke();
         }
-        
+
         public static void OnEconomyUpdated()
         {
             EconomyUpdated?.Invoke();
@@ -63,6 +68,11 @@ namespace General
         public static void OnPlayerDataLoaded()
         {
             PlayerDataLoaded?.Invoke();
+        }
+
+        public static void OnPlayerDataUpdated()
+        {
+            PlayerDataUpdated?.Invoke();
         }
         public static void OnLoadingEnds()
         {
