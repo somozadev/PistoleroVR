@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6183876562142101708}
   - component: {fileID: 5681730161610436293}
   - component: {fileID: 1475479808889044522}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PowerUp_maxAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}

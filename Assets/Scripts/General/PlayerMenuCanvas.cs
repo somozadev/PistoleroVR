@@ -127,8 +127,9 @@ namespace General
             GameManager.Instance.sceneController.LoadScene("E_StartScene", LoadSceneMode.Single);
             OpenCloseMenu();
             AudioManager.Instance.PlayStartingTheme();
+            GameManager.Instance.players[0].PlayerMovement.ResetTo(Vector3.zero);
         }
-        
+
         private void OnEnable()
         {
             _menuAction.Enable();

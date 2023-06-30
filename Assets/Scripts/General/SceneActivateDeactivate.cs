@@ -12,13 +12,6 @@ namespace General
 
         private void OnEnable()
         {
-            if (GameManager.Instance.players.Count > 0)
-                GameManager.Instance.players[0].PlayerMovement.ResetTo(_spawnPoint);
-            else
-            {
-                FindObjectOfType<MovementVR>().ResetTo(_spawnPoint);
-            }
-
             scene.SetActive(false);
             EventManager.LoadingStarts += HideScene;
             EventManager.LoadingEnds += ShowScene;

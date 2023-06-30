@@ -22,6 +22,8 @@ namespace General.Damageable
         {
             _entity.HitParticle.Play();
             base.Damage(baseGun);
+            _entity.TargetData.Gain(5);
+
             _entity.SetGainAmount(25);
             _entityHealth.Health -= (baseGun.BulletDamage * _critValue);
             //create hit particle and plug it here

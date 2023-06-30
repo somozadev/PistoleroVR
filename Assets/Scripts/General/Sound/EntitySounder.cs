@@ -10,6 +10,7 @@ namespace General.Sound
         [SerializeField] private Sound[] sounds;
 
         [SerializeField] private AudioSource[] _distanceBasedAudioSources;
+
         private void Start()
         {
             int i = 0;
@@ -66,13 +67,28 @@ namespace General.Sound
 
         public void PlayAttackSound()
         {
-            int id = Random.Range(4, sounds.Length);
+            int id = Random.Range(sounds.Length - 2, sounds.Length);
             PlayLocalOneShot(sounds[id].name);
         }
 
-        private void PlayAughSound()
+        private bool IsPlaying(string name)
         {
-            int id = Random.Range(0, sounds.Length-1);
+            var s = Array.Find(sounds, sound => sound.name == name);
+            return s.config.source.isPlaying;
+        }
+
+
+        public void PlayDistanceCloseSound()
+        {
+            if (IsPlaying("Zombie1") || IsPlaying("Zombie2") || IsPlaying("Zombie3") || IsPlaying("Zombie4") ||
+                IsPlaying("Zombie5") || IsPlaying("Zombie6") || IsPlaying("Zombie7") || IsPlaying("Zombie8") ||
+                IsPlaying("Zombie9")) return;
+            PlayAughSound();
+        }
+
+        public void PlayAughSound()
+        {
+            int id = Random.Range(0, sounds.Length - 2);
             PlayLocalOneShot(sounds[id].name);
         }
     }

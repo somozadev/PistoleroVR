@@ -269,7 +269,12 @@ namespace VR
             );
         }
 
-        private void PerformShoot(ActivateEventArgs args) => Shoot();
+        private void PerformShoot(ActivateEventArgs args)
+        {
+            if(Time.timeScale < 1)return;
+            Shoot();
+        }
+
         private void EndShoot(DeactivateEventArgs args) => NoShoot();
 
         private Vector3 GetBulletWorldPosition(BulletVR bullet)
@@ -323,8 +328,6 @@ namespace VR
 
         protected virtual void Shoot()
         {
-            if (Time.timeScale == 0)
-                return;
 
             if (currentBullets == 0)
             {

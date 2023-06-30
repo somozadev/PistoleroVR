@@ -31,7 +31,7 @@ namespace Enemies.BT.Nodes
 
             _agent.SetDestination(_target.position);
             state = NodeState.RUNNING;
-
+            if (_agent.remainingDistance <= 5f && _agent.remainingDistance >= 4.9f) _entity.PlaySoundByProximity();
             if (!(_agent.remainingDistance <= _agent.stoppingDistance)) return state;
             state = NodeState.SUCCESS;
             return state;

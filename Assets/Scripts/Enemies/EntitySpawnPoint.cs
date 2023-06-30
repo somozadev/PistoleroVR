@@ -9,7 +9,7 @@ namespace Enemies
         [SerializeField] private bool _used;
         [SerializeField] private float _waitToCheckTime = 0.5f;
         private GameObject _instantiatedGo;
-        private const float SpawnRange = 2f;
+        [SerializeField] private float SpawnRange = 2f;
 
         public bool IsInUse() => _used;
 
@@ -18,6 +18,7 @@ namespace Enemies
             //TODO: CHANGE TO USE POOLING
             _instantiatedGo = pool.GetPooledElement();
             _instantiatedGo.transform.position = transform.position;
+            Debug.LogError($"El {_instantiatedGo.name} con posicion {_instantiatedGo.transform.position} se setea a {transform.position} o {transform.localPosition} ? ");
             _instantiatedGo.GetComponent<BT.Entity>().ResetForNewUse();
             StartCoroutine(WaitInstantiatedToLeave());
             return _instantiatedGo;

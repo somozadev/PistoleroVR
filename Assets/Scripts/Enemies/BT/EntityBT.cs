@@ -9,13 +9,11 @@ using Tree = BehaviourTree.Tree;
 
 namespace Enemies.BT
 {
-    [Serializable]
     public class EntityBT : Tree
     {
         private Transform _target;
         private NavMeshAgent _agent;
         private EntitiesManager _entitiesManager;
-
         public void Init(Transform target, NavMeshAgent agent, EntitiesManager entitiesManager)
         {
             _target = target;

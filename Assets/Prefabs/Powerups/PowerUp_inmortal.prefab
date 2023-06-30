@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3913273251714086472}
   - component: {fileID: 2121472639667747746}
   - component: {fileID: 6015055107657974800}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PowerUp_inmortal
   m_TagString: Untagged
   m_Icon: {fileID: 0}

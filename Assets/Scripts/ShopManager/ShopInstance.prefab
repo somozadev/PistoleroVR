@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5749842650410518914}
   - component: {fileID: 2861959250365691445}
   - component: {fileID: 1647410852866332779}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2088721495178797710}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: initialPlacementPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 6210712869370047332}
   - component: {fileID: 4803093258084145256}
   - component: {fileID: 6092089224943012949}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShopInstance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7628332032714741073}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Elements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +276,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2465413544093247682}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: InstantiatePivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 8286554573219098836}
   - component: {fileID: 3579297901235621190}
   - component: {fileID: 8855383770519168285}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Price
   m_TagString: Untagged
   m_Icon: {fileID: 0}

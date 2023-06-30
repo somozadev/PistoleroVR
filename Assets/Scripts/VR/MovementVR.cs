@@ -1,6 +1,7 @@
 using System;
 using General;
 using JetBrains.Annotations;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -15,31 +16,38 @@ public class MovementVR : LocomotionProvider
         Snap
     }
 
-    [Header("Control movement status")] [SerializeField]
-    private bool canMove;
-
+    [Header("Control movement status")] 
+    [SerializeField] private bool canMove;
     [SerializeField] private bool canRotate;
+    [SerializeField] private bool isGrounded;
     [SerializeField] private RotationType rotationType;
     [SerializeField] private float turnAmount = 45f;
     [SerializeField] private bool readyToSnapTurn;
 
-    [Header("Movement Variables")] public float speed;
-    public float rotSpeed;
-    public float drag;
+    [Space(20)] [Header("Movement Variables")]
+    public float speed = 5;
 
-    [Header("Hands controllers InputActions references")] [SerializeField]
+    public float rotSpeed;
+    public float drag = 0;
+    public float groundDistance=0.1f;
+    public LayerMask groundLayerMask;
+    private RaycastHit _slopeHit;
+
+    [Space(20)] [Header("Hands controllers InputActions references")] [SerializeField]
     private InputActionProperty _leftHandMoveAction;
 
     [SerializeField] private InputActionProperty _rightHandMoveAction;
+    private Vector2 _lInput;
+    private Vector2 _rInput;
 
-    [Header("Needed references")] [SerializeField]
+    [Space(20)] [Header("Needed references")] [SerializeField]
     private Rigidbody _moveRb;
 
     [SerializeField] private XROrigin _xrOrigin;
     [SerializeField] private Rigidbody _lookRb;
     [SerializeField] private Transform _cameraHolder;
     [SerializeField] private Transform _orientationTrf;
-    [SerializeField] private Transform _pivotCamTrf;
+    [SerializeField] private Transform _raycastOrigin;
 
 
     public Transform CameraHolder => _cameraHolder;
@@ -128,19 +136,10 @@ public class MovementVR : LocomotionProvider
     /// <param key="translationInWorldSpace"> Desired direction of the movement </param>
     protected void FixedUpdate()
     {
-        var inputL = ReadInputLeftHand();
-        var inputR = ReadInputRightHand();
-        var translationInWorldSpace = ComputeDesiredDirection(inputL);
-        MoveRig(translationInWorldSpace, inputR);
-    }
-
-    /// <summary>
-    /// Unity calls <see cref="Update"/> on every frame.
-    /// Calls <see cref="SpeedControl"/> to limit the maximum velocity of the rigidbody to <see cref="speed"/> value.
-    /// </summary>
-    private void Update()
-    {
-        SpeedControl();
+        _lInput = ReadInputLeftHand();
+        _rInput = ReadInputRightHand();
+        var translationInWorldSpace = ComputeDesiredDirection(_lInput);
+        MoveRig(translationInWorldSpace, _rInput);
     }
 
 
@@ -164,7 +163,14 @@ public class MovementVR : LocomotionProvider
     /// Applies a force to the main rigidbody <see cref="_moveRb"/> on the given <paramref key="direction"/>
     /// </summary>
     /// <param key="direction"> Desired direction of the movement</param>
-    private void Move(Vector3 direction) => _moveRb.AddForce(direction, ForceMode.Force);
+    private void Move(Vector3 direction)
+    {
+        // _moveRb.AddForce(direction, ForceMode.Force);
+        if (isGrounded)
+            _moveRb.velocity = direction * speed * Time.deltaTime;
+        else
+            _moveRb.velocity = new Vector3(direction.x, -40, direction.z) * speed * Time.deltaTime;
+    }
 
     public void UpadteRotationType(RotationType type)
     {
@@ -225,26 +231,14 @@ public class MovementVR : LocomotionProvider
     private Vector3 ComputeDesiredDirection(Vector2 input)
     {
         if (input == Vector2.zero)
-            return _moveRb.position;
+            return Vector3.zero;
+        // return _moveRb.position;
         Vector3 forwardDir = _orientationTrf.forward * input.y + _orientationTrf.right * input.x;
 
         Vector3 moveDirection = Vector3.Normalize(forwardDir) * (speed * 1000 * Time.fixedDeltaTime);
         return moveDirection;
     }
 
-    /// <summary>
-    /// Measures the current <see cref="_moveRb"/> velocity magnitude ignoring it's y axis. If it's greater than the limit <see cref="speed"/>, limits the rb velocity to it.
-    /// </summary>
-    private void SpeedControl()
-    {
-        var velocity = _moveRb.velocity;
-        Vector3 flatVel = new Vector3(velocity.x, 0f, velocity.z);
-        if (flatVel.magnitude > speed)
-        {
-            Vector3 limitedVel = flatVel.normalized * speed;
-            _moveRb.velocity = new Vector3(limitedVel.x, velocity.y, limitedVel.z);
-        }
-    }
 
     /// <summary>
     /// Applyes a <see cref="drag"/> value to the <see cref="_moveRb"/> drag
@@ -262,6 +256,7 @@ public class MovementVR : LocomotionProvider
     /// <param key="inputRight">Input value of the right hand, calculated in <see cref="ReadInputRightHand"/></param>
     private void MoveRig(Vector3 translationInWorldSpace, Vector2 inputRight)
     {
+        isGrounded = IsGrounded();
         if (CanBeginLocomotion() && BeginLocomotion())
         {
             if (canMove)
@@ -274,16 +269,26 @@ public class MovementVR : LocomotionProvider
                     RotateSnapTurn(inputRight);
             }
 
+
             SetOrientationWithCam();
             EndLocomotion();
         }
     }
 
 
-    public void ResetTo(Transform target)
+    private bool IsGrounded()
     {
-        //otra opcion es calcular la posicion del xrorigin relativa a su padre, y mover al padre para que la posicion absoluta del player sea la deseada del target
-        _xrOrigin.MoveCameraToWorldLocation(target.position + Vector3.up);
-        _xrOrigin.MatchOriginUpCameraForward(target.up, target.forward);
+        if (Physics.Raycast(_raycastOrigin.position, Vector3.down, groundDistance, groundLayerMask))
+        {
+            Debug.DrawRay(_raycastOrigin.position, Vector3.down, Color.green, 1f);
+            return true;
+        }
+        return false;
+    }
+
+
+    public void ResetTo(Vector3 target)
+    {
+        _moveRb.MovePosition(target);
     }
 }

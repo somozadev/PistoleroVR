@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8086599491348853473}
   - component: {fileID: 4230503111580506700}
   - component: {fileID: 6992183415877833919}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PowerUp_instadeath
   m_TagString: Untagged
   m_Icon: {fileID: 0}

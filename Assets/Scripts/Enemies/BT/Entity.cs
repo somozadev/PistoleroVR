@@ -11,10 +11,11 @@ namespace Enemies.BT
 {
     public class Entity : MonoBehaviour
     {
-        [SerializeField] private EntityBT _tree = new EntityBT();
+        [SerializeField] public EntityBT _tree = new EntityBT();
         [SerializeField] private float updateTickInterval = 0.5f;
         [SerializeField] private float updateTickTimer = 0f;
-
+        [SerializeField] private EnemyIKHandSolver _leftHand;
+        [SerializeField] private EnemyIKHandSolver _rightHand;
         [SerializeField] private Transform target;
         [SerializeField] private EntityRagdoll _ragdoll;
         [SerializeField] private EntityHealth _health;
@@ -34,7 +35,8 @@ namespace Enemies.BT
         public EntityPowerup EntityPowerup => _entityPowerup;
         public EntitiesManager EntitiesManager => _entitiesManager;
         public ParticleSystem HitParticle => _hitPraticle;
-        
+
+        public PlayerData TargetData => _targetData;
 
         public void SetGainAmount(int value)
         {
@@ -79,16 +81,29 @@ namespace Enemies.BT
             updateTickTimer = 0f;
         }
 
-        public async void AnimateAttack()
+        public void PlaySoundByProximity()
         {
-            await Task.Delay(1000);
-            Debug.Log("<color='cyan'> ANIMATION ATTACK TRIGGERED </color>");
+            _sounder.PlayDistanceCloseSound();
         }
 
         public void Attack()
         {
-            _targetHealth.Damage(_attackDamage);
+            if(_leftHand.animating || _rightHand.animating)return;
+            StartCoroutine(AttackCorr());
+        }
+
+        private IEnumerator StartArmsAnim()
+        {
+            StartCoroutine(_leftHand.AttackAnim());
+            StartCoroutine(_rightHand.AttackAnim());
+            yield return null;
+        }
+        private IEnumerator AttackCorr()
+        {
+            yield return StartCoroutine(StartArmsAnim());
+            if(Vector3.Distance(agent.transform.position, target.position) > _attackRange+1) yield break;
             _sounder.PlayAttackSound();
+            _targetHealth.Damage(_attackDamage);
             Debug.Log("<color='green'> ATTACK TRIGGERED </color>");
         }
 

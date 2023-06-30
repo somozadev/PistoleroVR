@@ -32,6 +32,7 @@ namespace General
 
         private void HandleActivatedEvent(BaseInteractionEventArgs args)
         {
+            if (Time.timeScale < 1) return;
             _hapticOnActivated.TriggerHaptics(args, _gun);
         }
     }

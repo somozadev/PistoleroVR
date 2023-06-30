@@ -32,7 +32,6 @@ namespace Enemies.BT.Nodes
 
             if (Vector3.Distance(_agent.transform.position, _target.position) <= _attackRange)
             {
-                _entity.AnimateAttack();
                 state = NodeState.SUCCESS;
                 return state;
             }

@@ -25,23 +25,16 @@ public class GameOverCanvas : MonoBehaviour
         _gameOverCanvas.gameObject.SetActive(true);
     }
 
-    public void MenuButton()
+    [ContextMenu("ReturnButton")]
+    public void ReturnButton()
     {
         GameManager.Instance.sceneController.LoadScene("E_StartScene", LoadSceneMode.Single);
-        GameManager.Instance.players[0].PlayerMovement.transform.position = Vector3.zero;
+        GameManager.Instance.players[0].PlayerMovement.ResetTo(Vector3.zero);
+        GameManager.Instance.players[0].PlayerInteractionManager.EnableInteraction();
+        GameManager.Instance.players[0].PlayerMovement.EnableMovement();
+        GameManager.Instance.players[0].PlayerHealth.HitEffectVolume.weight = 0;
         AudioManager.Instance.PlayStartingTheme();
         _gameOverCanvas.gameObject.SetActive(false);
     }
-
-    public void ReturnToStartScene()
-    {
-        //load start scene 
-        //move player to start position
-
-
-        _player.PlayerMovement.EnableMovement();
-        _player.PlayerInteractionManager.EnableInteraction();
-        _player.PlayerHealth.HitEffectVolume.weight = 0;
-        MenuButton();
-    }
+    
 }
