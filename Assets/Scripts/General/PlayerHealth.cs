@@ -22,7 +22,7 @@ namespace General
         private bool _inmortal = false;
 
         public Volume HitEffectVolume => _hitEffectVolume;
-        
+
         public void SetInmortal(bool inmortal)
         {
             if (inmortal)
@@ -44,7 +44,7 @@ namespace General
         public void GainHp(int amount)
         {
             _currentHp += amount;
-            _ingameCanvas.UpdateEconomy(_currentHp);
+            _ingameCanvas.UpdateHp(_currentHp);
         }
 
         public void Damage(int amount)
@@ -57,21 +57,33 @@ namespace General
             }
             else
                 _currentHp -= amount;
+
             StartCoroutine(HitEffect());
             _ingameCanvas.UpdateHp(_currentHp);
         }
 
-        private void EndOfGame()
+        private async void EndOfGame()
         {
-            if(_wavesManager == null)
+            if (_wavesManager == null)
                 _wavesManager = FindObjectOfType<WavesManager>();
+            await GameManager.Instance.gameServices.CallToAddEconomyToPlayer(_wavesManager.WaveNumber);
             _movement.DisableMovement();
             _gameOverCanvas.OnDie(_wavesManager.WaveNumber);
             _player.PlayerInteractionManager.DisableInteraction();
+            _player.PlayerData.ResetEconomy();
             _player.PlayerData.AddRun();
             _hitEffectVolume.weight = 1;
+            ResetHp();
             _wavesManager.EndGame();
+            _ingameCanvas.UpdateHp(_currentHp);
+            _ingameCanvas.UpdateEconomy(_player.PlayerData._economy);
+        }
 
+        public void ResetHp()
+        {
+            _currentHp = _maxHp;
+            _ingameCanvas.UpdateHp(_currentHp);
+            _ingameCanvas.UpdateEconomy(0);
         }
 
         private IEnumerator HitEffect()

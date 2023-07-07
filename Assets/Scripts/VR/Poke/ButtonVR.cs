@@ -76,7 +76,7 @@ namespace VR.Poke
                         return;
                     
                     GameManager.Instance.players[0].PlayerData.UnlockHat(price, id);
-                    
+                    AudioManager.Instance.PlayOneShot("Buy");
                     hats.HatBought();
                     hatsInventory.LoadHats();
                     hats.selectedHat = null;

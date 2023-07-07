@@ -81,6 +81,18 @@ namespace General.Sound
             audioMixer.SetFloat("MUSICVolume", -80f);
         }
 
+        public void SetMusicVol(float vol)
+        {
+            audioMixer.SetFloat("MUSICVolume", vol);
+        }
+
+        public float GetMusicVol()
+        {
+            float v = -12f;
+            audioMixer.GetFloat("MUSICVolume", out v);
+            return v;
+        }
+
         public void UnMuteMusic()
         {
             audioMixer.SetFloat("MUSICVolume", musicVol);

@@ -20,7 +20,7 @@ public class MovementVR : LocomotionProvider
     [SerializeField] private bool canMove;
     [SerializeField] private bool canRotate;
     [SerializeField] private bool isGrounded;
-    [SerializeField] private RotationType rotationType;
+    [SerializeField] private RotationType rotationType= RotationType.Snap;
     [SerializeField] private float turnAmount = 45f;
     [SerializeField] private bool readyToSnapTurn;
 

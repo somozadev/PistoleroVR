@@ -26,6 +26,7 @@ namespace General
 
         [SerializeField] private TMP_Text _playerHeight;
         [SerializeField] private Slider _playerHeightSlider;
+        [SerializeField] private Slider _musicSlider;
 
 
         [Header("Tabs")] [Space(20)] [SerializeField]
@@ -78,13 +79,20 @@ namespace General
         {
             _playerHeightSlider.value = GetComponentInChildren<XROrigin>().CameraYOffset;
             _playerHeightSlider.onValueChanged.AddListener(delegate { UpdatePlayerHeight(); });
+            _musicSlider.onValueChanged.AddListener(delegate { UpdateMusicValue(); });
             _playerHeightSlider.onValueChanged.AddListener(delegate { HeightSlider(); });
+            _musicSlider.value = AudioManager.Instance.GetMusicVol();
         }
 
 
         private void UpdatePlayerHeight()
         {
             GetComponentInChildren<XROrigin>().CameraYOffset = _playerHeightSlider.value;
+        }
+
+        private void UpdateMusicValue()
+        {
+            AudioManager.Instance.SetMusicVol(_musicSlider.value);
         }
 
         public void MenuButtonPressed(InputAction.CallbackContext context)
@@ -106,6 +114,7 @@ namespace General
                 .UpadteRotationType(!value ? MovementVR.RotationType.Snap : MovementVR.RotationType.Continuous);
         }
 
+
         public void OpenCloseMenu()
         {
             if (!_menuOpened)
@@ -124,6 +133,13 @@ namespace General
 
         public void MenuButton()
         {
+            if (GameManager.Instance.objectPoolingManager.GetPoolByName("entititesPooling"))
+            {
+                GameManager.Instance.objectPoolingManager.DeleteObjectPooling("entititesPooling");
+            }
+
+            GameManager.Instance.players[0].PlayerData._economy = 0;
+            GameManager.Instance.players[0].PlayerHealth.ResetHp();
             GameManager.Instance.sceneController.LoadScene("E_StartScene", LoadSceneMode.Single);
             OpenCloseMenu();
             AudioManager.Instance.PlayStartingTheme();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using General.Sound;
 using Unity.Services.CloudSave;
 using UnityEngine;
 
@@ -17,6 +18,15 @@ namespace General
         public int _runs;
         public bool[] _unlockedHats = new bool[4];
         public int _selectedHat;
+
+        public void ResetEconomy()
+        {
+            _economy = 0;
+        }
+
+
+
+
         [SerializeField] private bool _doubleXp;
 
         private void Awake()
@@ -36,6 +46,7 @@ namespace General
             else
                 _economy -= price;
 
+            AudioManager.Instance.PlayOneShot("Buy");
             _ingameCanvas.UpdateEconomy(_economy);
         }
 
@@ -90,13 +101,17 @@ namespace General
                 await SaveData();
         }
 
+        public override string ToString()
+        {
+            return "Kills: " + _kills + "Runs: " + _runs + "UnlockedHats: " + _unlockedHats;
+        }
+
         private async void OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus)
                 await SaveData();
         }
 
-        [ContextMenu("SaveData")]
         public async Task SaveData()
         {
             _unlockedHats ??= new bool[] { true, false, false, false };
@@ -105,12 +120,6 @@ namespace General
             await CloudSaveService.Instance.Data.ForceSaveAsync(data);
         }
 
-        public override string ToString()
-        {
-            return "Kills: " + _kills + "Runs: " + _runs + "UnlockedHats: " + _unlockedHats;
-        }
-
-        [ContextMenu("LoadData")]
         public async Task LoadData()
         {
             var data = await CloudSaveService.Instance.Data.LoadAllAsync();

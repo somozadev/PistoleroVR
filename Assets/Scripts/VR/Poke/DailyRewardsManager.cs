@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using General;
 using General.Services;
+using General.Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -74,6 +75,7 @@ namespace VR.Poke
                 if (_rewarded) return;
                 _rewarded = true;
                 await GameManager.Instance.gameServices.GrantRandomCurrency();
+                AudioManager.Instance.PlayOneShot("Buy");
                 StartCoroutine(SelectedCor());
             }
         }
@@ -101,7 +103,7 @@ namespace VR.Poke
             _coinAmountParticle.transform.localScale = Vector3.zero;
             _coinAmountParticle.transform.localPosition = coinLocalPosInit;
             _toolTip.gameObject.SetActive(true);
-            
+
             // _rewardObject.SetActive(false);
             //start timer again 
 

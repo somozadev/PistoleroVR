@@ -10258,10 +10258,11 @@ MonoBehaviour:
   selector: {fileID: 0}
   _bulletSpeed: 60
   _bulletDrop: 2
-  _bulletDamage: 0.55
+  _bulletDamage: 7
   _muzzleParticles: {fileID: 5765912501237351784}
   _impactParticles: {fileID: 2455095677893191853}
   _raycastOrigin: {fileID: 2497018139055983430}
+  _shopInstance: {fileID: 0}
   _layerMask:
     serializedVersion: 2
     m_Bits: 1

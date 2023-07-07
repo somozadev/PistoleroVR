@@ -286,7 +286,7 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: e7c73b8fb6406a748b658e5f5403eba3, type: 3}
       volume: 0.256
       pitch: 1
-      source: {fileID: 0}
+      source: {fileID: 6674527581325131875}
   - name: Zombie2
     config:
       mixerGroup: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: 579c1dec385a2ac4a926bab43b941d20, type: 3}
       volume: 0.065
       pitch: 1
-      source: {fileID: 0}
+      source: {fileID: 2231429025285731085}
   - name: Zombie3
     config:
       mixerGroup: 0
@@ -302,7 +302,7 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: ff31a2f6437662f439ba0579da55854a, type: 3}
       volume: 0.256
       pitch: 1
-      source: {fileID: 0}
+      source: {fileID: 8373012210219097211}
   - name: Zombie4
     config:
       mixerGroup: 0
@@ -310,7 +310,7 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: 86fe8a7a3b2ab084bbd60ed59230be07, type: 3}
       volume: 0.256
       pitch: 1
-      source: {fileID: 0}
+      source: {fileID: 2252022922073861406}
   - name: Zombie5
     config:
       mixerGroup: 0
@@ -318,7 +318,7 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: ba94e00d857b82b408e868b8e1e1e080, type: 3}
       volume: 0.256
       pitch: 1
-      source: {fileID: 0}
+      source: {fileID: 2293658897183428638}
   - name: Zombie6
     config:
       mixerGroup: 0
@@ -326,7 +326,7 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: dc4cfc59b834cfc42aa943101c899fd0, type: 3}
       volume: 0.256
       pitch: 1
-      source: {fileID: 0}
+      source: {fileID: 4339585636279916803}
   - name: Zombie7
     config:
       mixerGroup: 0
@@ -334,7 +334,7 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: a37788565353a4f418455997a572b8f4, type: 3}
       volume: 0.256
       pitch: 1
-      source: {fileID: 0}
+      source: {fileID: 3331212995171676159}
   - name: Zombie8
     config:
       mixerGroup: 0
@@ -342,7 +342,7 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: 06af4571083fd6e49b2d6bb06e9e9fa7, type: 3}
       volume: 0.256
       pitch: 1
-      source: {fileID: 0}
+      source: {fileID: 726774188824455381}
   - name: Zombie9
     config:
       mixerGroup: 0
@@ -350,7 +350,7 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: 09af7e0e05128b94892cbfe7b2320d28, type: 3}
       volume: 0.256
       pitch: 1
-      source: {fileID: 0}
+      source: {fileID: 3732227609092445873}
   - name: ZombieDie
     config:
       mixerGroup: 0
@@ -358,7 +358,7 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: 742422f6ddea8b34ba3b82135990df70, type: 3}
       volume: 0.256
       pitch: 1
-      source: {fileID: 0}
+      source: {fileID: 5730504891137461007}
   - name: ZombieAttack1
     config:
       mixerGroup: 0
@@ -366,7 +366,7 @@ MonoBehaviour:
       clip: {fileID: 8300000, guid: ea798043e49f9e14989f83f841b5a63c, type: 3}
       volume: 0.256
       pitch: 1
-      source: {fileID: 0}
+      source: {fileID: 1026721639832825147}
   _distanceBasedAudioSources:
   - {fileID: 6674527581325131875}
   - {fileID: 2231429025285731085}
@@ -463,7 +463,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -559,7 +559,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -655,7 +655,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -751,7 +751,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -847,7 +847,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -943,7 +943,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1039,7 +1039,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1135,7 +1135,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1231,7 +1231,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1327,7 +1327,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
@@ -1423,7 +1423,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

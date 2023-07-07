@@ -97,10 +97,8 @@ namespace General.Services
             }
         }
 
-        [ContextMenu("ADD 10000 money")]
-        public async Task CallToAddEconomyToPlayer()
+        public async Task CallToAddEconomyToPlayer(int amount)
         {
-            int amount = 10000;
             try
             {
                 await CloudCodeManager.Instance.CallAddMoneyFromPlayerEndpoint(amount);

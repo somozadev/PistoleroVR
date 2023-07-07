@@ -58,11 +58,11 @@ namespace Enemies.BT
         private EntitySpawnPoint GetRandomAvailableSpawnPoint()
         {
             Random random = new Random();
-            var availableSpawnPoints = _spawnPoints.Where(sp => !sp.IsInUse()).ToArray();
-            if (availableSpawnPoints.Length > 0)
+            // var availableSpawnPoints = _spawnPoints.Where(sp => !sp.IsInUse()).ToArray();
+            if (_spawnPoints.Length > 0)
             {
-                int randomIndex = random.Next(0, availableSpawnPoints.Length);
-                return availableSpawnPoints[randomIndex];
+                int randomIndex = random.Next(0, _spawnPoints.Length);
+                return _spawnPoints[randomIndex];
             }
 
             return null;

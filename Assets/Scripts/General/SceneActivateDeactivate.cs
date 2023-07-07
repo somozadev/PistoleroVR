@@ -27,7 +27,12 @@ namespace General
         {
             scene.SetActive(true);
             if (SceneManager.GetActiveScene().name == "E_SinglePlayerScene")
+            {
                 GameManager.Instance.players[0].PlayerIngameCanvas.EnableCanvas();
+                GameManager.Instance.players[0].PlayerHealth.ResetHp();
+                GameManager.Instance.players[0].PlayerData._economy = 0;
+
+            }
             else
                 GameManager.Instance.players[0].PlayerIngameCanvas.DisableCanvas();
         }

@@ -88,7 +88,7 @@ namespace Enemies.BT
 
         public void Attack()
         {
-            if(_leftHand.animating || _rightHand.animating)return;
+            if (_leftHand.animating || _rightHand.animating) return;
             StartCoroutine(AttackCorr());
         }
 
@@ -98,10 +98,11 @@ namespace Enemies.BT
             StartCoroutine(_rightHand.AttackAnim());
             yield return null;
         }
+
         private IEnumerator AttackCorr()
         {
             yield return StartCoroutine(StartArmsAnim());
-            if(Vector3.Distance(agent.transform.position, target.position) > _attackRange+1) yield break;
+            if (Vector3.Distance(agent.transform.position, target.position) > _attackRange + 1) yield break;
             _sounder.PlayAttackSound();
             _targetHealth.Damage(_attackDamage);
             Debug.Log("<color='green'> ATTACK TRIGGERED </color>");
@@ -112,11 +113,12 @@ namespace Enemies.BT
             if (UnityEngine.Random.value <= _entityPowerup.Probability)
                 _entityPowerup.DropPowerUp();
             _targetData.Gain(_gainAmount);
+            agent.ResetPath();
+            agent.enabled = false;
             _sounder.PlayDeadSound();
             _entitiesManager.Entities.Remove(this);
             _entitiesManager.CheckIfNoMoreEntities();
             _tree.StopTree();
-            agent.ResetPath();
             _ragdoll.ActivateRagdoll();
             _sounder.StopSounding();
             GameManager.Instance.players[0].PlayerData.AddKill();
@@ -139,6 +141,7 @@ namespace Enemies.BT
 
         public void ResetForNewUse()
         {
+            agent.enabled = true;
             //set hp
             _sounder.StopSounding();
             updateTickTimer = 0f;
