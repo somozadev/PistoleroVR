@@ -133,7 +133,7 @@ namespace General
 
         public void MenuButton()
         {
-            if (GameManager.Instance.objectPoolingManager.GetPoolByName("entititesPooling"))
+            if (GameManager.Instance.objectPoolingManager.GetPoolByName("entititesPooling")!=null)
             {
                 GameManager.Instance.objectPoolingManager.DeleteObjectPooling("entititesPooling");
             }

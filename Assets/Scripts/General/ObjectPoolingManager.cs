@@ -49,6 +49,8 @@ namespace General
 
         public ObjectPooling GetPoolByName(string name)
         {
+            if (!objectPools.ContainsKey(name))
+                return null;
             return objectPools[name];
         }
     }
